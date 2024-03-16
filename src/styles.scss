@@ -1,1 +1,165 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import "reset.css";
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:root {
+  --font: "Roboto", sans-serif;
+  --primary-color-1: #4D56BE;
+  --primary-color-2: #A6ADFF;
+  --primary-color-3: #DDE0FF;
+  --primary-color-4: #F4F7FF;
+  --secondary-color-1: #4D2E00;
+  --secondary-color-2: #FFB74A;
+}
+
+.large {
+  color: var(--Gray-White, #FFF);
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+.medium {
+  color: var(--Gray-White, #FFF);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+.small {
+  color: var(--Gray-White, #FFF);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  padding: 4px 8px;
+  border-radius: 3.2px;
+}
+
+.button {
+  font-family: var(--font);
+  &-primary {
+    border: 1px solid var(--Theme-Primary, #0D6EFD);
+    background: var(--Theme-Primary, #0D6EFD);
+    &-outliner {
+      background: none;
+      border: 1px solid var(--Theme-Primary, #0D6EFD);
+      color: var(--Theme-Primary, #0D6EFD);
+      &:hover {
+        color: white;
+        background: var(--Theme-Primary, #0D6EFD);
+      }
+      &:active {
+        color: white;      
+        box-shadow: 0px 0px 0px 4px rgba(13, 110, 253, 0.25);
+      }
+      &:disabled {
+        opacity: 0.65;
+      }
+    }
+    &:hover{
+      color: white;
+      border: 1px solid var(--Components-Button-Primary-Active-Border, #0A53BE);
+      background: var(--Components-Button-Primary-Active-Background, #0A58CA);
+    }
+    &:active{
+      color: white;
+      box-shadow: 0px 0px 0px 4px rgba(49, 132, 253, 0.50);
+    }
+    &:disabled{
+      color: white;
+      border: 1px solid var(--Components-Button-Primary-Active-Border, #0A53BE);
+      opacity: 0.65;
+      background: var(--Theme-Primary, #0D6EFD);
+    }
+  }
+}
+
+.wrapper {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.bold {
+  font-weight: 700;
+}
+.sem {
+  font-weight: 600;
+}
+.med {
+  font-weight: 500;
+}
+.reg {
+  font-weight: 400;
+}
+
+.text {
+  font-family: var(--font);
+  font-style: normal;
+  line-height: normal;
+}
+
+.title-60-reg {
+  font-size: 60px;
+  letter-spacing: 0.6px;
+}
+.head {
+  &-48 {
+    font-size: 48px;
+    letter-spacing: 0.24px;
+  }
+  &-36 {
+    font-size: 36px;
+    letter-spacing: 0.09px;
+  }
+  &-30 {
+    font-size: 30px;
+    letter-spacing: 0.045px;
+  }
+  &-24 {
+    font-size: 24px;
+    letter-spacing: 0.036px;
+  }
+}
+
+.sub {
+  &-16 {
+    font-size: 16px;
+    letter-spacing: 0.032px;
+  }
+  &-14 {
+    font-size: 14px;
+    letter-spacing: 0.014px;
+  }
+}
+.body {
+  &-20 {
+    font-size: 20px;
+    letter-spacing: 0.1px;
+  }
+  &-16 {
+    font-size: 16px;
+    letter-spacing: 0.04px;
+  }
+}
+.button {
+  &-20 {
+    font-size: 20px;
+    letter-spacing: 0.05px;
+  }
+}
+.caption-14 {
+  font-size: 14px;
+  letter-spacing: 0.056px;
+}
+
