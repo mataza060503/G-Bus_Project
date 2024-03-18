@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+<div class="wrapper">
+  <section class="hero">
+    <div class="hero-background">
+      <img srcset="./assets/images/homepage-background.jpg 2x" alt="" style="width: 100%;">
+    </div>
+    <div class="hero-container">
+      <p class="text head-30 reg" style="color: #6F757F;">With GBus</p>
+      <p class="text head-48 bold">Go <b style="color: #41489F;">Around Viet Nam</b> with Us!</p>
+      <div class="hero-main">
+        <div class="hero-main-inputs">
+          <div class="hero-main-input">
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px; height: 80px;">
+              <mat-form-field style="height: 100%;">
+                <div mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">
+                    my_location
+                    </span>
+                </div>
+                <mat-label class="text sub-16 sem">Departure Location</mat-label>
+                <mat-select [(ngModel)]="DLocation">
+                  @for (city of cities; track city) {
+                    <mat-option class="text sub-16 sem" [value]="city.value">{{city.viewValue}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <span class="material-symbols-outlined icon-sync" (click)="switch()">sync_alt</span>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%;">
+                <div mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">
+                    location_on
+                    </span>
+                </div>
+                <mat-label class="text sub-16 sem">Arrival Location</mat-label>
+                <mat-select [(ngModel)]="ALocation">
+                  @for (city of cities; track city) {
+                    <mat-option class="text sub-16 sem" [value]="city.value">{{city.viewValue}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%;">
+                <mat-label class="text sub-16 sem" >Departure Date</mat-label>
+                <input class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker>
+                <div mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">calendar_today</span>
+                </div>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%; ">
+                <mat-label class="text sub-16 sem" >Return Date</mat-label>
+                <input class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker>
+                <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">add</span>
+                </div>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            
+          </div>
+          <button class="btn button-primary text sub-16 sem btn-find">Find</button>
+        </div>
+        <div class="hero-main-dropdowns">
+          <div class="dropdown">
+            <button class="btn btn-hero-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                group
+              </span>
+              <p class="text sub-16 sem"> {{selectedCustomer}} </p>
+              <span class="material-symbols-outlined icon">expand_more</span>
+            </button>
+            <ul class="dropdown-menu ">
+              <li><p class="dropdown-item text caption-14 reg btn-hero-dropdown-item-disable" style="color: var(--Neutral-Grey200, #ACAFB8);">Number</p></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 1 customer </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 2 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 3 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 4 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 5 customers </a></li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-hero-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                airport_shuttle
+              </span>
+              <p class="text sub-16 sem">Limousine {{busTypeSelected}} </p>
+              <span class="material-symbols-outlined icon">expand_more</span>
+            </button>
+            <ul class="dropdown-menu" style="width: 100%;">
+              <li><p class="dropdown-item text caption-14 reg btn-hero-dropdown-item-disable" style="color: var(--Neutral-Grey200, #ACAFB8);">Bus Type</p></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Seat </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Single Room </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Double Room </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    
+    
+  </section>
+</div>

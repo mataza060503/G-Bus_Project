@@ -5,9 +5,9 @@ import { LoginPhoneNumberComponent } from './login/login-phone-number/login-phon
 
 const routes: Routes = [
   {path:'',
-  component:LoginPhoneNumberComponent},
+  component:LoginPhoneNumberComponent,outlet:"popup"},
   {path:'login-password',
-  component:LoginPasswordComponent},
+  component:LoginPasswordComponent,outlet:"popup"},
 ];
 
 @NgModule({

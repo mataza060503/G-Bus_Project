@@ -1,0 +1,202 @@
+.hero {
+  position: relative;
+  &-dropdown {
+    max-width: 211px;
+    height: 80px;
+  }
+  &-divider {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background-color: #E2E4E7;
+    left: 0%;
+    z-index: 1;
+    transform: translateX(-50%);
+  }
+  &-container {
+    width: 1040px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap: 18px;
+  }
+  &-main {
+    &-dropdowns {
+      display: flex;
+      align-items: center;
+      gap: 63px;
+    }
+    
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    border-radius: 12px;
+    border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+    background: var(--Neutral-White, #FFF);
+    padding: 16px;
+    &-inputs {
+      display: flex;
+      gap: 12px;
+    }
+    &-input {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: solid 2px #E2E4E7;
+      border-radius: 8px;
+      &-bottom {
+        position: absolute;
+        width: 100%;
+        border-top: solid 1px #949494;
+        transform: translateY(-100%);
+      }
+      &-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 28px 21px;
+        gap: 8px;
+        width: 100%;
+        border-radius: 0px;
+        border: 0px;
+        border-bottom: solid 1px white;
+        border-radius: 4px;
+        &:hover {
+          background-color: #F6F6F6;
+        }
+        
+        
+        // &:focus {
+          
+        //   border-top: 0px;
+        //   border-left: none;
+        //   border-bottom: solid 3px var(--Primary-Purple500, #4D56BE);
+        //   border-radius: 4px;
+        // }
+        // &:active {
+        //   border-top: 0px;
+        //   border-left: none;
+        // }
+      }
+    }
+  }
+}
+
+.icon {
+  &-sync {
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+
+    background-color: #E2E4E7;
+    border-radius: 100rem;
+    color: #36373B;
+    padding: 8px;
+    font-size: 16px;
+    z-index: 2;
+    cursor: pointer;
+    transition: linear 0.2s;
+    
+  }
+}
+.btn {
+  &-find {
+    width: 152px;
+    color: white;
+    &:focus {
+      background-color: var(--primary-color-1);
+      color: #FFF;
+    }
+  }
+  &-hero-dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    &:focus {
+      border: none;
+    }
+    &-item {
+      padding: 8px 24px;
+      cursor: pointer;
+      &:hover {
+        background-color: #DDE0FF;
+      }
+      &:active {
+        background-color: #4D56BE;
+        color: white;
+      }
+      &-disable {
+        padding-left: 24px;
+        background-color: none;
+        &:active {
+          background-color: white;
+        }
+      }
+    }
+  }
+}
+/* Custom CSS to position the toggle button beside the inputs */
+.date-input-container {
+  display: flex;
+}
+
+
+::ng-deep .mat-mdc-form-field-icon-suffix {
+  order: -1;
+  
+}
+
+::ng-deep .mdc-text-field__input {
+  font-weight: 600;
+}
+::ng-deep .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+  margin: 0px;
+  padding: 0px;
+}
+::ng-deep .mdc-line-ripple .mdc-line-ripple--deactivating {
+  border: 0px;
+  background-color: white;
+  display: none;
+}
+::ng-deep .mat-mdc-form-field-subscript-wrapper, .mat-mdc-form-field-bottom-align::before {
+  display: none;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-text-field .mdc-text-field--filled {
+  display: none;
+  
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  margin: auto 0px;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  background-color: white;
+  border: 0px;
+  height: 100%;
+  margin: auto 0px;
+  align-items: center;
+  &:hover {
+    background-color: white;
+  }
+  
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  display: none;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+  border-bottom-color: white;
+}
+
+

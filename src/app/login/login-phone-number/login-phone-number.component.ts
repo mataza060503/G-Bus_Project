@@ -11,13 +11,14 @@ export class LoginPhoneNumberComponent implements OnInit{
   portText:string = "+85"
   portImageSelected:string = ""
   portTextSelected:string = ""
-  phoneNumber:string
+  phoneNumber:string = ""
 
   constructor(private router:Router) {
-    this.phoneNumber = "";
+
   }
 
   ngOnInit(): void {
+    this.phoneNumber = localStorage.getItem("phoneNumber") || ""
     this.portImageSelected = "./assets/images/login/vn.png 2x"
     this.portTextSelected = "+84"
     
@@ -34,6 +35,8 @@ export class LoginPhoneNumberComponent implements OnInit{
       this.router.navigate(["/login-password"])
     } else {
       alert("Your phone number is invalid!");
+      localStorage.setItem("phoneNumber",this.phoneNumber)
+      localStorage.setItem("token","true")
     }
   }
 
