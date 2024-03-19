@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat'
 
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -12,6 +13,7 @@ import { LoginModule } from './login/login.module';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { GeneralModule } from './general/general.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     SignUpModule,
     GeneralModule,
     MatFormFieldModule, 
-    MatDatepickerModule
+    MatDatepickerModule,
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [
     provideNativeDateAdapter(),

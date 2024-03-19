@@ -1,17 +1,22 @@
 .wrapper {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #886E72;
+}
+.background {
+  background-color: black;
+  opacity: 50%;
+  width: 100vw;
+  height: 100vh;
 }
 .container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   display:flex;
   align-items:center;
   flex-direction:column;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   margin: auto;
   background-color: white;
   width: 726px;

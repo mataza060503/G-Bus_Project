@@ -7,16 +7,16 @@
     <div class="header-nav">
       <ul class="menu text">
         <li class="menu-item head-24 med">
-          <a href="#" (click)="HeaderNavSelected($event, 'Homepage')" [class.active]="selectedLink === 'Homepage'">Homepage</a>
+          <a href="#" (click)="headerNavSelected($event, 'Homepage')" [class.active]="selectedLink === 'Homepage'">Homepage</a>
         </li>
         <li class="menu-item head-24 med">
-          <a href="#" (click)="HeaderNavSelected($event, 'Schedule')" [class.active]="selectedLink === 'Schedule'">Schedule</a>
+          <a href="#" (click)="headerNavSelected($event, 'Schedule')" [class.active]="selectedLink === 'Schedule'">Schedule</a>
         </li>
         <li class="menu-item head-24 med">
-          <a href="#" (click)="HeaderNavSelected($event, 'Contact')" [class.active]="selectedLink === 'Contact'">Contact</a>
+          <a href="#" (click)="headerNavSelected($event, 'Contact')" [class.active]="selectedLink === 'Contact'">Contact</a>
         </li>
         <li class="menu-item head-24 med">
-          <a href="#" (click)="HeaderNavSelected($event, 'About us')" [class.active]="selectedLink === 'About us'">About us</a>
+          <a href="#" (click)="headerNavSelected($event, 'About us')" [class.active]="selectedLink === 'About us'">About us</a>
         </li>
       </ul>
       
@@ -27,7 +27,7 @@
           search
           </span>
       </div>
-      <button type="button" class="btn auth head-24 med text sub">Log in</button>
+      <button type="button" class="btn auth head-24 med text sub" id="btnHeaderLogin">Log in</button>
     </div>
   </div>
 </section>

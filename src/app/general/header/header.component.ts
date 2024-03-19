@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, Routes } from '@angular/router';
+import { LoginPasswordComponent } from '../../login/login-password/login-password.component';
+import { LoginPhoneNumberComponent } from '../../login/login-phone-number/login-phone-number.component';
 
 @Component({
   selector: 'app-header',
@@ -6,24 +9,30 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   selectedLink: string = '';
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
+  ngOnInit(): void {
+    
+  }
+
+  // Modify the navigation method
   
 
-  HeaderNavSelected(event: Event, link: string) {
-    event.preventDefault(); // Prevents the default action of clicking on a link
-
-    // Remove the active class from the previously clicked link
-    this.selectedLink = '';
-
-    // Set the selected link
-    this.selectedLink = link;
+ headerNavSelected(event:any, headerName:string) {
+  const selectedHeader = event.target as HTMLElement
+  const headerList = document.getElementsByTagName("li") as HTMLCollection
+  console.log(headerList)
+  for (let i = 0; i < headerList.length; i++) {
+    const header = headerList[i];
+    console.log(header.textContent)
+    if (header.textContent) {
+      
+    }
   }
-
- 
+ }
 
 }

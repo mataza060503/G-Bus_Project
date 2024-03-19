@@ -1,5 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { LocalDataService } from '../../../services/LocalData.service';
+import { LocalData } from '../../../models/Item';
 
 @Component({
   selector: 'app-homepage',
@@ -7,22 +9,24 @@ import { MatDatepicker } from '@angular/material/datepicker';
   styleUrl: './homepage.component.scss',
   
 })
-export class HomepageComponent {
+export class HomepageComponent implements OnInit{
   selectedCustomer:string = "1 Customer"
   customer:string = "2 Customers";
   busTypeSelected:string = "Double Room";
   busType:string = "Limousine Single Room";
   DLocation:any
   ALocation:any
-  cities  = [
-    { value: 'pizza-0', viewValue: 'Pizza' },
-    { value: 'tacos-1', viewValue: 'Tacos' },
-    { value: 'burger-2', viewValue: 'Burger' }
-  ]
-  constructor() {
+  localData: LocalData = { contryPort: [], provinces: [] };
+  constructor(private localDataService: LocalDataService) {
 
   }
 
+  ngOnInit(): void {
+    this.localDataService.getLocalData().subscribe(data => {
+      this.localData = data
+    })
+    console.log(this.localData.provinces)
+  }
 
   getBusType(event: any) {
     const selected = event.target as HTMLElement;

@@ -198,5 +198,17 @@
 ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
   border-bottom-color: white;
 }
+::ng-deep .mat-mdc-select-panel .mat-mdc-option, .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  font-weight: 600;
+  font-family: var(--font);
+}
+::ng-deep .mat-mdc-select-panel.mat-mdc-option:hover {
+  background-color: #DDE0FF;
+}
+::ng-deep .mat-mdc-select-trigger {
+  font-weight: 600;
+  font-family: var(--font);
+}
+
 
 

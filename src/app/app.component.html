@@ -1,8 +1,10 @@
 <div class="wrapper">
   <app-header></app-header>
-  <div class="popup">
-    <router-outlet name="popup" ></router-outlet>
-  </div>
+  <section class="popup" id="popup">
+    <div class="popup-container">
+      <router-outlet name="auth-popup" class="popup-item"></router-outlet>
+    </div>
+  </section>
   <app-homepage></app-homepage>
   <app-footer></app-footer>
 </div>

@@ -19,8 +19,8 @@
                 </div>
                 <mat-label class="text sub-16 sem">Departure Location</mat-label>
                 <mat-select [(ngModel)]="DLocation">
-                  @for (city of cities; track city) {
-                    <mat-option class="text sub-16 sem" [value]="city.value">{{city.viewValue}}</mat-option>
+                  @for (province of localData.provinces; track province) {
+                    <mat-option class="text sub-16 sem" [value]="province.value">{{province.viewValue}}</mat-option>
                   }
                 </mat-select>
               </mat-form-field>
@@ -36,8 +36,8 @@
                 </div>
                 <mat-label class="text sub-16 sem">Arrival Location</mat-label>
                 <mat-select [(ngModel)]="ALocation">
-                  @for (city of cities; track city) {
-                    <mat-option class="text sub-16 sem" [value]="city.value">{{city.viewValue}}</mat-option>
+                  @for (province of localData.provinces; track province) {
+                    <mat-option class="text sub-16 sem" [value]="province.value">{{province.viewValue}}</mat-option>
                   }
                 </mat-select>
               </mat-form-field>
@@ -47,7 +47,7 @@
               <mat-form-field style="height: 100%;">
                 <mat-label class="text sub-16 sem" >Departure Date</mat-label>
                 <input class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker>
-                <div mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px;">
+                <div  mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">calendar_today</span>
                 </div>
                 <mat-datepicker #picker></mat-datepicker>
@@ -58,7 +58,7 @@
               <mat-form-field style="height: 100%; ">
                 <mat-label class="text sub-16 sem" >Return Date</mat-label>
                 <input class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker>
-                <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px;">
+                <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">add</span>
                 </div>
                 <mat-datepicker #picker1></mat-datepicker>

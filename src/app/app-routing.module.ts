@@ -4,10 +4,10 @@ import { LoginPasswordComponent } from './login/login-password/login-password.co
 import { LoginPhoneNumberComponent } from './login/login-phone-number/login-phone-number.component';
 
 const routes: Routes = [
-  {path:'',
-  component:LoginPhoneNumberComponent,outlet:"popup"},
+  {path:'login-phoneNumber',
+  component:LoginPhoneNumberComponent,outlet:"auth-popup"},
   {path:'login-password',
-  component:LoginPasswordComponent,outlet:"popup"},
+  component:LoginPasswordComponent,outlet:"auth-poppopup"},
 ];
 
 @NgModule({
