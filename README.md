@@ -37,8 +37,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Demo
 
-![Homepage](https://github.com/mataza060503/G-Bus_Project/assets/119863432/14d10a54-4f4f-471b-9ef8-05c6a0c3e659)
-![Footer](https://github.com/mataza060503/G-Bus_Project/assets/119863432/ced08edb-fc9f-499c-9d10-e53440c782ed)
+![Homepage](https://github.com/mataza060503/G-Bus_Project/assets/119863432/48b2cb3c-797e-4316-b294-c2819458dfcf)
+![Footer](https://github.com/mataza060503/G-Bus_Project/assets/119863432/2812d169-ea1b-4230-ab30-fecbbda20515)
 
 ## Features
 
