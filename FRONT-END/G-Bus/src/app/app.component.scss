@@ -1,0 +1,18 @@
+section.popup {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  top: 0;
+  display: none;
+}
+.popup-container {
+  position: fixed;
+  display: flex;
+}
+
+.popup-item {
+  
+  position: absolute;
+  z-index: 1;
+}

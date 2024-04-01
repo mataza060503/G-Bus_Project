@@ -1,0 +1,434 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+<div class="wrapper">
+  <section class="hero">
+    <div class="hero-background">
+      <img srcset="./assets/images/homepage-background.jpg 2x" alt="" style="width: 100%;">
+    </div>
+    <div class="hero-container">
+      <p class="text head-30 reg" style="color: #6F757F;">With GBus</p>
+      <p class="text head-48 bold">Go <b style="color: #41489F;">Around Viet Nam</b> with Us!</p>
+      <div class="hero-main">
+        <div class="hero-main-inputs">
+          <div class="hero-main-input">
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px; height: 80px;">
+              <mat-form-field style="height: 100%;">
+                <div mat-raised-button matSuffix style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">
+                    my_location
+                    </span>
+                </div>
+                <mat-label class="text sub-16 sem">Departure Location</mat-label>
+                <mat-select [(ngModel)]="DLocation">
+                  @for (province of localData.provinces; track province) {
+                    <mat-option class="text sub-16 sem" [value]="province.value">{{province.viewValue}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <span class="material-symbols-outlined icon-sync" (click)="switch()">sync_alt</span>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%;">
+                <div mat-raised-button matSuffix style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">
+                    location_on
+                    </span>
+                </div>
+                <mat-label class="text sub-16 sem">Arrival Location</mat-label>
+                <mat-select [(ngModel)]="ALocation">
+                  @for (province of localData.provinces; track province) {
+                    <mat-option class="text sub-16 sem" [value]="province.value">{{province.viewValue}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%;">
+                <mat-label class="text sub-16 sem" >Departure Date</mat-label>
+                <input class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
+                <div  mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
+                  <span class="material-symbols-outlined">calendar_today</span>
+                </div>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%; ">
+                <mat-label class="text sub-16 sem" >Return Date</mat-label>
+                <input class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
+                <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
+                  <span class="material-symbols-outlined">add</span>
+                </div>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            
+          </div>
+          <button class="btn button-primary text sub-16 sem btn-find" (click)="search()">Find</button>
+        </div>
+        <div class="hero-main-dropdowns">
+          <div class="dropdown">
+            <button class="btn btn-hero-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                group
+              </span>
+              <p class="text sub-16 sem"> {{selectedCustomer}} </p>
+              <span class="material-symbols-outlined icon">expand_more</span>
+            </button>
+            <ul class="dropdown-menu ">
+              <li><p class="dropdown-item text caption-14 reg btn-hero-dropdown-item-disable" style="color: var(--Neutral-Grey200, #ACAFB8);">Number</p></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 1 customer </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 2 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 3 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 4 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 5 customers </a></li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-hero-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                airport_shuttle
+              </span>
+              <p class="text sub-16 sem">Limousine {{busTypeSelected}} </p>
+              <span class="material-symbols-outlined icon">expand_more</span>
+            </button>
+            <ul class="dropdown-menu" style="width: 100%;">
+              <li><p class="dropdown-item text caption-14 reg btn-hero-dropdown-item-disable" style="color: var(--Neutral-Grey200, #ACAFB8);">Bus Type</p></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Seat </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Single Room </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Double Room </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="recent-search body">
+    <div class="recent-search-container">
+      <div class="section-title">
+        <p class="text cap-14 reg" style="color: #6F757F;">Your Search Trip</p>
+        <div class="slide-row">
+          <p class="text head-24 med">Recent Search</p>
+          <p class="text caption-14 reg" style="color: var(--neutral-grey-300); cursor: pointer;">View All</p>
+        </div>
+      </div>
+      <div class="infor-courseral">
+        <ngx-slick-carousel class="carousel" 
+                        #recentSerachSlickModal="slick-carousel" 
+                        [config]="slideConfig" 
+                        (init)="slickInit($event)"
+                        (breakpoint)="breakpoint($event)"
+                        (afterChange)="afterChange($event)"
+                        (beforeChange)="beforeChange($event)">
+        @for (search of SearchingHistory; track search) {
+            <div ngxSlickItem class="slide">
+                  <div class="slide-container">
+                    <div class="slide-row">
+                      <p class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{formatDate(search.DDate)}} </p>
+                      <div class="slide-more">
+                        <p class="text caption-14 reg">View More</p>
+                        <span class="material-symbols-outlined" style="font-size: 16px;">
+                          arrow_right_alt
+                          </span>
+                      </div>
+                    </div>
+                    <div class="slide-col">
+                      <div class="slide-location">
+                        <span class="material-symbols-outlined">
+                          my_location
+                        </span>
+                        <p class="text head-24 med"> {{search.DLocation}} </p>
+                      </div>
+                      <div class="slide-location">
+                        <span class="material-symbols-outlined">
+                          location_on
+                        </span>
+                        <p class="text head-24 med"> {{search.ALocation}} </p>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        }
+        </ngx-slick-carousel>
+        <div class="slide-control" >
+          <div class="slide-progress" style="width: 100%;">
+            <mat-progress-bar class="custom-progress-bar"  mode="determinate" value={{slidePercent}} style="border-radius: 100rem;"></mat-progress-bar>
+          </div>
+          <div style="display: flex; gap: 8px; margin-left: auto;">
+            <button (click)="recentSerachSlickModal.slickPrev();prevProgress()" id="slidePrevBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_left_alt
+                </span>
+            </button>
+            <button (click)="recentSerachSlickModal.slickNext();nextProgress()" id="slideNextBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_right_alt
+                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="common-routes body">
+    <div class="common-routes-container">
+      <div class="section-title">
+        <p class="text cap-14 reg" style="color: #6F757F;">Tralvel</p>
+        <div class="slide-row">
+          <p class="text head-24 med">Common Routes</p>
+          <p class="text caption-14 reg" style="color: var(--neutral-grey-300); cursor: pointer;">View All</p>
+        </div>
+      </div>
+      <div class="infor-courseral">
+        <ngx-slick-carousel class="carousel" 
+                        #slickModal="slick-carousel" 
+                        [config]="commonRouteSlideConfig" 
+                        (init)="slickInit($event)"
+                        (breakpoint)="breakpoint($event)"
+                        (afterChange)="afterChange($event)"
+                        (beforeChange)="beforeChange($event)">
+        @for (route of routes; track search) {
+            <div ngxSlickItem class="slide">
+                  <div class="route-slide-container" >
+                    <div class="route-slide-image">
+                      <img src={{route.Image}} height="162px"  alt="">
+                      <p class="text sub-14 med route-slide-discount route-slide-tag">Hot</p>
+                      
+                    </div>
+                    <div class="slide-col">
+                      <div class="slide-row">
+                        <p class="text button-20 bold"> {{route.DLocation + " - " + route.ALocation}} </p>
+                      </div>
+                      <div class="route-slide-price">
+                        <p class="text body-16 reg" style="color: #4D56BE;">From {{route.Price}} VNĐ </p>
+                        <p class="text sub-14 med route-slide-discount">Discount -{{route.Discount}}%  </p>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        }
+        </ngx-slick-carousel>
+        <div class="slide-control" >
+          <div class="slide-progress" style="width: 100%;">
+            <mat-progress-bar class="custom-progress-bar"  mode="determinate" value={{routeSlidePercent}} style="border-radius: 100rem;"></mat-progress-bar>
+          </div>
+          <div style="display: flex; gap: 8px; margin-left: auto;">
+            <button (click)="slickModal.slickPrev();routePrevProgress()" id="slidePrevBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_left_alt
+                </span>
+            </button>
+            <button (click)="slickModal.slickNext();routeNextProgress()" id="slideNextBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_right_alt
+                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="promotion body">
+    <div class="promotion-container">
+      <div class="section-title">
+        <p class="text cap-14 reg" style="color: #6F757F;">Tralvel</p>
+        <div class="slide-row">
+          <p class="text head-24 med">Promotions</p>
+          <p class="text caption-14 reg" style="color: var(--neutral-grey-300); cursor: pointer;">View All</p>
+        </div>
+      </div>
+      <div class="infor-courseral">
+        <ngx-slick-carousel class="carousel" 
+                        #promotionSlickModal="slick-carousel" 
+                        [config]="slideConfig" 
+                        (init)="slickInit($event)"
+                        (breakpoint)="breakpoint($event)"
+                        (afterChange)="afterChange($event)"
+                        (beforeChange)="beforeChange($event)">
+        @for (promotion of promotions; track promotion) {
+            <div ngxSlickItem class="slide">
+                  <div class="promotion-slide-container" >
+                    <p class="text sub-14 med route-slide-discount" style="margin-top: 0px;">Discount -{{promotion.Discount}}%  </p>
+                    <div class="promotion-slide-content">
+                      <div class="slide-row">
+                        <p class="text button-20 bold"> {{promotion.DLocation}} </p>
+                        <span class="material-symbols-outlined" style="font-size: 24px; color: var(--neutral-grey-300);">
+                          arrow_right_alt
+                        </span>
+                        <p class="text button-20 bold"> {{promotion.ALocation}} </p>
+                      </div>
+                      <div class="promotion-slide-price">
+                        <p class="text caption-14 reg">
+                          Only <b class="body-16" style="color: #4D56BE;">{{promotion.Price*(100-promotion.Discount)/100}} </b> 
+                          <b style="color: var(--neutral-grey-300);text-decoration: line-through;">{{promotion.Price}}</b>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="promotion-slide-expire caption-14 reg"> {{calculateDaysLeft(promotion.Expire)}} </div>
+                  </div>
+            </div>
+        }
+        </ngx-slick-carousel>
+        <div class="slide-control" >
+          <div class="slide-progress" style="width: 100%;">
+            <mat-progress-bar class="custom-progress-bar"  mode="determinate" value={{promotionSlidePercent}} style="border-radius: 100rem;"></mat-progress-bar>
+          </div>
+          <div style="display: flex; gap: 8px; margin-left: auto;">
+            <button (click)="promotionSlickModal.slickPrev();promotionPrevProgress()" id="slidePrevBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_left_alt
+                </span>
+            </button>
+            <button (click)="promotionSlickModal.slickNext();promotionNextProgress()" id="slideNextBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_right_alt
+                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="partner-promotion body">
+    <div class="partner-promotion-container">
+      <div class="section-title">
+        <p class="text cap-14 reg" style="color: #6F757F;">Tralvel</p>
+        <div class="slide-row">
+          <p class="text head-24 med">Promotions</p>
+          <p class="text caption-14 reg" style="color: var(--neutral-grey-300); cursor: pointer;">View All</p>
+        </div>
+      </div>
+      <div class="infor-courseral">
+        <ngx-slick-carousel class="carousel" 
+                        #partnerPromotionSlickModal="slick-carousel" 
+                        [config]="slideConfig" 
+                        (init)="slickInit($event)"
+                        (breakpoint)="breakpoint($event)"
+                        (afterChange)="afterChange($event)"
+                        (beforeChange)="beforeChange($event)">
+        @for (promotion of pnPromotions; track promotion) {
+            <div ngxSlickItem class="slide">
+                  <div class="partner-promotion-slide-container" >
+                    <div class="partner-promotion-slide-image">
+                      <img src={{promotion.Image}} width="333px" alt="">
+                    </div>
+                    <p class="text body-16 reg" style="padding: 16px;"> {{promotion.Title}} </p>
+                  </div>
+            </div>
+        }
+        </ngx-slick-carousel>
+        <div class="slide-control" >
+          <div class="slide-progress" style="width: 100%;">
+            <mat-progress-bar class="custom-progress-bar"  mode="determinate" value={{pnPromotionSlidePercent}} style="border-radius: 100rem;"></mat-progress-bar>
+          </div>
+          <div style="display: flex; gap: 8px; margin-left: auto;">
+            <button (click)="partnerPromotionSlickModal.slickPrev();pnPromotionPrevProgress()" id="slidePrevBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_left_alt
+                </span>
+            </button>
+            <button (click)="partnerPromotionSlickModal.slickNext();pnPromotionNextProgress()" id="slideNextBtn">
+              <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                arrow_right_alt
+                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="feedback body">
+    <div class="feedback-container">
+      <div class="section-title">
+        <p class="text cap-14 reg" style="color: #6F757F;">Ratings and Feedback</p>
+        <div class="feedback-title">
+          <p class="text head-24 med">Reviews</p>
+          <div class="text body-20 reg feedback-title-review">
+            <span class="material-symbols-outlined" style="color: black; font-size: 24px;">
+              group
+            </span>
+            <p style="color: var(--neutral-grey-300);"> {{feedbacks.length}} Reviews </p>
+          </div>
+        </div>
+      </div>
+      <div class="feedback-item" >
+        <div class="feedback-item-container" *ngFor="let feedback of feedbackSlide">
+          <div class="feedback-item-content">
+            <div class="feedback-item-content-user">
+              <div class="feedback-item-content-image">
+                <img src={{feedback.Item.Avatar}} height="47px" alt="">
+              </div>
+              <div class="feedback-item-content-userInfo">
+                <p class="text button-24 bold"> {{feedback.Item.CustomerName}} </p>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="text caption-14 reg" style="color: black; display: flex; gap: 8px; align-items: center;">
+                    <span class="material-symbols-outlined" style="font-size: 16px; color: black;">
+                      loyalty
+                    </span>
+                    <p> {{feedback.Item.TotalTrip}} Total Trips </p>
+                  </div>
+                  <div class="text caption-14 reg" style="color: black; display: flex; gap: 8px; align-items: center;">
+                    <span class="material-symbols-outlined" style="font-size: 16px; color: black;">
+                      where_to_vote
+                    </span>
+                    <p> {{feedback.Item.Destination}} Destinations </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-item-content-ratingAndFeedback ">
+              <div class="text button-20 bold" style="display: flex; gap: 4px;">
+                <span class="material-symbols-outlined" style="font-size: 24px; color: #FFB74A;">
+                  star
+                </span>
+                <p> {{feedback.Item.Rating}} </p>
+              </div>
+              <div class="text body-14 reg"> {{feedback.Item.Feedback}} </div>
+            </div>
+            <div class="feedback-item-content-tags" style="display: flex; gap: 7px;">
+              <div class="text caption-14 reg feedback-item-content-tag" *ngFor="let item of feedback.Item.Tag">
+                {{item}}
+              </div>
+            </div>
+          </div>
+          <div class="feedback-carousel">
+            <ngx-slick-carousel class="carousel" 
+                            #feedbackSlickModal="slick-carousel" 
+                            [config]="slideConfig" 
+                            (init)="slickInit($event)"
+                            (breakpoint)="breakpoint($event)"
+                            (afterChange)="afterChange($event)"
+                            (beforeChange)="beforeChange($event)">
+            @for (feedbackImage of feedback.Item.Image; track feedbackImage) {
+                <div ngxSlickItem class="slide">
+                      <div class="feedback-slide-container" >
+                        <img src={{feedbackImage}} style="height: 158px; max-width: 256px;" alt="">
+                      </div>
+                </div>
+            }
+            </ngx-slick-carousel>
+            <div class="slide-control" >
+              <div class="slide-progress" style="width: 100%;">
+                <mat-progress-bar class="custom-progress-bar"  mode="determinate" value={{feedback.Percent}} style="border-radius: 100rem;"></mat-progress-bar>
+              </div>
+              <div style="display: flex; gap: 8px; margin-left: auto;">
+                <button (click)="feedbackSlickModal.slickPrev();feedbackPrevProgress(feedback)" id="slidePrevBtn">
+                  <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                    arrow_left_alt
+                    </span>
+                </button>
+                <button (click)="feedbackSlickModal.slickNext();feedbackNextProgress(feedback)" id="slideNextBtn">
+                  <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);">
+                    arrow_right_alt
+                    </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

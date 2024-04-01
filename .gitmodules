@@ -1,0 +1,3 @@
+[submodule "FRONT-END/G-Bus"]
+	path = FRONT-END/G-Bus
+	url = https://github.com/mataza060503/G-Bus_Project.git

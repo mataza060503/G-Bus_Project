@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<section class="header">
+  <div class="header-container">
+    <div class="header-image">
+      <img srcset="./assets/images/G-bus_logo.png 2x ">
+    </div>
+    <div class="header-nav">
+      <ul class="menu text">
+        <li class="menu-item head-24 med">
+          <a href="#" (click)="headerNavSelected($event, 'Homepage')" [class.active]="selectedLink === 'Homepage'">Homepage</a>
+        </li>
+        <li class="menu-item head-24 med">
+          <a href="#" (click)="headerNavSelected($event, 'Schedule')" [class.active]="selectedLink === 'Schedule'">Schedule</a>
+        </li>
+        <li class="menu-item head-24 med">
+          <a href="#" (click)="headerNavSelected($event, 'Contact')" [class.active]="selectedLink === 'Contact'">Contact</a>
+        </li>
+        <li class="menu-item head-24 med">
+          <a href="#" (click)="headerNavSelected($event, 'About us')" [class.active]="selectedLink === 'About us'">About us</a>
+        </li>
+      </ul>
+      
+    </div>
+    <div class="header-auth">
+      <div class="header-auth-icon">
+        <span class="material-symbols-outlined icon-find sub">
+          search
+          </span>
+      </div>
+      <button type="button" class="btn auth head-24 med text sub" id="btnHeaderLogin">Log in</button>
+    </div>
+  </div>
+</section>

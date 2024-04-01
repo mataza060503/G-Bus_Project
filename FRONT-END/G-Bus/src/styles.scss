@@ -1,0 +1,230 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$G-Bus-primary: mat.define-palette(mat.$indigo-palette);
+$G-Bus-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$G-Bus-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$G-Bus-theme: mat.define-light-theme((
+  color: (
+    primary: $G-Bus-primary,
+    accent: $G-Bus-accent,
+    warn: $G-Bus-warn,
+  ),
+  typography: mat.define-typography-config($font-family: var(--font)),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($G-Bus-theme);
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import "reset.css";
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:root {
+  --font: "Roboto", sans-serif;
+  --primary-color-1: #4D56BE;
+  --primary-color-2: #A6ADFF;
+  --primary-color-3: #DDE0FF;
+  --primary-color-4: #F6F8FA;
+  --secondary-color-1: #4D2E00;
+  --secondary-color-2: #FFB74A;
+  --neutral-white: #FFFFFF;
+  --neutral-grey-50: #F7F8F9;
+  --neutral-grey-100: #E2E4E7;
+  --neutral-grey-200: #ACAFB8;
+  --neutral-grey-300: #6F757F;
+  --neutral-grey-500: #36373B;
+  --neutral-grey-black: #000000;
+}
+.wrapper {
+  position: relative;
+  width: 100vw;
+}
+.body {
+  max-width: 1041px;
+  margin: 0px auto;
+  margin-bottom: 56px;
+}
+
+.material-symbols-outlined {
+  color: var(--primary-color-1);
+}
+
+.large {
+  color: var(--Gray-White, #FFF);
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+.medium {
+  color: var(--Gray-White, #FFF);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+.small {
+  color: var(--Gray-White, #FFF);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+  padding: 4px 8px;
+  border-radius: 3.2px;
+}
+
+.button {
+  font-family: var(--font);
+  &-primary {
+    border: 1px solid var(--Theme-Primary, #0D6EFD);
+    background: var(--Theme-Primary, #0D6EFD);
+    &-outliner {
+      background: none;
+      border: 1px solid var(--Theme-Primary, #0D6EFD);
+      color: var(--Theme-Primary, #0D6EFD);
+      &:hover {
+        color: white;
+        background: var(--Theme-Primary, #0D6EFD);
+      }
+      &:active {
+        color: white;      
+        box-shadow: 0px 0px 0px 4px rgba(13, 110, 253, 0.25);
+      }
+      &:disabled {
+        opacity: 0.65;
+      }
+    }
+    &:hover{
+      color: white;
+      border: 1px solid var(--Primary-Purple500, #4D56BE);
+      background: var(--Primary-Purple500, #4D56BE);
+    }
+    &:focus {
+      color: white;
+      border: 1px solid var(--Primary-Purple500, #4D56BE);
+      background: var(--Primary-Purple500, #4D56BE);
+    }
+    &:disabled{
+      color: white;
+      border: 1px solid var(--Primary-Purple500, #4D56BE);
+      opacity: 0.65;
+      background: var(--Primary-Purple500, #4D56BE);
+    }
+  }
+}
+
+.wrapper {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.bold {
+  font-weight: 700;
+}
+.sem {
+  font-weight: 600;
+}
+.med {
+  font-weight: 500;
+}
+.reg {
+  font-weight: 400;
+}
+
+.text {
+  font-family: var(--font);
+  font-style: normal;
+  line-height: normal;
+}
+.sub {
+  color: #6F757F;
+}
+
+.title-60-reg {
+  font-size: 60px;
+  letter-spacing: 0.6px;
+}
+.head {
+  &-48 {
+    font-size: 48px;
+    letter-spacing: 0.24px;
+  }
+  &-36 {
+    font-size: 36px;
+    letter-spacing: 0.09px;
+  }
+  &-30 {
+    font-size: 30px;
+    letter-spacing: 0.045px;
+  }
+  &-24 {
+    font-size: 24px;
+    letter-spacing: 0.036px;
+  }
+}
+
+.sub {
+  &-16 {
+    font-size: 16px;
+    letter-spacing: 0.032px;
+  }
+  &-14 {
+    font-size: 14px;
+    letter-spacing: 0.014px;
+  }
+}
+.body {
+  &-20 {
+    font-size: 20px;
+    letter-spacing: 0.1px;
+  }
+  &-16 {
+    font-size: 16px;
+    letter-spacing: 0.04px;
+  }
+}
+.button {
+  &-20 {
+    font-size: 20px;
+    letter-spacing: 0.05px;
+  }
+}
+.caption-14 {
+  font-size: 14px;
+  letter-spacing: 0.056px;
+}
+
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: var(--font) }
