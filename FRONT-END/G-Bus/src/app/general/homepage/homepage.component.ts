@@ -4,6 +4,7 @@ import { LocalDataService } from '../../../services/LocalData.service';
 import { FeedbackItem, LocalData, PartnerPromotion, PromotionItem, RouteItem, SearchItem, SlideItem } from '../../../models/Item';
 import { ThemePalette } from '@angular/material/core';
 import { DataService } from '../../../services/Data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -56,12 +57,18 @@ export class HomepageComponent implements OnInit{
     this.getPartnerPromotion()
     this.getFeedback()
 
-    this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
+    const localStorageData = localStorage.getItem("his");
+    if (localStorageData) {
+      const parsedData = JSON.parse(localStorageData);
+      this.SearchingHistory = parsedData.slice(0, 20);
+    } else {
+      this.SearchingHistory = [];
+}
     this.slidePercent=(3/this.SearchingHistory.length)*100
         
   }
 
-  constructor(private localDataService: LocalDataService, private dbService: DataService) {
+  constructor(private localDataService: LocalDataService, private dbService: DataService, private router: Router) {
     this.slideCurrentPercent = 3
     this.routeSlideCurrentPercent = 4
     this.promotionSlideCurrentPercent = 3
@@ -169,7 +176,7 @@ export class HomepageComponent implements OnInit{
     this.ALocation = subLocation
   }
   search() {
-    var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate}
+    var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate || ""}
     if (searchResult.DLocation !== undefined && searchResult.ALocation !== undefined && searchResult.DDate !== undefined) {
       var searchHis = []
       searchHis = JSON.parse(localStorage.getItem("his") || "[]")
@@ -177,6 +184,12 @@ export class HomepageComponent implements OnInit{
       localStorage.setItem("his",JSON.stringify(searchHis))
 
       this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
+
+      if (this.RDate !== undefined) {
+        this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),this.formatDate(this.RDate)])
+      } else if (this.RDate === undefined) {
+        this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),""])
+      }
       
     } else {
       alert("Please select your trip information")

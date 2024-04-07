@@ -1,0 +1,496 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+<div class="wrapper">
+  <section class="searching">
+    <div class="hero-container">
+      <p class="text head-30 reg" style="color: #6F757F;">With GBus</p>
+      <p class="text head-48 bold">Go <b style="color: #41489F;">Around Viet Nam</b> with Us!</p>
+      <div class="hero-main">
+        <div class="hero-main-inputs">
+          <div class="hero-main-input">
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px; height: 80px;">
+              <mat-form-field style="height: 100%;">
+                <div mat-raised-button matSuffix style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">
+                    my_location
+                    </span>
+                </div>
+                <mat-label class="text sub-16 sem"> Departure Location </mat-label>
+                <mat-select [(ngModel)]="DLocation">
+                  @for (province of localData.provinces; track province) {
+                    <mat-option class="text sub-16 sem" [value]="province.value">{{province.viewValue}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <span class="material-symbols-outlined icon-sync" (click)="switch()">sync_alt</span>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%;">
+                <div mat-raised-button matSuffix style="margin-left: 16px; margin-right: 11px;">
+                  <span class="material-symbols-outlined">
+                    location_on
+                    </span>
+                </div>
+                <mat-label class="text sub-16 sem">Arrival Location</mat-label>
+                <mat-select [(ngModel)]="ALocation">
+                  @for (province of localData.provinces; track province) {
+                    <mat-option class="text sub-16 sem" [value]="province.value">{{province.viewValue}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%;cursor: pointer;">
+                <mat-label class="text sub-16 sem" >Departure Date</mat-label>
+                <input class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
+                <div  mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
+                  <span class="material-symbols-outlined">calendar_today</span>
+                </div>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
+              <div class="hero-divider"></div>
+              <mat-form-field style="height: 100%; cursor: pointer;" >
+                <mat-label class="text sub-16 sem" >Return Date</mat-label>
+                <input class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
+                <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
+                  <span class="material-symbols-outlined">add</span>
+                </div>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            
+          </div>
+          <button class="btn button-primary text sub-16 sem btn-find" (click)="search()">Find</button>
+        </div>
+        <div class="hero-main-dropdowns">
+          <div class="dropdown">
+            <button class="btn btn-hero-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                group
+              </span>
+              <p class="text sub-16 sem"> {{selectedCustomer}} </p>
+              <span class="material-symbols-outlined icon">expand_more</span>
+            </button>
+            <ul class="dropdown-menu ">
+              <li><p class="dropdown-item text caption-14 reg btn-hero-dropdown-item-disable" style="color: var(--Neutral-Grey200, #ACAFB8);">Number</p></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 1 customer </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 2 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 3 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 4 customers </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getCustomer($event)"> 5 customers </a></li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-hero-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                airport_shuttle
+              </span>
+              <p class="text sub-16 sem">Limousine {{busTypeSelected}} </p>
+              <span class="material-symbols-outlined icon">expand_more</span>
+            </button>
+            <ul class="dropdown-menu" style="width: 100%;">
+              <li><p class="dropdown-item text caption-14 reg btn-hero-dropdown-item-disable" style="color: var(--Neutral-Grey200, #ACAFB8);">Bus Type</p></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Seat </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Single Room </a></li>
+              <li><a class="dropdown-item text sub-16 sem btn-hero-dropdown-item" (click)="getBusType($event)"> Double Room </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="main-container">
+    
+    <section class="filter">
+      <div class="filter-container">
+        <div class="filter-item">
+          <div class="filter-title button-20 bold">Sort</div>
+          <div class="filter-sort">
+            <div class="filter-sort-item">
+              <input type="radio" name="sort" id="default" value="1">
+              <label for="default" class="caption-14 reg">Default</label>
+            </div>
+            <div class="filter-sort-item">
+              <input type="radio" name="sort" id="earliest" value="2">
+              <label for="earliest" class="caption-14 reg">Earliest Departure Time</label>
+            </div>
+            <div class="filter-sort-item">
+              <input type="radio" name="sort" id="latest" value="3t">
+              <label for="latest" class="caption-14 reg">Latest Departure Time</label>
+            </div>
+            <div class="filter-sort-item">
+              <input type="radio" name="sort" id="review" value="4">
+              <label for="review" class="caption-14 reg">Review</label>
+            </div>
+            <div class="filter-sort-item">
+              <input type="radio" name="sort" id="priceDescrease" value="5">
+              <label for="priceDescrease" class="caption-14 reg">Price Descrease</label>
+            </div>
+            <div class="filter-sort-item">
+              <input type="radio" name="sort" id="priceIncrease" value="6">
+              <label for="priceIncrease" class="caption-14 reg">Price Increase</label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-title button-20 bold">Filter</div>
+          <div class="filter-filter">
+            <div class="filter-filter-item">
+              <div class="filter-filter-title" (click)="showDropdown(0,$event)">
+                <div class="body-16 reg" style="pointer-events: none;">Departure Time</div>
+                <span class="material-symbols-outlined" style="color: #36373B; font-size: 24px;pointer-events: none;">
+                  expand_more
+                </span>
+              </div>
+              <div class="filter-filter-container" [class.active]="filterToggle[0]">
+                <div class="filter-filter-content">
+                  <div class="filter-filter-content-item">
+                    <input type="checkbox" id="time1">
+                    <span class="material-symbols-outlined input-checkbox-indicator">
+                      check
+                    </span>
+                    <label for="time1" class="caption-14 reg">
+                      0:00 - 6:00 <br> <b style="color: #979797;margin-top: 4px;">Early Morning</b>
+                    </label>
+                  </div>
+                  <div class="filter-filter-content-item">
+                    <input type="checkbox" id="time2">
+                    <span class="material-symbols-outlined input-checkbox-indicator">
+                      check
+                    </span>
+                    <label for="time2" class="caption-14 reg">
+                      6:00 - 12:00 <br> <b style="color: #979797;margin-top: 4px;">Morning</b>
+                    </label>
+                  </div>
+                  <div class="filter-filter-content-item">
+                    <input type="checkbox" id="time3">
+                    <span class="material-symbols-outlined input-checkbox-indicator">
+                      check
+                    </span>
+                    <label for="time3" class="caption-14 reg">
+                      12:00 - 17:00 <br> <b style="color:#979797;margin-top: 4px ">Afternoon</b>
+                    </label>
+                  </div>
+                  <div class="filter-filter-content-item">
+                    <input type="checkbox" id="time4">
+                    <span class="material-symbols-outlined input-checkbox-indicator">
+                      check
+                    </span>
+                    <label for="time4" class="caption-14 reg">
+                      17:00 - 0:00 <br> <b style="color: #979797;margin-top: 4px;">Evening</b>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-filter-item">
+              <div class="filter-filter-title" (click)="showDropdown(1,$event)">
+                <div class="body-16 reg" style="pointer-events: none;">Price Range</div>
+                <span class="material-symbols-outlined" style="color: #36373B; font-size: 24px;pointer-events: none;">
+                  expand_more
+                </span>
+              </div>
+              <div class="filter-filter-container" [class.active]="filterToggle[1]">
+                <div class="filter-filter-content">
+                  <div class="filter-filter-range">
+                    <mat-slider min="100000" max="1000000" style="width: 200px;" [step]="100000">
+                      <input [value]="0" matSliderStartThumb #priceMin>
+                      <input [value]="1000000" matSliderEndThumb #priceMax>
+                    </mat-slider>
+                  </div>
+                  <div class="filter-filter-range-price">
+                    <div class="text caption-14 reg filter-filter-range-item" style="text-align: right;"> {{priceMin.value}}VND </div>
+                    <div class="text caption-14 reg filter-filter-range-line"></div>
+                    <div class="text caption-14 reg filter-filter-range-item" style="text-align: left;"> {{priceMax.value}}VND </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-filter-item">
+              <div class="filter-filter-title" (click)="showDropdown(2,$event)">
+                <div class="body-16 reg" style="pointer-events: none;">Reviews</div>
+                <span class="material-symbols-outlined" style="color: #36373B; font-size: 24px;pointer-events: none;">
+                  expand_more
+                </span>
+              </div>
+              <div class="filter-filter-container" [class.active]="filterToggle[2]">
+                <div class="filter-filter-content">
+                  <div style="display: flex;
+                  justify-content: center;
+                  align-items: center; gap: 16px;">
+                    <div class="filter-filter-reviews" *ngFor="let item of generateStar(5);let i = index">
+                      <span class="material-symbols-outlined filter-filter-review" (click)="filterRating(i)" style="color: var(--neutral-grey-100);"> 
+                        star
+                      </span>
+                      <div class="text body-16 reg"></div>
+                    </div>
+                    <p class="text body-16 reg"> {{rating}} </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-filter-item">
+              <div class="filter-filter-title" (click)="showDropdown(3,$event)">
+                <div class="body-16 reg" style="pointer-events: none;">Seat Type</div>
+                <span class="material-symbols-outlined" style="color: #36373B; font-size: 24px;pointer-events: none;">
+                  expand_more
+                </span>
+              </div>
+              <div class="filter-filter-container" [class.active]="filterToggle[3]">
+                <div class="filter-filter-content">
+                  <div class="filter-sort-item">
+                    <input type="radio" name="seat" id="default" value="1">
+                    <label for="default" class="caption-14 reg">Seat</label>
+                  </div>
+                  <div class="filter-sort-item">
+                    <input type="radio" name="seat" id="default" value="2">
+                    <label for="default" class="caption-14 reg">Sleeper Seat</label>
+                  </div>
+                  <div class="filter-sort-item">
+                    <input type="radio" name="seat" id="default" value="3">
+                    <label for="default" class="caption-14 reg">Couple Sleeper</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-filter-item">
+              <div class="filter-filter-title" (click)="showDropdown(4,$event)">
+                <div class="body-16 reg" style="pointer-events: none;">Seat Positioning</div>
+                <span class="material-symbols-outlined" style="color: #36373B; font-size: 24px;pointer-events: none;">
+                  expand_more
+                </span>
+              </div>
+              <div class="filter-filter-container" [class.active]="filterToggle[4]">
+                <div class="filter-filter-content">
+                  <div class="filter-sort-item">
+                    <span class="material-symbols-outlined" style="font-size: 24px;color: #36373B;">
+                      airline_seat_recline_normal
+                    </span>
+                    <label for="default" class="caption-14 reg">Seat Available</label>
+                    <div style="display: flex; align-items: center; gap: 7px; margin-left: auto;">
+                      <span class="material-symbols-outlined" style="font-size: 24px;cursor: pointer;" (click)="substractSeat()">
+                        do_not_disturb_on
+                      </span>
+                      <label class="text body-14 reg" > {{seat}} </label>
+                      <span class="material-symbols-outlined" style="font-size: 24px;cursor: pointer;" (click)="addSeat()">
+                        add_circle
+                      </span>
+                    </div>
+                  </div>
+                  <div class="filter-sort-item">
+                    <input type="radio" name="seat" id="default" value="1">
+                    <label for="default" class="caption-14 reg">Seat</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="ticket">
+      <div class="ticket-title">
+        <p class="text caption-14 reg" style="color: var(--neutral-grey-300);">Total Results:</p>
+        <p class="text head-24 med">Select Departure Routes</p>
+      </div>
+      <div class="ticket-container">
+        <div class="ticket-item" *ngFor="let item of tickets; let i = index">
+          <div class="ticket-item-container">
+            <div class="ticket-item-image">
+              <img srcset="/assets/images/fb3.jpg 2x" width="282px" alt="">
+            </div>
+            <div class="ticket-item-content">
+              <div class="ticket-item-content-time">
+                <div class="text head-24 med">0:30</div>
+                <div class="ticket-item-content-time-divider">
+                  <div class="ticket-item-content-time-divider-left"></div>
+                  <hr style="width: 145px;">
+                  <div class="text caption-14 reg ticket-item-content-time-divider-text">7h</div>
+                  <div class="ticket-item-content-time-divider-right"></div>
+                </div>
+                <div class="text head-24 med">7:30</div>
+              </div>
+              <div class="ticket-item-content-location">
+                <div class="text caption-14 reg">Binh Thanh Office</div>
+                <div class="text caption-14 reg">Nha Trang Office</div>
+              </div>
+              <div class="ticket-item-content-review">
+                <div class="ticket-item-content-review-rating">
+                  <span class="material-symbols-outlined star" style="color: #FFB74A; font-size: 16px;" *ngFor="let item of generateStar(5)">
+                    grade
+                  </span>
+                  <div class="text body-16 reg">5</div>
+                </div>
+                <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">(258 Reviews)</div>
+              </div>
+              <div class="ticket-item-content-type text caption-14 reg">
+                <div>Limousine</div>
+                <div> <b class="text sub-14 med">12</b> empty seats </div>
+              </div>
+            </div>
+            <div class="ticket-item-control">
+              <div class="text head-24 med" style="color: #4D56BE;">450.000VND</div>
+              <div class="ticket-item-buttons">
+                <button class="btn btn-primary ticket-item-button" (click)="toggleSteper(i)">Book Tickets</button>
+                <div class="ticket-item-dropdown-control" (click)="toggleDropdown(i,$event)">
+                  <div class="text body-16 reg" style="pointer-events: none;">View Ticket Details</div>
+                  <span class="material-symbols-outlined" style="font-size: 24px;pointer-events: none;" id="ticket-expand-icon">
+                    expand_more
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-item-dropdown" [class.open]="isDropdownOpen[i]">
+            <div class="ticket-item-dropdown-nav" id="dropdown">
+              <div class="ticket-item-dropdown-nav-item text button-20 reg active"  (click)="showDropdownItem(1, i,$event)">Pick-Up/Drop-Off</div>
+              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(2, i,$event)">Reviews (25.8K+)</div>
+              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(3, i,$event)">Amenities</div>
+              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(4, i,$event)">Bus Features</div>
+            </div>
+            <div class="dropdown">
+              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 1">
+                Content 1
+              </div >
+              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 2">
+                Content 2
+              </div>
+              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 3">
+                Content 3
+              </div>
+              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 4">
+                Content 4
+              </div>
+            </div>
+          </div>
+          <div class="ticket-item-dropdown" [class.open]="isSteperOpen[i]">
+            <div class="ticket-item-booking">
+              <div class="ticket-item-booking-steper" [class.selected]="selectedSteper[i] === 1">
+                <label class="text sub-16 sem">1</label>
+                <div class="text body-16 reg">Choose seats</div>
+              </div>
+              <div class="ticket-item-booking-divider"></div>
+              <div class="ticket-item-booking-steper" [class.selected]="selectedSteper[i] === 2">
+                <label class="text sub-16 sem">2</label>
+                <div class="text body-16 reg">Choose pick-up & drop-off points</div>
+              </div>
+            </div>
+            <div class="ticket-item-booking-container" *ngIf="selectedSteper[i] === 1">
+              <div class="ticket-item-booking-seat">
+                <div class="ticket-item-booking-seat-type">
+                  <div class="ticket-item-booking-seat-type-item">
+                    <div class="ticket-item-booking-seat-symbol-1"></div>
+                    <div class="text caption-14 reg">Seat available</div>
+                  </div>
+                  <div class="ticket-item-booking-seat-type-item">
+                    <div class="ticket-item-booking-seat-symbol-2"></div>
+                    <div class="text caption-14 reg">Seat selected</div>
+                  </div>
+                  <div class="ticket-item-booking-seat-type-item">
+                    <div class="ticket-item-booking-seat-symbol-3"></div>
+                    <div class="text caption-14 reg">Seat reserved</div>
+                  </div>
+                </div>
+                <div class="ticket-item-booking-seat-content">
+                  <div class="ticket-item-booking-seat-content-title">
+                    <div class="text sub-16 sem" style="width: 156px;text-align: center;">Downstair</div>
+                    <div class="text sub-16 sem" style="width: 156px;text-align: center;">Upstair</div>
+                  </div>
+                  <div class="ticket-item-booking-seat-content-table">
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item unavailable" (click)="chooseSeat(i,$event)">1A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)">1B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-divider">1</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)">1C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)">1D</div>
+                    
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-divider">2</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2D</div>
+
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-divider">3</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3D</div>
+
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-divider">4</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4D</div>
+
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-divider">5</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5D</div>
+                  </div>
+                </div>
+                <div class="ticket-item-booking-seat-control">
+                  <div class="ticket-item-booking-seat-price">
+                    <div class="text body-16 reg">Total</div>
+                    <div class="text head-24 med" style="color: #4D56BE;"> {{450000*selectedSeat[i].length}}VND </div>
+                  </div>
+                  <div class="ticket-item-booking-seat-button btn btn-primary" [class.continue]="isContinue[i]" (click)="showSteperItem(2, i)">Continue</div>
+                </div>
+              </div>
+            </div>
+            <div class="ticket-item-booking-container" *ngIf="selectedSteper[i] === 2">
+              <div class="ticket-item-booking-location">
+                <div class="ticket-item-booking-location-notice">
+                  <span class="material-symbols-outlined" style="color: #0D6EFD;">
+                    admin_panel_settings
+                  </span>
+                  <div class="text caption-14 reg" style="color: #0D6EFD;">Assured that you will be picked up at the right place, returned to the right place, and can easily change when needed.</div>
+                </div>
+              </div>
+              <div class="ticket-item-booking-location-container">
+                <div class="ticket-item-booking-location-item">
+                  <div class="ticket-item-booking-location-item-title sub-16 sem">Pick-up points</div>
+                  <div class="ticket-item-booking-location-item-list">
+                    <div class="ticket-item-booking-location-item-point" *ngFor="let item of pickUpPoints;let i = index">
+                      <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
+                      <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
+                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
+                        <div class="text sub-16 sem" style="color: black;">6:00 - Ben Xe Mien Tay</div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="ticket-item-booking-location-divider"></div>
+                <div class="ticket-item-booking-location-item">
+                  <div class="ticket-item-booking-location-item-title sub-16 sem">Drop-off points</div>
+                  <div class="ticket-item-booking-location-item-list">
+                    <div class="ticket-item-booking-location-item-point" *ngFor="let item of pickUpPoints;let i = index">
+                      <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
+                      <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
+                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
+                        <div class="text sub-16 sem" style="color: black;">6:00 - Ben Xe Mien Tay</div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="ticket-item-booking-seat-control">
+                <div class="ticket-item-booking-seat-price">
+                  <div class="text body-16 reg">Total</div>
+                  <div class="text head-24 med" style="color: #4D56BE;"> {{450000*selectedSeat[i].length}}VND </div>
+                </div>
+                <div class="ticket-item-booking-seat-button btn btn-primary" [class.continue]="isContinue[i]" (click)="showSteperItem(2, i)">Continue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+  </div>
+</div>

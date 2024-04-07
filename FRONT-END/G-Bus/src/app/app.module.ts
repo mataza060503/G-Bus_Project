@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat'
@@ -13,14 +14,17 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { GeneralModule } from './general/general.module';
+import { BookingModule } from './booking/booking.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -28,6 +32,7 @@ import { environment } from '../environments/environment';
     LoginModule,
     SignUpModule,
     GeneralModule,
+    BookingModule,
     MatFormFieldModule, 
     MatDatepickerModule,
     SlickCarouselModule,
