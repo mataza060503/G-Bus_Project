@@ -46,7 +46,7 @@
               <div class="hero-divider"></div>
               <mat-form-field style="height: 100%;cursor: pointer;">
                 <mat-label class="text sub-16 sem" >Departure Date</mat-label>
-                <input class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
+                <input [min]="minDate" [max]="maxDate" class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
                 <div  mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">calendar_today</span>
                 </div>
@@ -57,7 +57,7 @@
               <div class="hero-divider"></div>
               <mat-form-field style="height: 100%; cursor: pointer;" >
                 <mat-label class="text sub-16 sem" >Return Date</mat-label>
-                <input class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
+                <input [min]="minDate" [max]="maxDate" class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
                 <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">add</span>
                 </div>

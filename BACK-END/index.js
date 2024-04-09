@@ -70,7 +70,8 @@ app.post("/ticket", cors(), async (req,res)=> {
     Amenities: Ticket.Amenities,
     Bus: Ticket.Bus,
     Price: Ticket.Price,
-    Image: Ticket.Image
+    Image: Ticket.Image,
+    Driver: Ticket.Driver
   }))
 
   res.send(Ticket)
@@ -103,7 +104,7 @@ app.post("/bus",cors(), async (req,res) => {
 app.post("/routeWithPoints",cors(), async (req,res) => {
   const id = req.body.Route
   const data = await database.collection("RouteWithPoints").find({_id: new ObjectId(id)}).toArray()
-  res.send(data)
+  res.send(data[0])
 })
 
 app.post("/routeId",cors(), async (req,res)=> {
@@ -112,6 +113,17 @@ app.post("/routeId",cors(), async (req,res)=> {
   const route = await database.collection("RouteWithPoints").find({DLocation: DLocation, ALocation: ALocation}).toArray()
   const id = route.map(r=>r._id)
   res.send(id[0])
+})
+
+app.post("/driver",cors(), async (req,res) => {
+  const ids = req.body.Driver
+  var data = []
+  for (let i = 0; i < ids.length; i++) {
+    const element = ids[i];
+    const review = await database.collection("Driver").find({_id: new ObjectId(element)}).toArray()
+    data.push(review[0])
+  }
+  res.send(data)
 })
 
 app.listen(port,()=>{

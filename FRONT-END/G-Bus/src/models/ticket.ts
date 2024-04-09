@@ -13,16 +13,17 @@ export interface RawTicket {
   Amenities: string[],
   Bus: string,
   Price: number,
-  Image: string
+  Image: string,
+  Driver: string[]
 }
 
 export interface Ticket {
   Ticket: RawTicket,
-  Seat: any[], // Assuming Seat can be an array of any type
   Route: Route,
   Reviews: FeedbackItem[],
   Amenities: Amenities[],
   Bus: Bus,
+  Driver: Driver[]
 }
 
 export interface Route {
@@ -52,7 +53,8 @@ export interface Bus {
   Name: string,
   Image: string[],
   Tag: Tag[],
-  Description: string
+  Description: string,
+  Seat: number
 }
 
 export interface Driver {
@@ -64,6 +66,7 @@ export interface Driver {
   TravelTrip: number;
   Hours: number;
   Rating: number[];
+  
 }
 
 export interface Tag {

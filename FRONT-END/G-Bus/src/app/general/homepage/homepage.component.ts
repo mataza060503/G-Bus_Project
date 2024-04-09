@@ -47,6 +47,9 @@ export class HomepageComponent implements OnInit{
   feedbackSlideCurrentPercent: number = 3
   feedbackSlidePercent: number = 0
 
+  minDate: Date;
+  maxDate: Date
+
   ngOnInit(): void {
     this.localDataService.getLocalData().subscribe(data => {
       this.localData = data
@@ -72,6 +75,10 @@ export class HomepageComponent implements OnInit{
     this.slideCurrentPercent = 3
     this.routeSlideCurrentPercent = 4
     this.promotionSlideCurrentPercent = 3
+
+    const currentDate = new Date();
+    this.minDate = currentDate
+    this.maxDate = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)
   }
 
   //Couseral 

@@ -4,6 +4,8 @@ import { SearchingResultComponent } from './searching-result/searching-result.co
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -30,6 +32,8 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatIconModule,
     MatSelectModule,
+    MatProgressBarModule,
+    SlickCarouselModule,
     FormsModule,
     HttpClientModule,
     RouterModule

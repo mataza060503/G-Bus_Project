@@ -43,18 +43,18 @@
               <div class="hero-divider"></div>
               <mat-form-field style="height: 100%;cursor: pointer;">
                 <mat-label class="text sub-16 sem" >Departure Date</mat-label>
-                <input class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
+                <input [min]="minDate" [max]="maxDate" class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
                 <div  mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">calendar_today</span>
-                </div>
-                <mat-datepicker #picker></mat-datepicker>
+                </div> 
+                <mat-datepicker #picker ></mat-datepicker>
               </mat-form-field>
             </div>
             <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
               <div class="hero-divider"></div>
               <mat-form-field style="height: 100%; cursor: pointer;" >
                 <mat-label class="text sub-16 sem" >Return Date</mat-label>
-                <input class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
+                <input [min]="minDate" [max]="maxDate" class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
                 <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">add</span>
                 </div>
@@ -293,51 +293,51 @@
     </section>
     <section class="ticket">
       <div class="ticket-title">
-        <p class="text caption-14 reg" style="color: var(--neutral-grey-300);">Total Results:</p>
+        <p class="text caption-14 reg" style="color: var(--neutral-grey-300);">Total Results: {{tickets.length}} </p>
         <p class="text head-24 med">Select Departure Routes</p>
       </div>
       <div class="ticket-container">
-        <div class="ticket-item" *ngFor="let item of tickets; let i = index">
+        <div class="ticket-item" *ngFor="let ticket of tickets; let i = index">
           <div class="ticket-item-container">
             <div class="ticket-item-image">
-              <img srcset="/assets/images/fb3.jpg 2x" width="282px" alt="">
+              <img src="{{ticket.Ticket.Image}}" width="282px" alt="">
             </div>
             <div class="ticket-item-content">
               <div class="ticket-item-content-time">
-                <div class="text head-24 med">0:30</div>
+                <div class="text head-24 med"> {{ticket.Ticket.DTime}} </div>
                 <div class="ticket-item-content-time-divider">
                   <div class="ticket-item-content-time-divider-left"></div>
                   <hr style="width: 145px;">
-                  <div class="text caption-14 reg ticket-item-content-time-divider-text">7h</div>
+                  <div class="text caption-14 reg ticket-item-content-time-divider-text"> {{timeDifference(ticket.Ticket.DTime,ticket.Ticket.ATime)}}</div>
                   <div class="ticket-item-content-time-divider-right"></div>
                 </div>
-                <div class="text head-24 med">7:30</div>
+                <div class="text head-24 med">{{ticket.Ticket.ATime}}</div>
               </div>
               <div class="ticket-item-content-location">
-                <div class="text caption-14 reg">Binh Thanh Office</div>
-                <div class="text caption-14 reg">Nha Trang Office</div>
+                <div class="text caption-14 reg"> {{ticket.Ticket.DOffice}} </div>
+                <div class="text caption-14 reg">{{ticket.Ticket.AOffice}}</div>
               </div>
               <div class="ticket-item-content-review">
                 <div class="ticket-item-content-review-rating">
-                  <span class="material-symbols-outlined star" style="color: #FFB74A; font-size: 16px;" *ngFor="let item of generateStar(5)">
+                  <span class="material-symbols-outlined star" style="color: #FFB74A; font-size: 16px;" *ngFor="let item of generateStar(calculateRating(ticket.Reviews))">
                     grade
                   </span>
-                  <div class="text body-16 reg">5</div>
+                  <div class="text body-16 reg"> {{calculateRating(ticket.Reviews)}} </div>
                 </div>
-                <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">(258 Reviews)</div>
+                <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">({{ticket.Reviews.length}} Reviews)</div>
               </div>
               <div class="ticket-item-content-type text caption-14 reg">
-                <div>Limousine</div>
-                <div> <b class="text sub-14 med">12</b> empty seats </div>
+                <div> {{ticket.Bus.Name}} </div>
+                <div> <b class="text sub-14 med"> {{ticket.Bus.Seat - ticket.Ticket.Seat.length}} </b> empty seats </div>
               </div>
             </div>
             <div class="ticket-item-control">
-              <div class="text head-24 med" style="color: #4D56BE;">450.000VND</div>
+              <div class="text head-24 med" style="color: #4D56BE;"> {{ticket.Ticket.Price}} </div>
               <div class="ticket-item-buttons">
                 <button class="btn btn-primary ticket-item-button" (click)="toggleSteper(i)">Book Tickets</button>
                 <div class="ticket-item-dropdown-control" (click)="toggleDropdown(i,$event)">
                   <div class="text body-16 reg" style="pointer-events: none;">View Ticket Details</div>
-                  <span class="material-symbols-outlined" style="font-size: 24px;pointer-events: none;" id="ticket-expand-icon">
+                  <span class="material-symbols-outlined" style="font-size: 24px;pointer-events: none;" id="ticket-expand-icon" [class.rotate]="isDropdownOpen[i]">
                     expand_more
                   </span>
                 </div>
@@ -347,22 +347,315 @@
           <div class="ticket-item-dropdown" [class.open]="isDropdownOpen[i]">
             <div class="ticket-item-dropdown-nav" id="dropdown">
               <div class="ticket-item-dropdown-nav-item text button-20 reg active"  (click)="showDropdownItem(1, i,$event)">Pick-Up/Drop-Off</div>
-              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(2, i,$event)">Reviews (25.8K+)</div>
+              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(2, i,$event);filterReviews(ticket,'All',i)">Reviews ({{ticket.Reviews.length}})</div>
               <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(3, i,$event)">Amenities</div>
-              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(4, i,$event)">Bus Features</div>
+              <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(4, i,$event)">Bus Features </div>
             </div>
-            <div class="dropdown">
-              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 1">
-                Content 1
+            <div class="ticket-item-dropdown-dropdown">
+              <div class="ticket-item-dropdown-dropdown-item" *ngIf="selectedDropdownItems[i] === 1">
+                <div class="ticket-item-booking-location-container">
+                  <div class="ticket-item-booking-location-item">
+                    <div class="ticket-item-booking-location-item-title sub-16 sem">Pick-up points</div>
+                    <div class="ticket-item-booking-location-item-list">
+                      <div class="ticket-item-booking-location-item-point" *ngFor="let point of ticket.Route.PickUpPoints;let i = index">
+                        <div style="display: flex;flex-direction: column; align-items: center; gap: 4px;">
+                          <div class="text sub-14 med"> {{calculateTimePoint(ticket.Ticket.DTime,point.Time)}} </div>
+                          <div class="text caption-14 reg"> {{calculateDatePoint(ticket.Ticket.Date,ticket.Ticket.DTime,point.Time)}} </div>
+                        </div>
+                        <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
+                          <div class="text sub-14 med" style="color: black;"> {{point.Point}} </div>
+                          <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{point.Address}} </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ticket-item-booking-location-divider"></div>
+                  <div class="ticket-item-booking-location-item">
+                    <div class="ticket-item-booking-location-item-title sub-16 sem">Pick-up points</div>
+                    <div class="ticket-item-booking-location-item-list">
+                      <div class="ticket-item-booking-location-item-point" *ngFor="let point of ticket.Route.DropOffPoints;let i = index">
+                        <div style="display: flex;flex-direction: column; align-items: center; gap: 4px;">
+                          <div class="text sub-14 med"> {{calculateTimePoint(ticket.Ticket.ATime,point.Time)}} </div>
+                          <div class="text caption-14 reg"> {{calculateDatePoint(ticket.Ticket.Date,ticket.Ticket.DTime,point.Time)}} </div>
+                        </div>
+                        <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
+                          <div class="text sub-14 med" style="color: black;"> {{point.Point}} </div>
+                          <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{point.Address}} </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div >
-              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 2">
-                Content 2
+              <div class="ticket-item-dropdown-dropdown-item" *ngIf="selectedDropdownItems[i] === 2" >
+                <div class="ticket-item-dropdown-content-2">
+                  <div class="ticket-item-dropdown-content-2-percents">
+                    <div class="ticket-item-dropdown-content-2-percent" >
+                      <div style="display: flex;justify-content: space-between;align-items: center;">
+                        <div class="text head-16 reg">Full Information</div>
+                        <div class="text head-16 reg"> {{calculateTagRating(ticket.Reviews,"Full Information")/20}} </div>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="calculateTagRating(ticket.Reviews, 'Full Information')"></mat-progress-bar>
+                    </div>
+                    <div class="ticket-item-dropdown-content-2-percent" >
+                      <div style="display: flex;justify-content: space-between;align-items: center;">
+                        <div class="text head-16 reg">Verified Information</div>
+                        <div class="text head-16 reg"> {{calculateTagRating(ticket.Reviews,"Verified Information")/20}} </div>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="calculateTagRating(ticket.Reviews, 'Verified Information')"></mat-progress-bar>
+                    </div>
+                    <div class="ticket-item-dropdown-content-2-percent" >
+                      <div style="display: flex;justify-content: space-between;align-items: center;">
+                        <div class="text head-16 reg">Convenience & Comfort</div>
+                        <div class="text head-16 reg"> {{calculateTagRating(ticket.Reviews,"Convenience & Comfort")/20}} </div>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="calculateTagRating(ticket.Reviews, 'Convenience & Comfort')"></mat-progress-bar>
+                    </div>
+                    <div class="ticket-item-dropdown-content-2-percent" >
+                      <div style="display: flex;justify-content: space-between;align-items: center;">
+                        <div class="text head-16 reg">Safety</div>
+                        <div class="text head-16 reg"> {{calculateTagRating(ticket.Reviews,"Safety")/20}} </div>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="calculateTagRating(ticket.Reviews, 'Safety')"></mat-progress-bar>
+                    </div>
+                    <div class="ticket-item-dropdown-content-2-percent" >
+                      <div style="display: flex;justify-content: space-between;align-items: center;">
+                        <div class="text head-16 reg">Service Quality</div>
+                        <div class="text head-16 reg"> {{calculateTagRating(ticket.Reviews,"Service Quality")/20}} </div>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="calculateTagRating(ticket.Reviews, 'Service Quality')"></mat-progress-bar>
+                    </div>
+                    <div class="ticket-item-dropdown-content-2-percent" >
+                      <div style="display: flex;justify-content: space-between;align-items: center;">
+                        <div class="text head-16 reg">Employee’s Attitudes</div>
+                        <div class="text head-16 reg"> {{calculateTagRating(ticket.Reviews,"Employee’s Attitudes")/20}} </div>
+                      </div>
+                      <mat-progress-bar mode="determinate" [value]="calculateTagRating(ticket.Reviews, 'Employee’s Attitudes')"></mat-progress-bar>
+                    </div>
+                  </div>
+                  <div class="ticket-item-dropdown-content-2-filters">
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter" (click)="filterReviews(ticket,'All',i)">All</div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter" (click)="filterReviews(ticket,'Recent',i)">Recent</div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter" (click)="filterReviews(ticket,'With Photos',i)">With Photos</div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter" (click)="filterReviews(ticket,'With Reviews',i)">With Reviews</div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter" (click)="filterReviews(ticket,'Oldest',i)">Oldest</div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter">
+                      <span class="material-symbols-outlined" style="color: #FFB74A;font-size: 16px;">
+                        grade
+                      </span>
+                      <div class="text caption-14 reg" style="color: #36373B;">5</div>
+                    </div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter">
+                      <span class="material-symbols-outlined" style="color: #FFB74A;font-size: 16px;">
+                        grade
+                      </span>
+                      <div class="text caption-14 reg" style="color: #36373B;">4</div>
+                    </div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter">
+                      <span class="material-symbols-outlined" style="color: #FFB74A;font-size: 16px;">
+                        grade
+                      </span>
+                      <div class="text caption-14 reg" style="color: #36373B;">3</div>
+                    </div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter">
+                      <span class="material-symbols-outlined" style="color: #FFB74A;font-size: 16px;">
+                        grade
+                      </span>
+                      <div class="text caption-14 reg" style="color: #36373B;">2</div>
+                    </div>
+                    <div class="text caption-14 reg ticket-item-dropdown-content-2-filter">
+                      <span class="material-symbols-outlined" style="color: #FFB74A;font-size: 16px;">
+                        grade
+                      </span>
+                      <div class="text caption-14 reg" style="color: #36373B;">1</div>
+                    </div>
+                  </div>
+                  <div class="ticket-item-dropdown-content-2-reviews">
+                    <div class="ticket-item-dropdown-content-2-review" *ngFor="let review of getCurrentPageReviews(ticket,i)">
+                      <div class="ticket-item-dropdown-content-2-review-header" style="display: flex; align-items: center;gap: 12px;">
+                        <div class="ticket-item-dropdown-content-2-review-avt">
+                          <img src={{review.Avatar}} alt="" width="72px">
+                        </div>
+                        <div style="display: flex;flex-direction: column;gap: 8px;">
+                          <div class="text button-20 bold"> {{review.CustomerName}} </div>
+                          <div style="display: flex;align-items: center;gap: 12px;">
+                            <div class="text caption-14 reg" style="display: flex; align-items: center; gap: 8px;">
+                              <span class="material-symbols-outlined" style="font-size: 16px; color: black;">
+                                loyalty
+                              </span>
+                              <p> {{review.TotalTrip}} Total Trips </p>
+                            </div>
+                            <div class="text caption-14 reg" style="display: flex; align-items: center; gap: 8px;">
+                              <span class="material-symbols-outlined" style="font-size: 16px; color: black;">
+                                where_to_vote
+                              </span>
+                              <p> {{review.Destination}} Destinations </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ticket-item-dropdown-content-2-review-body">
+                        <div style="display: flex;align-items: center; gap: 4px;">
+                          <span class="material-symbols-outlined" style="font-size: 24px; color: #FFB74A;">
+                            star
+                          </span>
+                          <div class="text button-20 bold"> {{review.Rating}} </div>
+                        </div>
+                        <div style="display: flex;flex-direction: column; gap: 8px;">
+                          <div class="text body-14 reg"> {{review.Feedback}} </div>
+                          <div style="display: flex; align-items: center; gap: 6.5px;">
+                            <div style="display: flex;align-items: center;justify-content: center;border-radius: 4px;width: 42px;height: 42px;overflow: hidden;" *ngFor="let image of review.Image">
+                              <img src={{image}} alt="" width="84px">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{review.Date}} </div>
+                      </div>
+                      <div style="width: 100%; height: 1px; background-color: var(--neutral-grey-100);"></div>
+                    </div>
+                    <div class="ticket-item-dropdown-content-2-control" style="display: flex; align-items: start;justify-content: center; gap: 4px;">
+                      <div class="ticket-item-dropdown-content-2-btn" (click)="previousPage(i)">
+                        <span class="material-symbols-outlined" style="font-size: 16px; color: var(--neutral-grey-200);">
+                          chevron_left
+                        </span>
+                      </div>
+                      <div class="ticket-item-dropdown-content-2-numbers">
+                        <div  *ngFor="let number of getPageNumbers(ticket)" style="width: 40px;">
+                          <div class="ticket-item-dropdown-content-2-number" (click)="goToPage(number,i)"> {{number}} </div>
+                        </div>
+                      </div>
+                      <div class="ticket-item-dropdown-content-2-btn" (click)="nextPage(ticket,i)">
+                        <span class="material-symbols-outlined" style="font-size: 16px; color: var(--neutral-grey-200);">
+                          chevron_right
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 3">
-                Content 3
+              <div class="ticket-item-dropdown-dropdown-item" *ngIf="selectedDropdownItems[i] === 3">
+                <div class="ticket-item-dropdown-content-3">
+                  <div class="text button-20 bold">Utilities ({{ticket.Amenities.length}}) </div>
+                  <div class="ticket-item-dropdown-content-3-list">
+                    <div class="ticket-item-dropdown-content-3-item" *ngFor="let amentity of ticket.Amenities">
+                      <div class="ticket-item-dropdown-content-3-image" style="width: 54px; height: 54px; border-radius: 4px;">
+                        <img src={{amentity.Image}} alt="" width="54px" height="54px">
+                      </div>
+                      <div style="display: flex;flex-direction: column; gap: 6px; width: 296px;">
+                        <div class="text sub-14 med"> {{amentity.Title}} </div>
+                        <div class="text caption-14 reg" style="color: #36373B;"> {{amentity.Description}} </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="dropdown-item" *ngIf="selectedDropdownItems[i] === 4">
-                Content 4
+              <div class="ticket-item-dropdown-dropdown-item" *ngIf="selectedDropdownItems[i] === 4">
+                <div class="ticket-item-dropdown-content-4">
+                  <div class="ticket-item-dropdown-content-4-carousel">
+                    <div class="ticket-item-dropdown-content-4-carousel">
+                      <ngx-slick-carousel class="carousel" 
+                            #feedbackSlickModal="slick-carousel" 
+                            [config]="slideConfig" 
+                            (init)="slickInit($event)"
+                            (breakpoint)="breakpoint($event)"
+                            (afterChange)="afterChange($event)"
+                            (beforeChange)="beforeChange($event)">
+                      @for (busImage of ticket.Bus.Image; track busImage) {
+                          <div ngxSlickItem class="slide">
+                                <div class="ticket-item-dropdown-content-4-image" >
+                                  <img src={{busImage}} style="height: 128px; min-width: 231px;" alt="">
+                                </div>
+                          </div>
+                        }
+                      </ngx-slick-carousel>
+                      <button (click)="feedbackSlickModal.slickNext()" class="ticket-item-dropdown-content-4-btn">
+                        <span class="material-symbols-outlined" style="color: var(--neutral-grey-300);font-size: 16px;">
+                          arrow_left_alt
+                          </span>
+                      </button>
+                    </div>
+                    <div class="ticket-item-dropdown-content-4-carousel-images">
+                      <div class="ticket-item-dropdown-content-4-carousel-image">
+                        <img src={{ticket.Bus.Image[0]}} alt="" style="height: 42px; min-width: 42px;">
+                      </div>
+                      <div class="ticket-item-dropdown-content-4-carousel-image">
+                        <img src={{ticket.Bus.Image[1]}} alt="" style="height: 42px; min-width: 42px;">
+                      </div>
+                      <div class="ticket-item-dropdown-content-4-carousel-image">
+                        <img src={{ticket.Bus.Image[2]}} alt="" style="height: 42px; min-width: 42px;">
+                        <div class="text caption-14 reg ticket-item-dropdown-content-4-carousel-number" style="color: white;"> {{ticket.Bus.Image.length}}+ </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;gap: 12px;">
+                    <div class="text button-20 bold"> {{ticket.Bus.Name}} </div>
+                    <div style="display: flex;align-items: center;gap: 24px;">
+                      <div *ngFor="let tag of ticket.Bus.Tag" style="display: flex;align-items: center;gap: 8px;">
+                        <div style="width: 16px;height: 16px;overflow: hidden;">
+                          <img src={{tag.Image}} alt="" width="16px" >
+                        </div>
+                        <div class="text caption-14 reg" style="color: #36373B;"> {{tag.Text}} </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;gap: 8px;">
+                    <div class="text sub-14 med">Description</div>
+                    <div class="text caption-14 reg" style="color: #36373B;"> {{ticket.Bus.Description}} </div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;gap: 8px;">
+                    <div class="text sub-14 med">Employee’s Information</div>
+                    <div style="display: flex;align-items: center;justify-content: space-between; width: 725px;">
+                      <div class="ticket-item-dropdown-content-4-employee" *ngFor="let driver of ticket.Driver">
+                        <div style="display: flex;align-items: center; gap: 12px;">
+                          <div style="display: flex;align-items: center;width: 27px;height: 27px;border-radius: 100rem;overflow: hidden;">
+                            <img src={{driver.Avatar}} alt="" style="width: 27px;min-height: 27px;">
+                          </div>
+                          <div class="text sub-14 reg">Driver. <b class="med"> {{driver.Name}} </b> </div>
+                        </div>
+                        <div>
+                          <div class="ticket-item-content-review">
+                            <div class="ticket-item-content-review-rating">
+                              <span class="material-symbols-outlined star" style="color: #FFB74A; font-size: 16px;" *ngFor="let item of generateStar(numberArrayAverage(driver.Rating))">
+                                grade
+                              </span>
+                              <div class="text body-16 reg"> {{numberArrayAverage(driver.Rating)}} </div>
+                            </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">({{driver.Rating.length}} Reviews)</div>
+                          </div>
+                        </div>
+                        <div style="margin: 12px 0px;display: flex;flex-direction: column;gap: 8px;">
+                          <div style="display: flex;align-items: center;gap: 4px;background-color: #DCECFF;padding: 8px;border-radius: 4px;width: fit-content;">
+                            <span class="material-symbols-outlined" style="font-size: 16px; color: #0D6EFD;">
+                              call
+                            </span>
+                            <div class="text caption-14 reg"> {{driver.PhoneNumber}} </div>
+                          </div>
+                          <div style="width: 100%;height: 1px;background-color: var(--neutral-grey-100);"></div>
+                        </div>
+                        <div style="display: flex;flex-direction: column;gap: 8px;">
+                          <div style="display: flex; align-items: center; gap: 4px;">
+                            <span class="material-symbols-outlined" style="font-size: 16px;color: var(--neutral-grey-300);">
+                              clinical_notes
+                            </span>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{driver.License}}-Level License </div>
+                          </div>
+                          <div style="display: flex; align-items: center; gap: 4px;">
+                            <span class="material-symbols-outlined" style="font-size: 16px;color: var(--neutral-grey-300);">
+                              where_to_vote
+                            </span>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{driver.TravelTrip}} Travel Trips </div>
+                          </div>
+                          <div style="display: flex; align-items: center; gap: 4px;">
+                            <span class="material-symbols-outlined" style="font-size: 16px;color: var(--neutral-grey-300);">
+                              schedule
+                            </span>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{driver.Hours}} Hours </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -399,36 +692,36 @@
                     <div class="text sub-16 sem" style="width: 156px;text-align: center;">Downstair</div>
                     <div class="text sub-16 sem" style="width: 156px;text-align: center;">Upstair</div>
                   </div>
-                  <div class="ticket-item-booking-seat-content-table">
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item unavailable" (click)="chooseSeat(i,$event)">1A</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)">1B</div>
+                  <div class="ticket-item-booking-seat-content-table" >
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'1A')">1A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'1B')">1B</div>
                     <div class="text body-16 reg ticket-item-booking-seat-content-divider">1</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)">1C</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)">1D</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'1C')">1C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item" (click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'1D')">1D</div>
                     
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2A</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'2A')">2A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'2B')">2B</div>
                     <div class="text body-16 reg ticket-item-booking-seat-content-divider">2</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2C</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">2D</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'2C')">2C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'2D')">2D</div>
 
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3A</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'3A')">3A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'3B')">3B</div>
                     <div class="text body-16 reg ticket-item-booking-seat-content-divider">3</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3C</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">3D</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'3C')">3C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'3D')">3D</div>
 
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4A</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'4A')">4A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'4B')">4B</div>
                     <div class="text body-16 reg ticket-item-booking-seat-content-divider">4</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4C</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">4D</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'4C')">4C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'4D')">4D</div>
 
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5A</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5B</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'5A')">5A</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'5B')">5B</div>
                     <div class="text body-16 reg ticket-item-booking-seat-content-divider">5</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5C</div>
-                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)">5D</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'5C')">5C</div>
+                    <div class="text body-16 reg ticket-item-booking-seat-content-item"(click)="chooseSeat(i,$event)" [class.unavailable]="checkSeatAvailable(ticket,'5D')">5D</div>
                   </div>
                 </div>
                 <div class="ticket-item-booking-seat-control">
@@ -453,12 +746,12 @@
                 <div class="ticket-item-booking-location-item">
                   <div class="ticket-item-booking-location-item-title sub-16 sem">Pick-up points</div>
                   <div class="ticket-item-booking-location-item-list">
-                    <div class="ticket-item-booking-location-item-point" *ngFor="let item of pickUpPoints;let i = index">
+                    <div class="ticket-item-booking-location-item-point" *ngFor="let item of ticket.Route.PickUpPoints;let i = index">
                       <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
                       <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
-                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
-                        <div class="text sub-16 sem" style="color: black;">6:00 - Ben Xe Mien Tay</div>
-                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
+                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
+                        <div class="text sub-16 sem" style="color: black;">{{calculateTimePoint(ticket.Ticket.DTime,item.Time)}} - {{item.Point}}</div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
                       </label>
                     </div>
                   </div>
@@ -467,17 +760,20 @@
                 <div class="ticket-item-booking-location-item">
                   <div class="ticket-item-booking-location-item-title sub-16 sem">Drop-off points</div>
                   <div class="ticket-item-booking-location-item-list">
-                    <div class="ticket-item-booking-location-item-point" *ngFor="let item of pickUpPoints;let i = index">
+                    <div class="ticket-item-booking-location-item-point" *ngFor="let item of ticket.Route.DropOffPoints;let i = index">
+                      
                       <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
                       <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
-                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
-                        <div class="text sub-16 sem" style="color: black;">6:00 - Ben Xe Mien Tay</div>
-                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
+                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
+                        <div>
+                          <div class="text caption-14 reg shuttle-bus-tag" [class.active]="item.ShuttleBus">Shuttle Bus</div>
+                          <div class="text sub-16 sem" style="color: black;"> {{calculateTimePoint(ticket.Ticket.ATime,item.Time)}} - {{item.Point}}  </div>
+                        </div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
                       </label>
                     </div>
                   </div>
                 </div>
-                
               </div>
               <div class="ticket-item-booking-seat-control">
                 <div class="ticket-item-booking-seat-price">
