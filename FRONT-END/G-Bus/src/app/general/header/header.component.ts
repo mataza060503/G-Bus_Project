@@ -10,10 +10,15 @@ import { LoginPhoneNumberComponent } from '../../login/login-phone-number/login-
 })
 
 export class HeaderComponent implements OnInit{
-  selectedLink: string = '';
+  selectedLink: boolean[] = [];
   constructor(private router: Router) {
+    for (let i = 0; i < 4; i++) {
+      this.selectedLink.push(false)
+    }
+    this.selectedLink[0] = true
 
   }
+  
 
   ngOnInit(): void {
     
@@ -22,17 +27,16 @@ export class HeaderComponent implements OnInit{
   // Modify the navigation method
   
 
- headerNavSelected(event:any, headerName:string) {
-  const selectedHeader = event.target as HTMLElement
-  const headerList = document.getElementsByTagName("li") as HTMLCollection
-  console.log(headerList)
-  for (let i = 0; i < headerList.length; i++) {
-    const header = headerList[i];
-    console.log(header.textContent)
-    if (header.textContent) {
-      
-    }
+ headerNavSelected(event:any,index:number) {
+  const target = event.target as HTMLElement
+  for (let i = 0; i < this.selectedLink.length; i++) {
+    this.selectedLink[i] = false
   }
+  this.selectedLink[index] = true
+  if (target.textContent === "Schedule") {
+    this.router.navigate(["searchResult","","","",""])
+  }
+
  }
 
 }

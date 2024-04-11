@@ -169,6 +169,10 @@ export class HomepageComponent implements OnInit{
   } 
 
   //Other functions:
+  count(arr: any[]): number {
+    return (arr ?? []).length;
+  }
+
   getBusType(event: any) {
     const selected = event.target as HTMLElement;
     this.busTypeSelected = selected.textContent?.trim() || ""
@@ -183,23 +187,27 @@ export class HomepageComponent implements OnInit{
     this.ALocation = subLocation
   }
   search() {
-    var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate || ""}
-    if (searchResult.DLocation !== undefined && searchResult.ALocation !== undefined && searchResult.DDate !== undefined) {
-      var searchHis = []
-      searchHis = JSON.parse(localStorage.getItem("his") || "[]")
-      searchHis.unshift(searchResult)
-      localStorage.setItem("his",JSON.stringify(searchHis))
-
-      this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
-
-      if (this.RDate !== undefined) {
-        this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),this.formatDate(this.RDate)])
-      } else if (this.RDate === undefined) {
-        this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),""])
-      }
-      
-    } else {
+    var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate}
+    if (this.DDate === undefined) {
       alert("Please select your trip information")
+    }
+    else {
+      if (searchResult.DLocation !== undefined && searchResult.ALocation !== undefined && searchResult.DDate !== undefined) {
+        var searchHis = []
+        searchHis = JSON.parse(localStorage.getItem("his") || "[]")
+        searchHis.unshift(searchResult)
+        localStorage.setItem("his",JSON.stringify(searchHis))
+  
+        this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
+  
+        if (this.RDate !== undefined) {
+          this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),this.formatDate(this.RDate)])
+        } else if (this.RDate === undefined) {
+          this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),""])
+        }
+      } else {
+        alert("Please select your trip information")
+      }
     }
   }
 

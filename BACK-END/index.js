@@ -76,6 +76,30 @@ app.post("/ticket", cors(), async (req,res)=> {
 
   res.send(Ticket)
 })
+
+app.get("/allTicket", cors(), async (req,res)=> {
+  const rawTicket = await database.collection("Tickets").find({}).toArray()
+  
+  var Ticket = rawTicket.map(Ticket => ({
+    _id: Ticket._id,
+    DTime: Ticket.DTime,
+    ATime: Ticket.ATime,
+    DOffice: Ticket.DOffice,
+    AOffice: Ticket.AOffice,
+    Date: Ticket.Date,
+    Seat: Ticket.Seat,
+    Route: Ticket.Route,
+    Reviews: Ticket.Reviews,
+    Amenities: Ticket.Amenities,
+    Bus: Ticket.Bus,
+    Price: Ticket.Price,
+    Image: Ticket.Image,
+    Driver: Ticket.Driver
+  }))
+
+  res.send(Ticket)
+})
+
 app.post("/reviews",cors(), async (req,res)=> {
   const ids = req.body.Reviews
   const data = []

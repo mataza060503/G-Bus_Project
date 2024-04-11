@@ -106,6 +106,25 @@
     
     <section class="filter">
       <div class="filter-container">
+        <div class="booked-ticket" [class.display]="isBooked">
+          <div style="display: flex;align-items:center;gap: 16px;margin: 0px 16px">
+            <div class="text caption-14 reg" style="padding: 2px 4px;background-color: #FFB74A;color: white;">Departure Trip</div>
+            <div style="display: flex;gap: 4px;align-items: center;">
+              <span class="material-symbols-outlined" style="font-size: 20px; color: var(--neutral-grey-300);">
+                airline_seat_recline_normal
+              </span>
+              <div class="text head-16 reg"> {{count(departureTicket.Seat)}} </div>
+            </div>
+          </div>
+          <div class="text button-20 bold" style="margin: 0px 16px;margin-top: 24px;margin-bottom: 12px;"> {{departureTicket.BusType}} </div>
+          <div class="text body-16 reg" style="margin: 0px 16px;"> {{departureTicket.Time}} </div>
+          <div style="background-color: var(--neutral-grey-100);width: 100%;height: 0.5px;margin: 16px 0px;"></div>
+          <div style="display: flex; align-items: center;justify-content: space-between;margin: 0px 16px; margin-bottom: 16px;">
+            <div class="text body-16 reg">Subtotal</div>
+            <div class="text head-24 med"> {{departureTicket.Subtotal}} </div>
+          </div>
+          <button class="btn btn-primary" style="width: 213px;height: 53px;margin: 0px auto;">View Details</button>
+        </div>
         <div class="filter-item">
           <div class="filter-title button-20 bold">Sort</div>
           <div class="filter-sort">
@@ -727,7 +746,7 @@
                 <div class="ticket-item-booking-seat-control">
                   <div class="ticket-item-booking-seat-price">
                     <div class="text body-16 reg">Total</div>
-                    <div class="text head-24 med" style="color: #4D56BE;"> {{450000*selectedSeat[i].length}}VND </div>
+                    <div class="text head-24 med" style="color: #4D56BE;"> {{450000*count(selectedSeat[i])}}VND </div>
                   </div>
                   <div class="ticket-item-booking-seat-button btn btn-primary" [class.continue]="isContinue[i]" (click)="showSteperItem(2, i)">Continue</div>
                 </div>
@@ -747,12 +766,14 @@
                   <div class="ticket-item-booking-location-item-title sub-16 sem">Pick-up points</div>
                   <div class="ticket-item-booking-location-item-list">
                     <div class="ticket-item-booking-location-item-point" *ngFor="let item of ticket.Route.PickUpPoints;let i = index">
-                      <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
-                      <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
-                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
-                        <div class="text sub-16 sem" style="color: black;">{{calculateTimePoint(ticket.Ticket.DTime,item.Time)}} - {{item.Point}}</div>
-                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
-                      </label>
+                      <div style="display: flex; gap: 18px;" (click)="selectPickPoint(item)">
+                        <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
+                        <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
+                        <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
+                          <div class="text sub-16 sem" style="color: black;">{{calculateTimePoint(ticket.Ticket.DTime,item.Time)}} - {{item.Point}}</div>
+                          <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -762,15 +783,17 @@
                   <div class="ticket-item-booking-location-item-list">
                     <div class="ticket-item-booking-location-item-point" *ngFor="let item of ticket.Route.DropOffPoints;let i = index">
                       
-                      <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
-                      <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
-                      <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
-                        <div>
-                          <div class="text caption-14 reg shuttle-bus-tag" [class.active]="item.ShuttleBus">Shuttle Bus</div>
-                          <div class="text sub-16 sem" style="color: black;"> {{calculateTimePoint(ticket.Ticket.ATime,item.Time)}} - {{item.Point}}  </div>
-                        </div>
-                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
-                      </label>
+                      <div (click)="selectDropPoint(item)" style="display: flex; gap: 18px;">
+                        <input type="radio" [id]="'dropOffPoint_' + i" name="dropOffPoint" class="custom-radio">
+                        <label [for]="'dropOffPoint_' + i" class="radio-indicator"></label>
+                        <label [for]="'dropOffPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
+                          <div>
+                            <div class="text caption-14 reg shuttle-bus-tag" [class.active]="item.ShuttleBus">Shuttle Bus</div>
+                            <div class="text sub-16 sem" style="color: black;"> {{calculateTimePoint(ticket.Ticket.ATime,item.Time)}} - {{item.Point}}  </div>
+                          </div>
+                          <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -780,7 +803,7 @@
                   <div class="text body-16 reg">Total</div>
                   <div class="text head-24 med" style="color: #4D56BE;"> {{450000*selectedSeat[i].length}}VND </div>
                 </div>
-                <div class="ticket-item-booking-seat-button btn btn-primary" [class.continue]="isContinue[i]" (click)="showSteperItem(2, i)">Continue</div>
+                <div class="ticket-item-booking-seat-button btn btn-primary" [class.continue]="isContinue[i]" (click)="goContinue(ticket,i)">Continue</div>
               </div>
             </div>
           </div>

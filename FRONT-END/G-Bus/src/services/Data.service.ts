@@ -78,6 +78,18 @@ getRawTicket(DLocation:string, ALocation: string, DDate: string):Observable<any>
     catchError(this.handleError)
   )
 }
+getAllTicket():Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text",
+  } 
+  return this._http.post<any>(this.API+"/allTicket",requestOptions).pipe(
+    map(res=> JSON.parse(res) as RawTicket[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
 
 getRouteWithPoints(route:string):Observable<any> {
   const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")

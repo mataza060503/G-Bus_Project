@@ -4,6 +4,19 @@
   
   gap: 21px;
 }
+.booked-ticket {
+  display: none;
+  flex-direction: column;
+  border-radius: 8px;
+  border: solid 1px var(--neutral-grey-100);
+  width: 245px;
+  padding: 16px 0px;
+}
+
+.display {
+  display: flex;
+}
+
 .filter {
   &-container {
     display: flex;

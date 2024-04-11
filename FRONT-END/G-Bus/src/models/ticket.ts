@@ -26,12 +26,32 @@ export interface Ticket {
   Driver: Driver[]
 }
 
+export interface BookedTicket {
+  Ticket: string,
+  State: boolean,
+  Seat: string[],
+  Subtotal: number,
+  PickUpLocation: Point,
+  DropOffLocation: Point,
+  Time: string,
+  Status: string,
+  Passenger: passengerInfo,
+  BusType: string
+}
+
 export interface Route {
   _id: string;
   DLocation: string;
   ALocation: string;
   PickUpPoints: Point[];
   DropOffPoints: Point[];
+}
+
+export interface passengerInfo {
+  Account: string,
+  FullName: string,
+  PhoneNumber: string,
+  Email: string
 }
 
 export interface Point {

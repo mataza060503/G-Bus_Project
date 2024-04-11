@@ -1,11 +1,12 @@
+import { passengerInfo } from './../../../models/ticket';
 
 import { Component, OnInit } from '@angular/core';
 import { empty } from 'rxjs';
 import { FeedbackItem, LocalData } from '../../../models/Item';
 import { LocalDataService } from '../../../services/LocalData.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../services/Data.service';
-import { Bus, RawTicket, Ticket, Route, Amenities, Driver } from '../../../models/ticket';
+import { Bus, RawTicket, Ticket, Route, Amenities, Driver, Point, BookedTicket } from '../../../models/ticket';
 
 @Component({
   selector: 'app-searching-result',
@@ -41,7 +42,7 @@ export class SearchingResultComponent implements OnInit{
   ALocation: any
   DDate:any
   RDate:any
-  localData: LocalData = { contryPort: [], provinces: [] };
+  localData: LocalData 
 
   minDate:Date;
   maxDate:Date;
@@ -58,13 +59,25 @@ export class SearchingResultComponent implements OnInit{
   reviewsPerPage: number = 3; // Number of reviews to display per page
   currentPage: number[] = []; // Current page index
 
-  
+  /** Ticket booked variables */
+
+  departureTicket!: BookedTicket
+  returnTicket!: BookedTicket
+
+  returnTrip: boolean = false
+  isBooked:boolean = false
+
+  pickPoint: Point = {Point:"",Time:0,Address:"",ShuttleBus: false}
+  dropPoint: Point = {Point:"",Time:0,Address:"",ShuttleBus: false}
 
   /////////////////////////////////////////////////////////////////////////////////////////////
 
-  constructor(private localDataService:LocalDataService, private dataService: DataService, private activatedRoute:ActivatedRoute) {
+  constructor(private localDataService:LocalDataService, private dataService: DataService, private activatedRoute:ActivatedRoute, private router: Router) {
+
+    this.localData = { contryPort: [], provinces: [] };
     this.localDataService.getLocalData().subscribe(data => {
       this.localData = data
+      console.log(this.localData)
     })
     this.loadDataIntoSearchBar()
     this.loadTicketData()
@@ -73,30 +86,25 @@ export class SearchingResultComponent implements OnInit{
     this.minDate = currentDate
     this.maxDate = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)
     
+    if (this.RDate != undefined) {
+      this.returnTrip = true
+    }
+
+    this.departureTicket = {
+      Ticket: "",
+      State: false,
+      Seat: [],
+      Subtotal: 0,
+      PickUpLocation: {} as Point,
+      DropOffLocation: {} as Point,
+      Time: "",
+      Status: "unpaid",
+      Passenger: {} as passengerInfo,
+      BusType: ""
+    }
   }
 
-  ngOnInit(): void {
-    for (let i = 0; i < 3; i++) {
-      this.isDropdownOpen.push(false);
-    }
-    for (let i = 0; i < 2; i++) {
-      this.isSteperOpen.push(false)
-    }
-    for (let i = 0; i < 3; i++) {
-      this.filterToggle.push(false);
-    }
-    for (let i = 0; i < this.list.length; i++) {
-      this.isContinue.push(false)
-    }
-    for (let i = 0; i < 4; i++) {
-      this.selectedDropdownItems.push(1);
-    }
-    for (let i = 0; i < 3; i++) {
-      this.selectedSteper.push(1)
-    }
-    for (let i = 0; i < this.list.length; i++) {
-      this.selectedSeat.push([])
-    }
+  ngOnInit(): void {   
     this.dropdownController()
   }
 
@@ -107,14 +115,24 @@ export class SearchingResultComponent implements OnInit{
       next: (data: RawTicket[]) => {
         this.rawTicket = data;
         console.log(this.rawTicket);
-  
+
+        for (let i = 0; i < 2; i++) {
+          this.isSteperOpen.push(false)
+        }
+        
         // Initialize tickets array
         this.tickets = [];
-  
+        
         // Iterate over raw tickets
         for (let i = 0; i < this.rawTicket.length; i++) {
           const ticket = this.rawTicket[i];
           this.currentPage.push(1)
+          this.selectedSteper.push(1)
+          this.selectedSeat.push([])
+          this.isContinue.push(false)
+          this.selectedDropdownItems.push(1);
+          this.isDropdownOpen.push(false);
+          this.filterToggle.push(false);
           this.selectedSteper.push(1)
           
           // Create a new Ticket object
@@ -254,6 +272,56 @@ export class SearchingResultComponent implements OnInit{
     this.currentPage[index] = pageNumber;
   }
 
+  selectPickPoint(point: Point) {
+    this.pickPoint = point
+  }
+  selectDropPoint(point:Point) {
+    this.dropPoint = point
+  }
+
+  goContinue(ticket:Ticket, index: number) {
+    this.departureTicket = {
+      Ticket: ticket.Ticket._id,
+      State: this.returnTrip,
+      Seat: this.selectedSeat[index],
+      Subtotal: ticket.Ticket.Price*this.selectedSeat[index].length,
+      PickUpLocation: this.pickPoint,
+      DropOffLocation: this.dropPoint,
+      Time: this.calculateTimePoint(ticket.Ticket.DTime,this.pickPoint.Time)+" - "+this.formatDate(ticket.Ticket.Date,3),
+      Status: "unpaid",
+      Passenger: {} as passengerInfo,
+      BusType: ticket.Bus.Name
+    }
+
+    if (this.RDate != undefined) {
+      this.returnTrip = true
+    }
+
+    console.log(this.returnTrip)
+
+    if (this.returnTrip === true) {
+      this.currentPage = []
+      this.selectedSteper = []
+      this.selectedSeat = []
+      this.isContinue = []
+      this.selectedDropdownItems = []
+      this.isDropdownOpen.push(false);
+      this.filterToggle = []
+      this.selectedSteper = []
+      this.isSteperOpen = []
+
+      this.switch()
+      const returnDate = this.RDate
+      this.RDate = this.DDate
+      this.DDate = returnDate
+      this.loadTicketData()
+
+      this.isBooked = true
+    }
+
+    console.log(this.departureTicket)
+  }
+
   filterReviews(ticket: Ticket, filter: string,index: number) {
     ticket.Reviews = this.reviewsCopy[index]
     var filtered: FeedbackItem[] = []
@@ -369,12 +437,15 @@ export class SearchingResultComponent implements OnInit{
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Note: Months are zero-based
     const year = date.getFullYear();
+    const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
+
 
     if (type === 1 ) {
       return `${day}/${month}/${year}`;
-    }
-    if (type === 2) {
+    } else if (type === 2) {
       return `${day}/${month}`;
+    } else if (type === 3) {
+      return `${dayOfWeek}, ${day}/${month}/${year}`;
     }
 
     // Return the formatted date string
@@ -400,6 +471,8 @@ export class SearchingResultComponent implements OnInit{
     return `${hours}h${minutes < 10 ? '0' : ''}${minutes}`;
   }
 
+  
+
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Searching bar
@@ -408,14 +481,13 @@ export class SearchingResultComponent implements OnInit{
       this.DLocation = param.get("DLocation")
       this.ALocation = param.get("ALocation")
       var dateCheck = param.get("DDate")
+      var dateCheck2 = param.get("RDate")
       if (dateCheck != null) {
         this.DDate = this.parseDateString(dateCheck)
       }
-      if (param.get("RDate") != "") {
-        this.RDate = param.get("RDate")
-
+      if (dateCheck2 != null) {
+        this.RDate = this.parseDateString(dateCheck2)
       }
-     
     })
   }
   getBusType(event: any) {
@@ -438,6 +510,8 @@ export class SearchingResultComponent implements OnInit{
       searchHis = JSON.parse(localStorage.getItem("his") || "[]")
       searchHis.unshift(searchResult)
       localStorage.setItem("his",JSON.stringify(searchHis))
+
+      this.loadTicketData()
       
     } else {
       alert("Please select your trip information")
@@ -445,6 +519,8 @@ export class SearchingResultComponent implements OnInit{
         this.localData = data
       })
     }
+
+
   }
 
   generateStar(time: number) {
@@ -471,13 +547,18 @@ export class SearchingResultComponent implements OnInit{
   }
 
   toggleDropdown(index: number, event: any) {
+    for (let i = 0; i < this.tickets.length; i++) {
+      this.isDropdownOpen[i]=false
+      this.isSteperOpen[i] =false
+    }
     this.isDropdownOpen[index] = !this.isDropdownOpen[index];
-    this.isSteperOpen[index] = false
-    
   }
   toggleSteper(index: number) {
+    for (let i = 0; i < this.tickets.length; i++) {
+      this.isDropdownOpen[i]=false
+      this.isSteperOpen[i] =false
+    }
     this.isSteperOpen[index] = !this.isSteperOpen[index]
-    this.isDropdownOpen[index] = false;
   }
   dropdownController() {
     const dropdowns = document.querySelectorAll("#dropdown")
@@ -563,6 +644,11 @@ export class SearchingResultComponent implements OnInit{
   }
 
   /** Other Functions */
+
+  count(arr: any[]): number {
+    return (arr ?? []).length;
+  }
+  
 
   numberArrayAverage(array: number[]) {
     var sum = array.reduce((total, num) => total + num, 0);
