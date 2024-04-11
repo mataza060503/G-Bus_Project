@@ -4,6 +4,7 @@ import { LocalDataService } from '../../../services/LocalData.service';
 import { FeedbackItem, LocalData, PartnerPromotion, PromotionItem, RouteItem, SearchItem, SlideItem } from '../../../models/Item';
 import { ThemePalette } from '@angular/material/core';
 import { DataService } from '../../../services/Data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -46,6 +47,9 @@ export class HomepageComponent implements OnInit{
   feedbackSlideCurrentPercent: number = 3
   feedbackSlidePercent: number = 0
 
+  minDate: Date;
+  maxDate: Date
+
   ngOnInit(): void {
     this.localDataService.getLocalData().subscribe(data => {
       this.localData = data
@@ -56,15 +60,25 @@ export class HomepageComponent implements OnInit{
     this.getPartnerPromotion()
     this.getFeedback()
 
-    this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
+    const localStorageData = localStorage.getItem("his");
+    if (localStorageData) {
+      const parsedData = JSON.parse(localStorageData);
+      this.SearchingHistory = parsedData.slice(0, 20);
+    } else {
+      this.SearchingHistory = [];
+}
     this.slidePercent=(3/this.SearchingHistory.length)*100
         
   }
 
-  constructor(private localDataService: LocalDataService, private dbService: DataService) {
+  constructor(private localDataService: LocalDataService, private dbService: DataService, private router: Router) {
     this.slideCurrentPercent = 3
     this.routeSlideCurrentPercent = 4
     this.promotionSlideCurrentPercent = 3
+
+    const currentDate = new Date();
+    this.minDate = currentDate
+    this.maxDate = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)
   }
 
   //Couseral 
@@ -155,6 +169,10 @@ export class HomepageComponent implements OnInit{
   } 
 
   //Other functions:
+  count(arr: any[]): number {
+    return (arr ?? []).length;
+  }
+
   getBusType(event: any) {
     const selected = event.target as HTMLElement;
     this.busTypeSelected = selected.textContent?.trim() || ""
@@ -170,16 +188,26 @@ export class HomepageComponent implements OnInit{
   }
   search() {
     var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate}
-    if (searchResult.DLocation !== undefined && searchResult.ALocation !== undefined && searchResult.DDate !== undefined) {
-      var searchHis = []
-      searchHis = JSON.parse(localStorage.getItem("his") || "[]")
-      searchHis.unshift(searchResult)
-      localStorage.setItem("his",JSON.stringify(searchHis))
-
-      this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
-      
-    } else {
+    if (this.DDate === undefined) {
       alert("Please select your trip information")
+    }
+    else {
+      if (searchResult.DLocation !== undefined && searchResult.ALocation !== undefined && searchResult.DDate !== undefined) {
+        var searchHis = []
+        searchHis = JSON.parse(localStorage.getItem("his") || "[]")
+        searchHis.unshift(searchResult)
+        localStorage.setItem("his",JSON.stringify(searchHis))
+  
+        this.SearchingHistory = JSON.parse(localStorage.getItem("his") || "[]")
+  
+        if (this.RDate !== undefined) {
+          this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),this.formatDate(this.RDate)])
+        } else if (this.RDate === undefined) {
+          this.router.navigate(["searchResult",this.DLocation,this.ALocation,this.formatDate(this.DDate),""])
+        }
+      } else {
+        alert("Please select your trip information")
+      }
     }
   }
 

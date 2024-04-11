@@ -6,17 +6,17 @@
     </div>
     <div class="header-nav">
       <ul class="menu text">
-        <li class="menu-item head-24 med">
-          <a href="#" (click)="headerNavSelected($event, 'Homepage')" [class.active]="selectedLink === 'Homepage'">Homepage</a>
+        <li class="menu-item head-24 med" (click)="headerNavSelected($event,0)" >
+          <div class="menu-item-sub" [class.active]="selectedLink[0]">Homepage</div>
         </li>
-        <li class="menu-item head-24 med">
-          <a href="#" (click)="headerNavSelected($event, 'Schedule')" [class.active]="selectedLink === 'Schedule'">Schedule</a>
+        <li class="menu-item head-24 med" (click)="headerNavSelected($event,1)" >
+          <div class="menu-item-sub" [class.active]="selectedLink[1]" >Schedule</div>
         </li>
-        <li class="menu-item head-24 med">
-          <a href="#" (click)="headerNavSelected($event, 'Contact')" [class.active]="selectedLink === 'Contact'">Contact</a>
+        <li class="menu-item head-24 med" (click)="headerNavSelected($event,2)" >
+          <div class="menu-item-sub" [class.active]="selectedLink[2]">Contact</div>
         </li>
-        <li class="menu-item head-24 med">
-          <a href="#" (click)="headerNavSelected($event, 'About us')" [class.active]="selectedLink === 'About us'">About us</a>
+        <li class="menu-item head-24 med" (click)="headerNavSelected($event,3)" >
+          <div class="menu-item-sub" [class.active]="selectedLink[3]">About us</div>
         </li>
       </ul>
       
@@ -31,3 +31,4 @@
     </div>
   </div>
 </section>
+<router-outlet></router-outlet>

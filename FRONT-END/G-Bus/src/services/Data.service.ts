@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { FeedbackItem, PartnerPromotion, PromotionItem, RouteItem } from '../models/Item';
+import { Amenities, Bus, Driver, RawTicket, Route } from '../models/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -64,8 +65,100 @@ getAllFeedback():Observable<any> {
   )
 }
 
+//Booking Service 
+getRawTicket(DLocation:string, ALocation: string, DDate: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text",
+  } 
+  return this._http.post<any>(this.API+"/ticket",{"DLocation":DLocation,"ALocation":ALocation,"DDate":DDate},requestOptions).pipe(
+    map(res=> JSON.parse(res) as RawTicket[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+getAllTicket():Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text",
+  } 
+  return this._http.post<any>(this.API+"/allTicket",requestOptions).pipe(
+    map(res=> JSON.parse(res) as RawTicket[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getRouteWithPoints(route:string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/routeWithPoints",JSON.stringify({"Route":route}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as Route[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getReviews(reviews:string[]):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/reviews",JSON.stringify({"Reviews":reviews}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as FeedbackItem[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getBus(id:string):Observable<any>{
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/bus",JSON.stringify({"Bus":id}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as Bus),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getAmenities(amenities:string[]):Observable<any>{
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/amenities",JSON.stringify({"Amenities":amenities}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as Amenities[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getDrivers(drivers:string[]):Observable<any>{
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/driver",JSON.stringify({"Driver":drivers}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as Driver[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
 handleError(error:HttpErrorResponse){
   return throwError(()=>new Error(error.message))
 }
+
 
 }
