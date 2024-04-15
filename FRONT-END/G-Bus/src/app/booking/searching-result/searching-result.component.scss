@@ -11,10 +11,41 @@
   border: solid 1px var(--neutral-grey-100);
   width: 245px;
   padding: 16px 0px;
+  
 }
+
+.offcanvas-body {
+  height: calc(100vh - 96px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 100rem;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 100rem;
+    background: var(--neutral-grey-100);
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100rem;
+    background: var(--neutral-grey-300); 
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    border-radius: 100rem;
+    background: var(--neutral-grey-300); 
+  }
+} 
 
 .display {
   display: flex;
+}
+
+::ng-deep .custom-panel.offcanvas.offcanvas-end.show {
+  width: 622px;
+  border: none;
+}
+
+.custom-panel {
+  width: 622px;
 }
 
 .filter {

@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat'
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { Component, inject, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -17,6 +19,7 @@ import { GeneralModule } from './general/general.module';
 import { BookingModule } from './booking/booking.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import { environment } from '../environments/environment';
     MatFormFieldModule, 
     MatDatepickerModule,
     SlickCarouselModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    NgbModule
   ],
   providers: [
     provideNativeDateAdapter(),

@@ -15,12 +15,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { PassengerInfoComponent } from './passenger-info/passenger-info.component';
 
 
 
 @NgModule({
   declarations: [
-    SearchingResultComponent
+    SearchingResultComponent,
+    PassengerInfoComponent
   ],
   imports: [
     CommonModule,

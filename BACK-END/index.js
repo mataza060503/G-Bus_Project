@@ -100,6 +100,11 @@ app.get("/allTicket", cors(), async (req,res)=> {
   res.send(Ticket)
 })
 
+app.post("/ticket", cors(), async (req, res) => {
+  const tikets = req.body
+  database.collection("BookedTickets").insertMany(tikets)
+})
+
 app.post("/reviews",cors(), async (req,res)=> {
   const ids = req.body.Reviews
   const data = []
