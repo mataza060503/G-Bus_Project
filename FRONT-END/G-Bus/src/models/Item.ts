@@ -46,7 +46,8 @@ export interface FeedbackItem {
   Tag: string[],
   Feedback: string,
   Image: string[],
-  Rating: number
+  Rating: number,
+  Date: string
 }
 
 export interface SlideItem {

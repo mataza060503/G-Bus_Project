@@ -20,7 +20,6 @@ export class LoginPhoneNumberComponent implements OnInit{
   ngOnInit(): void {
     const loginPhoneNumberPopup = document.querySelector("#loginPhoneNumber") as HTMLElement
     console.log(loginPhoneNumberPopup)
-    loginPhoneNumberPopup.style.display = "block"
 
     this.phoneNumber = localStorage.getItem("phoneNumber") || ""
     this.portImageSelected = "./assets/images/login/vn.png 2x"

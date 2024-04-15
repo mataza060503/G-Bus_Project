@@ -65,4 +65,11 @@
   &-item.active {
     color: var(--Primary-Purple500, #4D56BE);
   }
+  &-item-sub {
+    color: var(--Neutral-Grey300, #6F757F);
+  }
+}
+
+.active {
+  color: var(--Primary-Purple500, #4D56BE);
 }

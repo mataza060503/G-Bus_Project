@@ -36,7 +36,7 @@ $G-Bus-theme: mat.define-light-theme((
 @include mat.all-component-themes($G-Bus-theme);
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import "reset.css";
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -73,46 +73,30 @@ input::-webkit-inner-spin-button {
   color: var(--primary-color-1);
 }
 
-.large {
-  color: var(--Gray-White, #FFF);
-  font-family: var(--font);
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 30px;
-  padding: 8px 16px;
-  border-radius: 4px;
-}
-.medium {
-  color: var(--Gray-White, #FFF);
-  font-family: var(--font);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 150%; /* 24px */
-  padding: 6px 12px;
-  border-radius: 4px;
-}
-.small {
-  color: var(--Gray-White, #FFF);
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 150%; /* 21px */
-  padding: 4px 8px;
-  border-radius: 3.2px;
+a {
+  text-decoration: none;
 }
 
 .button {
   font-family: var(--font);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 4px;
   &-primary {
-    border: 1px solid var(--Theme-Primary, #0D6EFD);
-    background: var(--Theme-Primary, #0D6EFD);
+    border: 1px solid var(--primary-color-1);
+    background: var(--primary-color-1);
+    border-radius: 8px;
+    color: white;
     &-outliner {
       background: none;
-      border: 1px solid var(--Theme-Primary, #0D6EFD);
-      color: var(--Theme-Primary, #0D6EFD);
+      border: 1px solid var(--primary-color-1);
+      color: var(--primary-color-1);
+      border-radius: 8px;
       &:hover {
         color: white;
-        background: var(--Theme-Primary, #0D6EFD);
+        background: var(--primary-color-1);
       }
       &:active {
         color: white;      
@@ -131,12 +115,20 @@ input::-webkit-inner-spin-button {
       color: white;
       border: 1px solid var(--Primary-Purple500, #4D56BE);
       background: var(--Primary-Purple500, #4D56BE);
+      outline: solid 2px #0D6EFD;
+    }
+    &:active {
+      color: white;
+      border: 1px solid var(--Primary-Purple500, #4D56BE);
+      background: var(--Primary-Purple500, #4D56BE);
+      outline: solid 2px #0D6EFD;
     }
     &:disabled{
       color: white;
       border: 1px solid var(--Primary-Purple500, #4D56BE);
       opacity: 0.65;
       background: var(--Primary-Purple500, #4D56BE);
+      
     }
   }
 }
@@ -148,15 +140,19 @@ input::-webkit-inner-spin-button {
 }
 
 .bold {
+  font-family: var(--font);
   font-weight: 700;
 }
 .sem {
+  font-family: var(--font);
   font-weight: 600;
 }
 .med {
+  font-family: var(--font);
   font-weight: 500;
 }
 .reg {
+  font-family: var(--font);
   font-weight: 400;
 }
 
@@ -164,6 +160,8 @@ input::-webkit-inner-spin-button {
   font-family: var(--font);
   font-style: normal;
   line-height: normal;
+  margin: 0px;
+  padding: 0px;
 }
 .sub {
   color: #6F757F;
@@ -223,8 +221,33 @@ input::-webkit-inner-spin-button {
   letter-spacing: 0.056px;
 }
 
-
+.path {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  &-home {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #0D6EFD;
+    cursor: pointer;
+    & div {
+      text-decoration: underline;
+    }
+  }
+  &-item {
+    color: #6C757D;
+  }
+  & span {
+    font-size: 16px;
+    cursor: pointer;
+  }
+}
 
 
 html, body { height: 100%; }
 body { margin: 0; font-family: var(--font) }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import "reset.css";
