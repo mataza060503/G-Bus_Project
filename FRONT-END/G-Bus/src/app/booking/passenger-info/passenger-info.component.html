@@ -1,0 +1,108 @@
+<div class="wrapper">
+  <section class="passenger">
+    <div class="passenger-container">
+      <div class="path">
+        <div class="path-home" (click)="navigate('homepage')">
+          <span class="material-symbols-outlined">
+            home
+          </span>
+          <div class="text sub-16 reg">Home</div>
+        </div>
+        <span class="material-symbols-outlined" style="color: black;">
+          chevron_right
+        </span>
+        <div class="path-item text sub-16 reg">
+          Passenger Information
+        </div>
+      </div>
+      <div class="passenger-body">
+        <div style="display: flex; flex-direction: column;gap: 24px;">
+          <div class="passenger-form">
+            <div class="text button-20 bold">Passenger Information</div>
+            <div class="passenger-content">
+              <div class="passenger-input">
+                <label for="name" class="text sub-16 med">Full Name<b style="color: #DD1F13;">*</b></label>
+                <input class="text cption-14 reg" type="text" id="name" placeholder="Nguyen Quoc Khanh">
+              </div>
+              <div class="passenger-input">
+                <label for="name" class="text sub-16 med">Phone Number<b style="color: #DD1F13;">*</b></label>
+                <input class="text cption-14 reg" type="text" id="name" placeholder="(+84) 123 456 789">
+              </div>
+              <div class="passenger-input">
+                <label for="name" class="text sub-16 med">Email<b style="color: #DD1F13;">*</b></label>
+                <input class="text cption-14 reg" type="text" id="name" placeholder="khanhnq@gmail.com">
+              </div>
+            </div>
+            <div class="passenger-notice text caption-14 reg">
+              <span class="material-symbols-outlined" style="font-size: 16px;">
+                admin_panel_settings
+              </span>
+              <p>Phone number and email are used to send order information and contact when necessary.</p>
+            </div>
+          </div>
+          <div class="passenger-form-control">
+            <div class="button button-primary-outliner large sub-16 sem">Cancel</div>
+            <div class="button button-primary large sub-16 sem">Continue</div>
+          </div>
+        </div>
+        <div class="passenger-ticket">
+          <div class="passenger-ticket-item">
+            <div style="display: flex;align-items: center;justify-content: space-between;">
+              <div class="text body-20 reg">Subtotal</div>
+              <div class="text head-24 med" style="color: var(--primary-color-1);"> {{convertMoney(departureTicket.Subtotal + returnTicket.Subtotal)}}VND </div>
+            </div>
+            
+          </div>
+          <div class="passenger-ticket-item">
+            <div style="display: flex;flex-direction: column; gap: 16px;">
+              <div class="text button-20 bold">Booking Preview</div>
+              <div class="passenger-ticket-booked">
+                <div class="passenger-ticket-booked-header">
+                  <div class="text sub-16 sem">Departure Trip</div>
+                  <div style="display: flex;align-items: center;gap: 4px;color: var(--neutral-grey-300);">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; color: var(--neutral-grey-300);font-size: 16px;">
+                      group
+                    </span>
+                    <div class="text body-12 reg"> {{count(departureTicket.Seat)}} </div>
+                  </div>
+                </div>
+                <div style="width: 100%;height: 1px;background-color: var(--neutral-grey-100);"></div>
+                <div class="passenger-ticket-booked-body">
+                  <div style="display: flex;gap: 12px;">
+                    <div style="width: 61px;height: 61px;text-align: center;border-radius: 4px;overflow: hidden;">
+                      <img src={{departureTicket.Image}} alt="" style="width: 61px;min-height: 61px;">
+                    </div>
+                    <div style="display: flex;flex-direction: column;justify-content: space-between">
+                      <div class="text sub-16 sem">Limousine Single Room</div>
+                      <div style="display: flex;align-items: center;justify-content: space-between; width: 283px;">
+                        <div class="text caption-16 reg" style="color: var(--neutral-grey-300);">Seat number</div>
+                        <div class="text sub-16 med"> {{departureTicket.Seat.toString()}} </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex;flex-direction: column;gap: 24px;">
+                    <div style="display: flex;align-items: start;gap: 8px;">
+                      <div style="display: flex;flex-direction: column;gap: 4px;align-items: center;">
+                        <div class="text sub-16 sem"> {{convertDateTime(departureTicket.PickUpTime,"time")}} </div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> ({{convertDateTime(departureTicket.PickUpTime,"date")}}) </div>
+                      </div>
+                      <span class="material-symbols-outlined" style="color: black; font-size: 16px;">
+                        my_location
+                      </span>
+                      <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
+                        <div class="text sub-16 sem"> {{departureTicket.PickUpLocation.Point}} </div>
+                        <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.PickUpLocation.Address}} </div>
+                      </div>
+                      <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);">Edit</div>
+                    </div>
+                    
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

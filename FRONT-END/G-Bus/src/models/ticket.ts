@@ -28,15 +28,20 @@ export interface Ticket {
 
 export interface BookedTicket {
   Ticket: string,
-  State: boolean,
+  Date: string,
+  State: string,
   Seat: string[],
   Subtotal: number,
   PickUpLocation: Point,
   DropOffLocation: Point,
-  Time: string,
+  PickUpTime: string,
+  DropOffTime: string,
   Status: string,
-  Passenger: passengerInfo,
-  BusType: string
+  Passenger: PassengerInfo,
+  BusType: string,
+  DLocation: string,
+  ALocation: string,
+  Image: string
 }
 
 export interface Route {
@@ -47,7 +52,7 @@ export interface Route {
   DropOffPoints: Point[];
 }
 
-export interface passengerInfo {
+export interface PassengerInfo {
   Account: string,
   FullName: string,
   PhoneNumber: string,

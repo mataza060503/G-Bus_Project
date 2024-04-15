@@ -1,5 +1,149 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
 <div class="wrapper">
+  <ng-template #content let-offcanvas>
+    <div style="background-color: white; height: 100vh;">
+      <div class="offcanvas-header" style="display: flex;align-items: center;gap: 24px; width: 100%;padding: 24px;background-color: #4D56BE;">
+        <span class="material-symbols-outlined" style="color: white;font-size: 30px;cursor: pointer;" (click)="offcanvas.dismiss('Cross click')">
+          arrow_left_alt
+        </span>
+        <div class="text sub-16 sem" style="display: flex;flex-direction: column;gap: 8px; color: white;">
+          <div> {{departureTicket.DLocation}} - {{departureTicket.ALocation}} </div>
+          <div style="display: flex;align-items: center;gap: 16px;">
+            <div class="text caption-14 reg" style="padding: 2px 4px;background-color: #FFB74A;color: white;">Departure Trip</div>
+            <div class="text body-16 reg" style="color: white;"> {{departureTicket.Date}} </div>
+          </div>
+        </div>
+      </div>
+      <div class="offcanvas-body" style="display: flex;flex-direction: column;padding: 24px;gap: 24px;">
+        <div class="booked-ticket-info" style="display: flex;flex-direction: column; gap: 12px;">
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Trip</div>
+            <div> {{departureTicket.DLocation}} - {{departureTicket.ALocation}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Bus Type</div>
+            <div> {{departureTicket.BusType}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Time</div>
+            <div> {{departureTicket.Date}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">State</div>
+            <div> {{departureTicket.State}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Seat Numbers</div>
+            <div> {{departureTicket.Seat.toString()}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Subtotal</div>
+            <div> {{convertMoney(departureTicket.Subtotal)}}VND </div>
+          </div>
+        </div>
+        <div class="booked-ticket-point" style="display: flex;justify-content: space-between;">
+          <div style="display: flex;gap: 20px;">
+            <span class="material-symbols-outlined" style="color: black;">
+              my_location
+            </span>
+            <div style="display: flex;flex-direction: column;gap: 10px;">
+              <div class="text head-24 med">Pick-up location</div>
+              <div class="text body-20 reg"> {{departureTicket.PickUpLocation.Point}} </div>
+              <div class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.PickUpLocation.Address}} </div>
+              <div class="text sub-14 reg">Expected pick-up at {{departureTicket.PickUpTime}} </div>
+            </div>
+          </div>
+          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;" (click)="openStaticBackdrop(editPickUp)">Edit</div>
+        </div>
+        <div class="booked-ticket-point" style="display: flex;justify-content: space-between;margin-bottom: 40px;">
+          <div style="display: flex;gap: 20px;">
+            <span class="material-symbols-outlined" style="color: black;">
+              my_location
+            </span>
+            <div style="display: flex;flex-direction: column;gap: 10px;">
+              <div class="text head-24 med">Pick-up location</div>
+              <div class="text body-20 reg"> {{departureTicket.DropOffLocation.Point}} </div>
+              <div class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.DropOffLocation.Address}} </div>
+              <div class="text sub-14 reg">Expected pick-up at {{departureTicket.DropOffTime}} </div>
+            </div>
+          </div>
+          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;">Edit</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #editPickUp let-offPcanvas>
+    <div style="background-color: white; height: 100vh;">
+      <div class="offcanvas-header" style="display: flex;align-items: center;gap: 24px; width: 100%;padding: 24px;background-color: #4D56BE;">
+        <span class="material-symbols-outlined" style="color: white;font-size: 30px;cursor: pointer;" (click)="offPcanvas.dismiss('Cross click')">
+          arrow_left_alt
+        </span>
+        <div class="text sub-16 sem" style="display: flex;flex-direction: column;gap: 8px; color: white;">
+          <div class="body-20 reg">Edit Pick-up point</div>
+          <div> {{departureTicket.DLocation}} - {{departureTicket.ALocation}} </div>
+          <div style="display: flex;align-items: center;gap: 16px;">
+            <div class="text caption-14 reg" style="padding: 2px 4px;background-color: #FFB74A;color: white;">Departure Trip</div>
+            <div class="text body-16 reg" style="color: white;"> {{departureTicket.Date}} </div>
+          </div>
+        </div>
+      </div>
+      <div class="offcanvas-body" style="display: flex;flex-direction: column;padding: 24px;gap: 24px;">
+        <div class="booked-ticket-info" style="display: flex;flex-direction: column; gap: 12px;">
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Trip</div>
+            <div> {{departureTicket.DLocation}} - {{departureTicket.ALocation}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Bus Type</div>
+            <div> {{departureTicket.BusType}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Time</div>
+            <div> {{departureTicket.Date}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">State</div>
+            <div> {{departureTicket.State}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Seat Numbers</div>
+            <div> {{departureTicket.Seat.toString()}} </div>
+          </div>
+          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="color: var(--neutral-grey-300);">Subtotal</div>
+            <div> {{convertMoney(departureTicket.Subtotal)}}VND </div>
+          </div>
+        </div>
+        <div class="booked-ticket-point" style="display: flex;justify-content: space-between;">
+          <div style="display: flex;gap: 20px;">
+            <span class="material-symbols-outlined" style="color: black;">
+              my_location
+            </span>
+            <div style="display: flex;flex-direction: column;gap: 10px;">
+              <div class="text head-24 med">Pick-up location</div>
+              <div class="text body-20 reg"> {{departureTicket.PickUpLocation.Point}} </div>
+              <div class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.PickUpLocation.Address}} </div>
+              <div class="text sub-14 reg">Expected pick-up at {{departureTicket.PickUpTime}} </div>
+            </div>
+          </div>
+          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;">Edit</div>
+        </div>
+        <div class="booked-ticket-point" style="display: flex;justify-content: space-between;margin-bottom: 40px;">
+          <div style="display: flex;gap: 20px;">
+            <span class="material-symbols-outlined" style="color: black;">
+              my_location
+            </span>
+            <div style="display: flex;flex-direction: column;gap: 10px;">
+              <div class="text head-24 med">Pick-up location</div>
+              <div class="text body-20 reg"> {{departureTicket.DropOffLocation.Point}} </div>
+              <div class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.DropOffLocation.Address}} </div>
+              <div class="text sub-14 reg">Expected pick-up at {{departureTicket.DropOffTime}} </div>
+            </div>
+          </div>
+          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;">Edit</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>  
   <section class="searching">
     <div class="hero-container">
       <p class="text head-30 reg" style="color: #6F757F;">With GBus</p>
@@ -41,8 +185,8 @@
             </div>
             <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
               <div class="hero-divider"></div>
-              <mat-form-field style="height: 100%;cursor: pointer;">
-                <mat-label class="text sub-16 sem" >Departure Date</mat-label>
+              <mat-form-field style="height: 100%;cursor: pointer;" (click)="picker.open()">
+                <mat-label class="text sub-16 sem" (click)="picker.open()">Departure Date</mat-label>
                 <input [min]="minDate" [max]="maxDate" class="text sub-16 sem" matInput [matDatepicker]="picker" #inpdatepicker [(ngModel)]="DDate" (click)="picker.open()">
                 <div  mat-raised-button matSuffix (click)="picker.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">calendar_today</span>
@@ -52,8 +196,8 @@
             </div>
             <div class="dropdown hero-dropdown" style="display: flex;align-items: center; height: 100%; width: 211px;">
               <div class="hero-divider"></div>
-              <mat-form-field style="height: 100%; cursor: pointer;" >
-                <mat-label class="text sub-16 sem" >Return Date</mat-label>
+              <mat-form-field style="height: 100%; cursor: pointer;" (click)="picker1.open()">
+                <mat-label class="text sub-16 sem" (click)="picker1.open()">Return Date</mat-label>
                 <input [min]="minDate" [max]="maxDate" class="text sub-16 sem" matInput [matDatepicker]="picker1" #inpdatepicker [(ngModel)]="RDate" (click)="picker1.open()">
                 <div mat-raised-button matSuffix (click)="picker1.open()" style="margin-left: 16px; margin-right: 11px; cursor: pointer;">
                   <span class="material-symbols-outlined">add</span>
@@ -63,7 +207,7 @@
             </div>
             
           </div>
-          <button class="btn button-primary text sub-16 sem btn-find" (click)="search()">Find</button>
+          <button class=" button-primary text sub-16 sem btn-find" (click)="search()">Find</button>
         </div>
         <div class="hero-main-dropdowns">
           <div class="dropdown">
@@ -117,16 +261,16 @@
             </div>
           </div>
           <div class="text button-20 bold" style="margin: 0px 16px;margin-top: 24px;margin-bottom: 12px;"> {{departureTicket.BusType}} </div>
-          <div class="text body-16 reg" style="margin: 0px 16px;"> {{departureTicket.Time}} </div>
+          <div class="text body-16 reg" style="margin: 0px 16px;"> {{departureTicket.Date}} </div>
           <div style="background-color: var(--neutral-grey-100);width: 100%;height: 0.5px;margin: 16px 0px;"></div>
           <div style="display: flex; align-items: center;justify-content: space-between;margin: 0px 16px; margin-bottom: 16px;">
             <div class="text body-16 reg">Subtotal</div>
-            <div class="text head-24 med"> {{departureTicket.Subtotal}} </div>
+            <div class="text head-24 med"> {{convertMoney(departureTicket.Subtotal)}}VND </div>
           </div>
-          <button class="btn btn-primary" style="width: 213px;height: 53px;margin: 0px auto;">View Details</button>
+          <button class="btn btn-primary" style="width: 213px;height: 53px;margin: 0px auto;" (click)="openEnd(content)">View Details</button>
         </div>
         <div class="filter-item">
-          <div class="filter-title button-20 bold">Sort</div>
+          <div class="filter-title text button-20 bold">Sort</div>
           <div class="filter-sort">
             <div class="filter-sort-item">
               <input type="radio" name="sort" id="default" value="1">
@@ -363,8 +507,8 @@
               </div>
             </div>
           </div>
-          <div class="ticket-item-dropdown" [class.open]="isDropdownOpen[i]">
-            <div class="ticket-item-dropdown-nav" id="dropdown">
+          <div class="ticket-item-dropdown" [class.open]="isDropdownOpen[i]" style="width: 775px;">
+            <div class="ticket-item-dropdown-nav" id="dropdown" >
               <div class="ticket-item-dropdown-nav-item text button-20 reg active"  (click)="showDropdownItem(1, i,$event)">Pick-Up/Drop-Off</div>
               <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(2, i,$event);filterReviews(ticket,'All',i)">Reviews ({{ticket.Reviews.length}})</div>
               <div class="ticket-item-dropdown-nav-item text button-20 reg " (click)="showDropdownItem(3, i,$event)">Amenities</div>
