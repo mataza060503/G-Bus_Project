@@ -113,7 +113,9 @@ export class SearchingResultComponent implements OnInit{
       BusType: "",
       DLocation: "",
       ALocation: "",
-      Image: ""
+      Image: "",
+      PickUpPoints: [],
+      DropOffPoints: []
     }
     this.returnTicket = {
       Ticket: "",
@@ -130,7 +132,9 @@ export class SearchingResultComponent implements OnInit{
       BusType: "",
       DLocation: "",
       ALocation: "",
-      Image: ""
+      Image: "",
+      PickUpPoints: [],
+      DropOffPoints: []
     }
   }
 
@@ -309,6 +313,13 @@ export class SearchingResultComponent implements OnInit{
     this.dropPoint = point
   }
 
+  editPickPoint(point: Point) {
+    this.departureTicket.PickUpLocation = point
+  }
+  editDropPoint(point: Point) {
+    this.departureTicket.DropOffLocation = point
+  }
+
   goContinue(ticket:Ticket, index: number) {
     if (this.RDate != undefined) {
       this.returnTrip = "Round-trip"
@@ -333,7 +344,9 @@ export class SearchingResultComponent implements OnInit{
           BusType: ticket.Bus.Name,
           DLocation: ticket.Route.DLocation,
           ALocation: ticket.Route.ALocation,
-          Image: ticket.Ticket.Image
+          Image: ticket.Ticket.Image,
+          PickUpPoints: ticket.Route.PickUpPoints,
+          DropOffPoints: ticket.Route.DropOffPoints
         }
         this.resetTickets()
         window.scrollTo({ top: 150, behavior: 'smooth' });
@@ -353,7 +366,9 @@ export class SearchingResultComponent implements OnInit{
           BusType: ticket.Bus.Name,
           DLocation: ticket.Route.DLocation,
           ALocation: ticket.Route.ALocation,
-          Image: ticket.Ticket.Image
+          Image: ticket.Ticket.Image,
+          PickUpPoints: ticket.Route.PickUpPoints,
+        DropOffPoints: ticket.Route.DropOffPoints
         }
       }
       this.router.navigate(["passengerInfo"])
@@ -373,7 +388,9 @@ export class SearchingResultComponent implements OnInit{
         BusType: ticket.Bus.Name,
         DLocation: ticket.Route.DLocation,
         ALocation: ticket.Route.ALocation,
-        Image: ticket.Ticket.Image
+        Image: ticket.Ticket.Image,
+        PickUpPoints: ticket.Route.PickUpPoints,
+        DropOffPoints: ticket.Route.DropOffPoints
       }
       this.router.navigate(["passengerInfo"])
     }

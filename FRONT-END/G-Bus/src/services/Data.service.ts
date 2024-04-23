@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { FeedbackItem, PartnerPromotion, PromotionItem, RouteItem } from '../models/Item';
-import { Amenities, Bus, Driver, RawTicket, Route } from '../models/ticket';
+import { Amenities, BookedTicket, Bus, Driver, OrderTicket, PassengerInfo, PostBookedTicket, RawTicket, Route } from '../models/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -151,6 +151,32 @@ getDrivers(drivers:string[]):Observable<any>{
   } 
   return this._http.post<any>(this.API+"/driver",JSON.stringify({"Driver":drivers}),requestOptions).pipe(
     map(res=> JSON.parse(res) as Driver[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+// [POST] Save booked tickets
+postBookedTickets(order: PostBookedTicket):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/bookedTicket",JSON.stringify(order),requestOptions).pipe(
+    map(res=> JSON.parse(res) as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+postOrder(order: OrderTicket):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/order",JSON.stringify(order),requestOptions).pipe(
+    map(res=> JSON.parse(res) as string),
     retry(3),
     catchError(this.handleError)
   )
