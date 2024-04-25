@@ -7,7 +7,7 @@ import { HomepageComponent } from './general/homepage/homepage.component';
 import { PassengerInfoComponent } from './booking/passenger-info/passenger-info.component';
 
 const routes: Routes = [
-  {path:'passengerInfo',component:HomepageComponent},
+  {path:'homepage',component:HomepageComponent},
   {path:'searchResult/:DLocation/:ALocation/:DDate/:RDate',component:SearchingResultComponent},
   {path:'', component:PassengerInfoComponent},
   {path:'login-phoneNumber',

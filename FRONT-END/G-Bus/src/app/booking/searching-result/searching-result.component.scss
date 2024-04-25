@@ -14,6 +14,11 @@
   
 }
 
+input[type="radio"] {
+  width: 24px;
+  height: 24px;
+}
+
 .offcanvas-body {
   height: calc(100vh - 96px);
   overflow-y: scroll;

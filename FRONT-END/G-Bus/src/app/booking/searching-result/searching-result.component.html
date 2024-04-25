@@ -52,7 +52,7 @@
               <div class="text sub-14 reg">Expected pick-up at {{departureTicket.PickUpTime}} </div>
             </div>
           </div>
-          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;" (click)="openStaticBackdrop(editPickUp)">Edit</div>
+          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;cursor: pointer;" (click)="openStaticBackdrop(editPickUp)">Edit</div>
         </div>
         <div class="booked-ticket-point" style="display: flex;justify-content: space-between;margin-bottom: 40px;">
           <div style="display: flex;gap: 20px;">
@@ -66,7 +66,7 @@
               <div class="text sub-14 reg">Expected pick-up at {{departureTicket.DropOffTime}} </div>
             </div>
           </div>
-          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;">Edit</div>
+          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;cursor: pointer;" (click)="openStaticBackdrop(editDropOff)">Edit</div>
         </div>
       </div>
     </div>
@@ -86,64 +86,53 @@
           </div>
         </div>
       </div>
-      <div class="offcanvas-body" style="display: flex;flex-direction: column;padding: 24px;gap: 24px;">
-        <div class="booked-ticket-info" style="display: flex;flex-direction: column; gap: 12px;">
-          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
-            <div style="color: var(--neutral-grey-300);">Trip</div>
-            <div> {{departureTicket.DLocation}} - {{departureTicket.ALocation}} </div>
-          </div>
-          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
-            <div style="color: var(--neutral-grey-300);">Bus Type</div>
-            <div> {{departureTicket.BusType}} </div>
-          </div>
-          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
-            <div style="color: var(--neutral-grey-300);">Time</div>
-            <div> {{departureTicket.Date}} </div>
-          </div>
-          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
-            <div style="color: var(--neutral-grey-300);">State</div>
-            <div> {{departureTicket.State}} </div>
-          </div>
-          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
-            <div style="color: var(--neutral-grey-300);">Seat Numbers</div>
-            <div> {{departureTicket.Seat.toString()}} </div>
-          </div>
-          <div class="text body-20 reg" style="display: flex;align-items: center;justify-content: space-between;">
-            <div style="color: var(--neutral-grey-300);">Subtotal</div>
-            <div> {{convertMoney(departureTicket.Subtotal)}}VND </div>
-          </div>
-        </div>
-        <div class="booked-ticket-point" style="display: flex;justify-content: space-between;">
-          <div style="display: flex;gap: 20px;">
-            <span class="material-symbols-outlined" style="color: black;">
-              my_location
-            </span>
-            <div style="display: flex;flex-direction: column;gap: 10px;">
-              <div class="text head-24 med">Pick-up location</div>
-              <div class="text body-20 reg"> {{departureTicket.PickUpLocation.Point}} </div>
-              <div class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.PickUpLocation.Address}} </div>
-              <div class="text sub-14 reg">Expected pick-up at {{departureTicket.PickUpTime}} </div>
+      <div class="offcanvas-body" style="display: flex;flex-direction: column;padding: 24px;gap: 24px;width: 100%;">
+        <div class="ticket-item-booking-location-item-list" style="overflow-y:auto; width: 100%;">
+          <div class="ticket-item-booking-location-item-point" *ngFor="let item of departureTicket.PickUpPoints;let i = index" style="width: 100%;">
+            <div style="display: flex; gap: 18px;width: 100%;" (click)="editPickPoint(item)">
+              <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio">
+              <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
+              <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: calc(100%-24px);">
+                <div class="text sub-16 sem" style="color: black;">{{calculateTimePoint(departureTicket.Date,item.Time)}} - {{item.Point}}</div>
+                <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
+              </label>
             </div>
           </div>
-          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;">Edit</div>
-        </div>
-        <div class="booked-ticket-point" style="display: flex;justify-content: space-between;margin-bottom: 40px;">
-          <div style="display: flex;gap: 20px;">
-            <span class="material-symbols-outlined" style="color: black;">
-              my_location
-            </span>
-            <div style="display: flex;flex-direction: column;gap: 10px;">
-              <div class="text head-24 med">Pick-up location</div>
-              <div class="text body-20 reg"> {{departureTicket.DropOffLocation.Point}} </div>
-              <div class="text body-16 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.DropOffLocation.Address}} </div>
-              <div class="text sub-14 reg">Expected pick-up at {{departureTicket.DropOffTime}} </div>
-            </div>
-          </div>
-          <div class="text body-20 reg" style="color: var(--neutral-grey-300);text-decoration: underline;">Edit</div>
         </div>
       </div>
     </div>
-  </ng-template>  
+  </ng-template>
+  <ng-template #editDropOff let-offPcanvas>
+    <div style="background-color: white; height: 100vh;">
+      <div class="offcanvas-header" style="display: flex;align-items: center;gap: 24px; width: 100%;padding: 24px;background-color: #4D56BE;">
+        <span class="material-symbols-outlined" style="color: white;font-size: 30px;cursor: pointer;" (click)="offPcanvas.dismiss('Cross click')">
+          arrow_left_alt
+        </span>
+        <div class="text sub-16 sem" style="display: flex;flex-direction: column;gap: 8px; color: white;">
+          <div class="body-20 reg">Edit Drop-off point</div>
+          <div> {{departureTicket.DLocation}} - {{departureTicket.ALocation}} </div>
+          <div style="display: flex;align-items: center;gap: 16px;">
+            <div class="text caption-14 reg" style="padding: 2px 4px;background-color: #FFB74A;color: white;">Departure Trip</div>
+            <div class="text body-16 reg" style="color: white;"> {{departureTicket.Date}} </div>
+          </div>
+        </div>
+      </div>
+      <div class="offcanvas-body" style="display: flex;flex-direction: column;padding: 24px;gap: 24px;">
+        <div class="ticket-item-booking-location-item-list" style="overflow-y: visible;width: 100%;margin-bottom: 150px;">
+          <div class="ticket-item-booking-location-item-point" *ngFor="let item of departureTicket.DropOffPoints;let i = index" style="width: 100%;">
+            <div style="display: flex; gap: 18px;width: 100%;" (click)="editDropPoint(item)">
+              <input type="radio" [id]="'pickUpPoint_' + i" name="pickUpPoint" class="custom-radio" style="width: 24px;">
+              <label [for]="'pickUpPoint_' + i" class="radio-indicator"></label>
+              <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: calc(100%-24px)">
+                <div class="text sub-16 sem" style="color: black;">{{calculateTimePoint(departureTicket.Date,item.Time)}} - {{item.Point}}</div>
+                <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
   <section class="searching">
     <div class="hero-container">
       <p class="text head-30 reg" style="color: #6F757F;">With GBus</p>
@@ -265,7 +254,7 @@
           <div style="background-color: var(--neutral-grey-100);width: 100%;height: 0.5px;margin: 16px 0px;"></div>
           <div style="display: flex; align-items: center;justify-content: space-between;margin: 0px 16px; margin-bottom: 16px;">
             <div class="text body-16 reg">Subtotal</div>
-            <div class="text head-24 med"> {{convertMoney(departureTicket.Subtotal)}}VND </div>
+            <div class="text head-24 med" style="color: #4D56BE;"> {{convertMoney(departureTicket.Subtotal)}}VND </div>
           </div>
           <button class="btn btn-primary" style="width: 213px;height: 53px;margin: 0px auto;" (click)="openEnd(content)">View Details</button>
         </div>
