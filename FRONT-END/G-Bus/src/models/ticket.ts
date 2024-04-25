@@ -41,7 +41,28 @@ export interface BookedTicket {
   BusType: string,
   DLocation: string,
   ALocation: string,
-  Image: string
+  Image: string,
+  PickUpPoints: Point[],
+  DropOffPoints: Point[]
+}
+
+export interface PostBookedTicket {
+  Ticket: string,
+  State: string,
+  Seat: string[],
+  Subtotal: number,
+  PickUpLocation: Point,
+  DropOffLocation: Point,
+}
+
+export interface OrderTicket {
+  PassengerInfo: PassengerInfo,
+  Status: string,
+  CustomerId: string,
+  Departure: String;
+  Return: String;
+  BookedTime: Date;
+  TransactionNumber: String;
 }
 
 export interface Route {

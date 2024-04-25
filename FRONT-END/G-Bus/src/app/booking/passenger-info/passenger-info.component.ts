@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { BookedTicket } from '../../../models/ticket';
+import { Component, TemplateRef, inject } from '@angular/core';
+import { BookedTicket, OrderTicket, PassengerInfo, Point, PostBookedTicket } from '../../../models/ticket';
 import { DataService } from '../../../services/Data.service';
 import { Router } from '@angular/router';
+
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-passenger-info',
@@ -9,9 +11,16 @@ import { Router } from '@angular/router';
   styleUrl: './passenger-info.component.scss'
 })
 export class PassengerInfoComponent {
+  errMessage: string = ""
 
   departureTicket!: BookedTicket
   returnTicket!: BookedTicket
+  passengerInfo!: PassengerInfo
+
+  ///** Passenger Variables */
+  psgName: string = ""
+  psgPhone: string = ""
+  psgMail: string = ""
 
   constructor(private service: DataService, private router: Router) {
     const dStr = localStorage.getItem("departureTicket")
@@ -22,6 +31,14 @@ export class PassengerInfoComponent {
     if (rStr != null) {
       this.returnTicket = JSON.parse(rStr)
     }
+
+    this.passengerInfo = {
+      Account:"",
+      FullName:"",
+      PhoneNumber: "",
+      Email: ""
+    }
+
     console.log(this.departureTicket)
     console.log(this.returnTicket)
   }
@@ -30,12 +47,94 @@ export class PassengerInfoComponent {
     this.router.navigate([path])
   }
 
+  ///** Main Functions */
+  continue() {
+    this.passengerInfo = {
+      Account: "account1",
+      PhoneNumber: this.psgPhone,
+      Email: this.psgMail,
+      FullName: this.psgName
+    }
+    const order:OrderTicket = {
+      PassengerInfo: this.passengerInfo,
+      Departure: "",
+      Return: "",
+      Status: "Unpaid",
+      CustomerId: "account1",
+      BookedTime: new Date(),
+      TransactionNumber: ""
+    }
+    const postDeparture:PostBookedTicket = {
+      Ticket: this.departureTicket.Ticket,
+      State:this.departureTicket.State,
+      Seat:this.departureTicket.Seat,
+      Subtotal:this.departureTicket.Subtotal,
+      PickUpLocation:this.departureTicket.PickUpLocation,
+      DropOffLocation:this.departureTicket.DropOffLocation,
+    }
+    const postReturn:PostBookedTicket = {
+      Ticket: this.returnTicket.Ticket,
+      State:this.returnTicket.State,
+      Seat:this.returnTicket.Seat,
+      Subtotal:this.returnTicket.Subtotal,
+      PickUpLocation:this.returnTicket.PickUpLocation,
+      DropOffLocation:this.returnTicket.DropOffLocation,
+    }
+    this.service.postBookedTickets(postDeparture).subscribe({
+      next: (data) => {
+        order.Departure = data
+        this.service.postBookedTickets(postReturn).subscribe({
+          next: (data) => {
+            order.Return = data
+            this.service.postOrder(order).subscribe({
+              next: (data) => {
+                console.log(data)
+              }, error: (err) => {
+                this.errMessage = err
+              }
+            })
+          }, error: (err) => {
+            this.errMessage = err
+          }
+        })
+      }, error: (err) => {
+        this.errMessage = err
+      }
+    })
+    
+    
+  }
+
+  editPickPoint(point: Point) {
+    this.departureTicket.PickUpLocation = point
+  }
+  editDropPoint(point: Point) {
+    this.departureTicket.DropOffLocation = point
+  }
+  editReturnPickPoint(point: Point) {
+    this.returnTicket.PickUpLocation = point
+  }
+  editReturnDropPoint(point: Point) {
+    this.returnTicket.DropOffLocation = point
+  }
+  private offcanvasService = inject(NgbOffcanvas)
+  openStaticBackdrop(content: TemplateRef<any>) {
+		this.offcanvasService.open(content, { position: 'end' , backdrop: 'static', panelClass: "custom-panel" });
+	}
+
   ///** Other functions */
   convertMoney(num: number) {
     if (num > 1000) {
-      return num/1000 + ".000"
+      // Convert the number to a string with commas as thousands separators
+      let numString = (num / 1000).toLocaleString('en-US', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+      
+      // Replace commas with dots
+      numString = numString.replace(/,/g, '.');
+
+      // Append '.000' for consistency with your original implementation
+      return numString;
     }
-    return num
+    return num.toString(); // Convert to string
   } 
   count(arr: any[]): number {
     return (arr ?? []).length;
@@ -117,7 +216,7 @@ export class PassengerInfoComponent {
   }
   convertDateTime(inputString: string, type: string): string {
     // Parse the input string
-    const [, time, day, month, year] = inputString.match(/(\d+:\d+) - (\w+), (\d+)\/(\d+)\/(\d+)/)!;
+    const [, time, day, month, year] = inputString.match(/(\d+:\d+) - \w+, (\d+)\/(\d+)\/(\d+)/)!;
 
     if (type === "time") {
         // Convert time to HH:MM format
@@ -125,7 +224,7 @@ export class PassengerInfoComponent {
         return `${hours}:${minutes}`;
     } else if (type === "date") {
         // Convert date to DD/MM format
-        return `${day}/${month}`;
+        return `${day.padStart(2, '0')}/${month.padStart(2, '0')}`;
     } else {
         // Handle invalid type
         return "Invalid type. Please provide 'time' or 'date'.";

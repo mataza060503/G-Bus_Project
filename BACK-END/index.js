@@ -100,10 +100,22 @@ app.get("/allTicket", cors(), async (req,res)=> {
   res.send(Ticket)
 })
 
-app.post("/ticket", cors(), async (req, res) => {
-  const tikets = req.body
-  database.collection("BookedTickets").insertMany(tikets)
+app.post("/bookedTicket", cors(), async (req,res)=> {
+  const ticket = req.body
+  const data = await database.collection("BookedTickets").insertOne(ticket)
+  
+  res.send(data.insertedId)
 })
+app.post("/order", cors(), async (req,res)=> {
+  const ticket = req.body;
+  const result = await database.collection("Order").insertOne(ticket);
+  const insertedId = result.insertedId;
+  await database.collection("Order").updateOne(
+    { _id: insertedId },
+    { $set: { TransactionNumber: generateTransactionNumber() } }
+  );
+  res.send({ insertedId });
+});
 
 app.post("/reviews",cors(), async (req,res)=> {
   const ids = req.body.Reviews
@@ -154,6 +166,22 @@ app.post("/driver",cors(), async (req,res) => {
   }
   res.send(data)
 })
+
+///* ORTHER *///
+
+// Function to generate a unique transaction number
+function generateTransactionNumber() {
+  // Generate a timestamp component (e.g., milliseconds since epoch)
+  const timestamp = Date.now();
+
+  // Generate a random component (e.g., random 4-digit number)
+  const random = Math.floor(1000 + Math.random() * 9000);
+
+  // Concatenate timestamp and random number to create the transaction number
+  const transactionNumber = timestamp.toString() + random.toString();
+
+  return transactionNumber;
+}
 
 app.listen(port,()=>{
   console.log(`My Server listening on port ${port}`)
