@@ -10,6 +10,9 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'; 
+import { MatButtonModule } from '@angular/material/button'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +39,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SignUpModule,
     GeneralModule,
     BookingModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
+    MatInputModule, 
+    MatButtonModule,
+    MatCheckboxModule,
     MatDatepickerModule,
     SlickCarouselModule,
     AngularFireModule.initializeApp(environment.firebase),

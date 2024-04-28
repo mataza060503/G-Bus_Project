@@ -1,0 +1,130 @@
+.wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+  .background {
+    background-color: black;
+    opacity: 50%;
+    width: 100vw;
+    height: 100vh;
+  }
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+    margin: auto;
+    background-color: white;
+    width: 726px;
+    flex-shrink: 0;
+    padding: 36px 20px;
+    border-radius: 12px;
+    background: var(--Neutral-White, #FFF);
+    
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 164px;
+    border-radius: 8px;
+    border: 1px solid #E2E4E7;
+    height: 48px;
+  }
+  .dropdown-menu {
+    width: 164px;
+  }
+  .dropdown-menu li {
+    margin-right: 14px;
+  }
+  .inp-phone-number {
+    width: 680px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+    background: var(--Neutral-White, #FFF);
+    outline: none;
+    padding: 16px;
+  }
+  .inp-phone-number:focus {
+    outline: none;
+    border-radius: 8px;
+    border: 1px solid var(--Primary-Purple500, #4D56BE);
+    background: var(--Neutral-White, #FFF);
+    
+  }
+  .inp-phone-number::placeholder {
+    color: black;
+  }
+  .signup-form-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .signup-form {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap: 24px;
+    &-btn {
+      width: 100%;
+      height: 48px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    &-divider {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      color: var(--Neutral-Grey300, #6F757F);
+    }
+    &-google {
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      &-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 8px;
+        height: 48px;
+        border-radius: 8px;
+        color: var(--Primary-Purple500, #4D56BE);
+        border: 1px solid var(--Primary-Purple500, #4D56BE);
+        background: var(--Neutral-White, #FFF);
+        &:hover {
+          border-radius: 8px;
+          border: 1px solid var(--Semantic-Info-Blue200, #0C1FD0);
+          background: var(--Neutral-White, #FFF);
+          color: (--Semantic-Info-Blue200, #0C1FD0);
+        };
+        &:active{
+          box-shadow: 0px 0px 0px 4px rgba(49, 132, 253, 0.50);
+        }
+      }
+    }
+  }
+  hr {
+    width: 14px;
+  }
+  .register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+    gap: 8px;
+  }
+  .small-text {
+    font-size: 16px; /* hoặc kích thước mong muốn */
+  }
+  
