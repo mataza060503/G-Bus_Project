@@ -20,6 +20,7 @@ import { LoginModule } from './login/login.module';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { GeneralModule } from './general/general.module';
 import { BookingModule } from './booking/booking.module';
+import { BookingHistoryModule } from './booking-history/booking-history.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -46,7 +47,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatDatepickerModule,
     SlickCarouselModule,
     AngularFireModule.initializeApp(environment.firebase),
-    NgbModule
+    NgbModule,
+    BookingHistoryModule,
+
+    SignUpModule
   ],
   providers: [
     provideNativeDateAdapter(),

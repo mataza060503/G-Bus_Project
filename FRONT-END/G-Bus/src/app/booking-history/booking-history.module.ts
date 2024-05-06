@@ -14,6 +14,10 @@ import { BookingHistoryUnpaidticketsComponent } from './booking-history-unpaidti
   ],
   imports: [
     CommonModule
+  ], exports: [
+    BookingHistoryCancellationsComponent,
+    BookingHistoryPaidticketsComponent,
+    BookingHistoryUnpaidticketsComponent
   ]
 })
 export class BookingHistoryModule { }
