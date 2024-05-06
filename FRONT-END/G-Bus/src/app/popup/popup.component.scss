@@ -1,0 +1,145 @@
+.custom-button {
+  background-color: #4D56BE; /* Make background transparent */
+  padding: 16px; /* Add padding for better appearance */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  width: 686px;
+  height: 48px;
+  color: white;
+  text-align: center; 
+  border-radius: 8px;
+  border: none !important;
+}
+
+/* Optional: Add hover effect */
+.custom-button:hover {
+  background-color: #DDE0FF; /* Change background color on hover */
+  color: #4D56BE; /* Change text color on hover */
+  width: 686px;
+  height: 48px;
+  border: none !important;
+}
+.custom-button2 {
+  background-color: #4D56BE; /* Make background transparent */
+  padding: 16px; /* Add padding for better appearance */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  width: 430px;
+  height: 48px;
+  color: white;
+  text-align: center; 
+  border-radius: 8px;
+  border: none !important;
+}
+
+/* Optional: Add hover effect */
+.custom-button2:hover {
+  background-color: #DDE0FF; /* Change background color on hover */
+  color: #4D56BE; /* Change text color on hover */
+  width: 430px;
+  height: 48px;
+  border: none !important;
+}
+.custom-button1 {
+  border: 2px solid #4D56BE; /* Set border properties */
+  background-color: transparent; /* Make background transparent */
+  padding: 16px; /* Add padding for better appearance */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  width: 240px;
+  color: #4D56BE;
+  text-align: center; 
+  border-radius: 8px;
+}
+
+/* Optional: Add hover effect */
+.custom-button1:hover {
+  background-color: #4D56BE; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+
+}
+.scroll-view {
+  width: 300px; /* Adjust width as needed */
+  height: 200px; /* Adjust height as needed */
+  overflow: hidden; /* Hide default scrollbar */
+  position: relative; /* Position for custom scrollbar */
+}
+/* Style for the content inside the scroll view */
+.scroll-content {
+  width: 100%; /* Ensure content fills container width */
+  height: auto; /* Allow content to expand vertically */
+  padding-right: 20px; /* Reserve space for custom scrollbar */
+}
+/* Style for the custom scrollbar track */
+.scrollbar-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px; /* Adjust width of the scrollbar */
+  height: 100%;
+  background-color: #f0f0f0; /* Background color of the scrollbar track */
+  z-index: 1; /* Ensure scrollbar appears above content */
+}
+/* Style for the custom scrollbar thumb */
+.scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px; /* Adjust width of the scrollbar thumb */
+  background-color: #888; /* Color of the scrollbar thumb */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  border-radius: 5px; /* Rounded corners for the scrollbar thumb */
+  z-index: 2; /* Ensure scrollbar thumb appears above scrollbar track */
+}
+.scroll-view{
+  height: 100vh;
+  overflow-y: scroll;
+}
+.scroll-content{
+  display: inline-block;
+  /* Optionally, you can add styles for appearance */
+  background-color: white;  
+  border: 1px solid #E2E4E7;
+  
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+}
+.voucher-flex{
+  display: flex;
+  align-items: center;
+  width: 558px;
+  height: 112px;
+}
+.voucher-ic1{
+  background-color: #F4F7FF;
+  color: #4D56BE;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+  width: 80px;
+  height: 80px;
+}
+.voucher-ic2{
+  background-color: #FFF8EF;
+  color: #4D2E00;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+}
+.voucher-ic3{
+  background-color: #FFF7EC;
+  color: #FFB74A;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+}

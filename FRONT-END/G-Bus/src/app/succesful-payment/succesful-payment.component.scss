@@ -1,0 +1,95 @@
+.successfulpayment {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  margin: 0px auto;
+}
+.displayflex{
+  display: flex;
+  gap: 24px;
+}
+.border-div {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 598px;
+  padding: 16px;
+  
+  
+}
+.border-div2 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 422px;
+  height: 492px;
+  padding: 16px;
+  margin-bottom: 16px;
+  
+}
+.border-div3 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 422px;
+  height: 289px;
+  padding: 16px;
+  margin-bottom: 16px;
+  
+}
+.title-success{
+  display: flex;
+  gap: 16px;
+}
+.heading{
+  margin-bottom: 24px;
+}
+.detail-content{
+  display: flex;
+  justify-content: space-between;
+  width: 390px;
+  margin-bottom: 16px;
+}
+.booking-preview{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 598px;
+  height: 340px;
+  align-items: center;
+  padding:16px;
+  margin-bottom: 16px;
+}
+.booking-details{
+  display: flex;
+  margin-right: 8px;
+}
+.booking-name-trip{
+  display: flex;
+  width: 480px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.booking-time{
+  align-items:center;
+  margin-right: 8px;
+}
+.booking-img{
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.booking-seat-number{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.booking-info{
+  width: 480px;
+  gap: 6px;
+}
+.booking-title{
+  display: flex;
+  gap: 16px;
+}

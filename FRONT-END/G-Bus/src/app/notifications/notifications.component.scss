@@ -1,0 +1,51 @@
+.notihead{
+  display: flex;
+  align-items: center;
+  &-btnhead{
+      margin-left: auto;
+      color: var(--neutral-color-3);
+  }
+}
+
+.notiline{
+  position: relative;
+  color: #ACAFB8;
+}
+.notiline hr {
+  width: 100%;
+}
+.notiline p {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%,50%);
+  background-color: white;
+  padding: 0px 8px;
+}
+.notification {
+  width: 100vw;
+  height: 100vh;
+}
+.notification-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  margin: 0px auto;
+}
+.notiitem{
+  display: flex;
+  gap: 12px;
+}
+.noticontent{
+  gap: 8px;
+}
+.notititle{
+  display: flex;
+  margin-bottom: 8px;
+}
+.notiheadline{
+  color: #000000;
+}
+
+

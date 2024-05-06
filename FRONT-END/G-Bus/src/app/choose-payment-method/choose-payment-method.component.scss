@@ -1,0 +1,304 @@
+.choosepaymentmethod {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  margin: 0px auto;
+}
+.displayflex{
+  display: flex;
+  
+}
+.border-div {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 598px;
+  padding: 16px;
+  
+  
+}
+.method-flex{
+  display: flex;
+}
+.methodchild-flex{
+  display: flex;
+  align-items: center;
+}
+.methodchild-tag{
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 4px;
+  background-color: #0D6EFD;
+  color: #FFF;
+  margin-bottom: 8px;
+}
+.methodchild-notify{
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #D8F7E0;
+  color: #068238;
+  margin-top: 16px;
+}
+.rad-method{
+  align-items: center;
+}
+button {
+  background-color: #4D56BE;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  
+  height: 48px;
+  margin-bottom: 24px;
+  margin-top: 40px;
+}
+.display-flex2{
+  display: flex;
+  gap: 8px;
+  
+}
+.display-center{
+  align-items: center;
+}
+.no-background-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  color: #4D56BE;
+}
+.column-2{
+  margin-left: 24px;
+}
+.border-div2{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 422px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.border-div3{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 422px;
+  height: 184px;
+  align-items: center;
+  padding:16px;
+  margin-bottom: 16px;
+}
+.text-underline-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  /* Optionally, you can adjust the font size, color, and other text properties */
+  font-size: 16px;
+  color: #6F757F;
+  /* Optionally, adjust any other styles you want for your button */
+}
+.voucher-container {
+  width: 391px; /* Adjust the width as needed */
+  overflow-x: auto;
+  white-space: nowrap; /* Prevent text wrapping */
+   /* Add a border for visualization */
+  padding: 8px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.voucher {
+  display: inline-block;
+  /* Optionally, you can add styles for appearance */
+  background-color: white;  
+  border: 1px solid #E2E4E7;
+  padding: 8px;
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 16px;
+}
+.voucher-flex{
+  display: flex;
+  align-items: center;
+}
+.voucher-ic1{
+  background-color: #F4F7FF;
+  color: #4D56BE;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+}
+.voucher-ic2{
+  background-color: #FFF8EF;
+  color: #4D2E00;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+}
+input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  /* Hide the default radio button */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Create a custom radio button */
+  border: 2px solid #333;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  margin-left: 16px;
+}
+
+input[type="radio"]:checked + label:before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #333;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.radio-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+}
+.border-div4{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 422px;
+  height: 731px;
+  align-items: center;
+  padding:16px;
+  margin-bottom: 16px;
+}
+.border-div5{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 422px;
+  height: 184px;
+  align-items: center;
+  padding:16px;
+  margin-bottom: 16px;
+}
+.info-flex{
+  display: flex;
+  justify-content: space-between;
+}
+.booking-preview{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 390px;
+  height: 309px;
+  align-items: center;
+  padding:16px;
+  margin-bottom: 16px;
+}
+.booking-preview2{
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 390px;
+  height: 330px;
+  align-items: center;
+  padding:16px;
+  margin-bottom: 24px;
+}
+.booking-title{
+  display: flex;
+  gap: 16px;
+}
+.material-symbols-outlined1{
+color: #6F757F;
+size: 16px;
+}
+.booking-img{
+display: flex;
+gap: 12px;
+margin-bottom: 16px;
+}
+.booking-seat-number{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.booking-info{
+width: 283px;
+gap: 6px;
+}
+.booking-time{
+align-items:center;
+margin-right: 8px;
+}
+.booking-line{
+align-items: center;
+position: absolute;
+}
+.booking-details{
+display: flex;
+margin-right: 8px;
+}
+.booking-name-trip{
+display: flex;
+width: 287px;
+justify-content: space-between;
+margin-bottom: 8px;
+}
+.popup {
+display: none; /* Hide the popup by default */
+position: fixed; /* Position the popup relative to the viewport */
+top: 50%; /* Position the popup vertically at the center */
+left: 50%; /* Position the popup horizontally at the center */
+transform: translate(-50%, -50%); /* Center the popup precisely */
+width: 622px; /* Set the width of the popup */
+height: 1033px;
+background-color: #fff; /* Background color of the popup */
+border: 1px solid #ccc; /* Border around the popup */
+padding: 20px; /* Padding inside the popup */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow for better visual */
+}
+/* Styling for the overlay */
+.overlay {
+display: none; /* Hide the overlay by default */
+position: fixed; /* Position the overlay relative to the viewport */
+top: 0; /* Position the overlay at the top */
+left: 0; /* Position the overlay at the left */
+width: 100%; /* Cover the entire width of the viewport */
+height: 100%; /* Cover the entire height of the viewport */
+background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}

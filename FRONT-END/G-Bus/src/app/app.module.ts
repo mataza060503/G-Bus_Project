@@ -24,11 +24,27 @@ import { BookingHistoryModule } from './booking-history/booking-history.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AccountManagement1Component } from './account-management1/account-management1.component';
+import { Cancellation2Component } from './cancellation2/cancellation2.component';
+import { ChoosePaymentMethodComponent } from './choose-payment-method/choose-payment-method.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { Notification2Component } from './notification2/notification2.component';
+import { PopupComponent } from './popup/popup.component';
+import { SuccesfulPaymentComponent } from './succesful-payment/succesful-payment.component';
+import { UnsuccessfulPaymentComponent } from './unsuccessful-payment/unsuccessful-payment.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AccountManagement1Component,
+    Cancellation2Component,
+    ChoosePaymentMethodComponent,
+    NotificationsComponent,
+    Notification2Component,
+    PopupComponent,
+    SuccesfulPaymentComponent,
+    UnsuccessfulPaymentComponent
   ],
   imports: [
     CommonModule,
