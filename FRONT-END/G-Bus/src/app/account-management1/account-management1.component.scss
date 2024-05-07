@@ -1,0 +1,109 @@
+.accountmanagement1 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  margin: 0px auto;
+}
+.border-div {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 246px;
+  height: 500px;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-right: 20px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+.accountmanagementbox{
+  display: flex;
+}
+.oneselect{
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.childselect{
+  gap: 8px;
+}
+.optionselect{
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+.border-div2 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 775px;
+  height: 554px;
+  flex-shrink: 0;
+  padding: 16px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+.fixedinfo{
+  display: flex;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+.fixedinfo-2{
+  display: flex;
+  text-align: center;
+  
+}
+.fixedinfoscope{
+  gap: 16px;
+}
+
+.formtitle{
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.inp-name {
+  width: 743px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  outline: none;
+  padding: 16px;
+}
+.inp-name:focus {
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid var(--Primary-Purple500, #4D56BE);
+  background: var(--Neutral-White, #FFF);
+}
+.inp-name::placeholder {
+  color: black;
+}
+input{
+  color: #36373B;
+  font-size: 14px;
+  font-weight: 400px;
+  font-family: 'Roboto';
+}
+.formmargin{
+  margin-bottom: 16px;
+}
+.button {
+  background-color: #4D56BE;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  width: 743px;
+  height: 48px;
+}

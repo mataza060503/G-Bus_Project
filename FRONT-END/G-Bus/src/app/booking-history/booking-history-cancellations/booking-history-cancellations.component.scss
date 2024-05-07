@@ -1,0 +1,460 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    font-family: Roboto;
+}
+.container {
+  left: 200px;
+  top: 136px;
+  position: absolute;
+  justify-content: flex-start;
+  align-items: center;
+  display: inline-flex;
+}
+
+h2 {
+    color: black;
+    font-size: 24px;
+    font-family: Roboto;
+    font-weight: 500;
+    letter-spacing: 0.04px;
+    line-height: 20px;
+    word-wrap: break-word;
+}
+  
+.inner-container {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    display: flex;
+}
+  
+  .icon-container {
+    width: 16px;
+    height: 16px;
+    position: relative;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  
+  .text-container {
+    background: rgba(255, 255, 255, 0);
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    display: flex;
+  }
+  
+  .text {
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 400;
+    line-height: 24px;
+    word-wrap: break-word;
+  }
+  
+  .home {
+    color: #0D6EFD;
+    text-decoration: underline;
+    margin-right: 8px; /* Add margin-right for spacing between text elements */
+  }
+  
+  .history {
+    color: #6C757D;
+    margin-left: 8px; /* Add margin-right for spacing between text elements */
+  }
+  .custom-div {
+    width: 245px;
+    height: 564px;
+    left: -5px;
+    top: 0px;
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    border: 1px #E2E4E7 solid;
+  }
+  
+  .cancel-regu {
+    left: 466px;
+    top: 200px;
+    width: 775px;
+    height: 360px;
+    position: absolute;
+    border-radius: 12px;
+    border: 1px #E2E4E7 solid;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 16px;
+    /* display: inline-flex; */
+  }
+  
+  .ticket-button {
+  padding: 16px 86px;
+  border-radius: 12px 8px 12px 12px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  }
+
+  
+  .sidebar-div {
+  width: 246px;
+  height: 564px;
+  left: 200px;
+  top: 200px;
+  position: absolute;
+  }
+  .sidebar-frame-div {
+  width: 246px;
+  height: 564px;
+  left: -5px;
+  top: 0px;
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  border: 1px #E2E4E7 solid;
+  }
+  .title-sidebar-div {
+  width: 212.13px;
+  left: 16.93px;
+  position: absolute;
+  color: black;
+  font-size: 14px;
+  font-family: Roboto;
+  font-weight: bold;
+  letter-spacing: 0.01px;
+  word-wrap: break-word;
+  }
+  
+  
+  .sidebar-container {
+  width: 244px;
+  height: 72px;
+  left: 0px;
+  position: absolute;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  display: inline-flex;
+  }
+  
+  .sidebar-item {
+  height: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: white;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  display: flex;
+  }
+  
+  .sidebar-sub-item {
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  display: inline-flex;
+  }
+  
+  .sidebar-icon-container {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  }
+  
+  .sidebar-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  }
+  
+  .sidebar-text {
+  color: #6F757F;
+  font-size: 14px;
+  font-family: Roboto;
+  font-weight: 400;
+  letter-spacing: 0.06px;
+  word-wrap: break-word;
+  }
+  
+  
+  .departure-frame {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  display: flex;
+  }
+  
+
+
+  .time-bigtext {
+  color: #4D56BE;
+  font-size: 36px;
+  font-family: Roboto;
+  font-weight: 600;
+  letter-spacing: 0.09px;
+  word-wrap: break-word;
+  }
+  
+  .time-date {
+  color: black;
+  font-size: 20px;
+  font-family: Roboto;
+  font-weight: 400;
+  letter-spacing: 0.10px;
+  word-wrap: break-word;
+  }
+
+  .frame-info {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  display: flex;
+  }
+
+
+  
+  
+.custom-div {
+    width: 671px;
+    height: 16px;
+    margin-top: 330px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 60px;
+    background: #DCECFF;
+    border-radius: 4px;
+
+    gap: 17px;
+    display: inline-flex;
+}
+
+.text {
+    width: 639px;
+    height: 16px;
+    color: #0D6EFD;
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: 400;
+    letter-spacing: 0.06px;
+    word-wrap: break-word;
+}
+
+table, tr, td, th {
+    border: 1px solid #E2E4E7;
+    border-collapse:collapse;
+    text-align: center;
+    width: 328px;
+    height: 30px;
+
+}
+
+.cancel-reasons-container {
+    top: 410px;
+    width: 775px;
+    height: 366px;
+    position: absolute;
+    border-radius: 12px;
+    border: 1px #E2E4E7 solid;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 16px;
+
+}
+
+.radio-container {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.radio-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.radio-container input:checked ~ .checkmark {
+    background-color: #0D6EFD;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.radio-container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+}
+.custom-hr {
+    border: none;
+    height: 1px;
+    background-color: #E2E4E7;
+    margin: 16px 0; 
+}
+.container {
+  left: 200px;
+  top: 136px;
+  position: absolute;
+  justify-content: flex-start;
+  align-items: center;
+  display: inline-flex;
+}
+
+.inner-container {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+}
+
+.icon-container {
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.text-container {
+  background: rgba(255, 255, 255, 0);
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+}
+
+.text {
+  font-size: 16px;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.home {
+  color: #0D6EFD;
+  text-decoration: underline;
+  margin-right: 8px; /* Add margin-right for spacing between text elements */
+}
+
+.history {
+  color: #6C757D;
+  margin-left: 8px; /* Add margin-right for spacing between text elements */
+}
+.custom-div {
+  width: 245px;
+  height: 564px;
+  left: -5px;
+  top: 0px;
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  border: 1px #E2E4E7 solid;
+}
+
+.ticket-div {
+  left: 466px;
+  top: 200px;
+  position: absolute;
+  border-radius: 12px;
+  border: 1px #E2E4E7 solid;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: inline-flex;
+}
+
+.ticket-button {
+padding: 16px 86px;
+border-radius: 12px 8px 12px 12px;
+border: none;
+outline: none;
+cursor: pointer;
+position: relative;
+overflow: hidden;
+background-color: transparent;
+}
+
+
+
+
+
+.primary-button {
+width: 738px;
+height: 53px;
+top: 0px;
+position: absolute;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+display: inline-flex;
+background: #4D56BE;
+border-radius: 8px;
+border: none;
+text-align: center;
+color: white;
+font-size: 16px;
+font-family: Roboto;
+font-weight: 600;
+letter-spacing: 0.03px;
+word-wrap: break-word;
+
+}
+
+

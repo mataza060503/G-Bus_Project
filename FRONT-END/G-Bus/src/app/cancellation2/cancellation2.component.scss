@@ -1,0 +1,117 @@
+.cancellation2{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  margin: 0px auto;
+}
+.displayflex{
+  display: flex;
+}
+.border-div {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 246px;
+  height: 500px;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-right: 20px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+.oneselect{
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.childselect{
+  gap: 8px;
+}
+.optionselect{
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+.border-div2 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 775px;
+  height: 384px;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-bottom: 16px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+.border-div3 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 775px;
+  height: 365px;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-bottom: 40px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+table, th, td {
+  margin-top: 12px;
+  margin-bottom: 16px;
+  border: 1px solid;
+  border-color: #E2E4E7;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  width: 328px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 4px;
+  text-align: center;
+}
+.notify{
+  display: flex;
+  gap: 16px;
+  color: #0D6EFD;
+  background-color: #DCECFF;
+  padding-left: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border: 4px;
+}
+input[type=radio] {
+  border: 0px;
+  margin-right: 24px;
+}
+button {
+  background-color: #4D56BE;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  width: 775px;
+  height: 48px;
+  margin-bottom: 24px;
+}
+button.disabled{
+  background-color: #8E93C7;
+}
+.issue{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 40px;
+  margin-left: 317px;
+}

@@ -1,0 +1,44 @@
+<div class="wrapper">
+    <div class="background" id="screenBackground"></div>
+    <div class="container">
+      <h1 class="text head-24 med" style="margin-bottom: 36px;">Sign Up</h1>
+      <div class="signup-form">
+        <div class="phone-number">
+          <label for="phoneNumber" class="text body-20 reg" style="margin-bottom: 16px;">Phone Number</label>
+          <div style="display: flex; gap: 12px;">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="country-port-dropdown-item">
+                  <div class="country-port-image">
+                    <img srcset={{portImageSelected}} alt="">
+                  </div>
+                  <p class="text caption-14 reg"> {{portTextSelected}} </p>
+                </div>
+              </button>
+              <ul class="dropdown-menu">
+                <li (click)="select()">
+                  <div class="country-port-dropdown-item">
+                    <div>
+                      <img srcset={{portImage}} alt="">
+                    </div>
+                    <p class="text caption-14 reg"> {{portText}} </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <input id="phoneNumber" class="inp-phone-number text caption-14 reg" type="text" placeholder="Please enter your phone number" [(ngModel)]="phoneNumber">
+          </div>
+        </div>
+        <button class="btn button-primary large signup-form-btn" (click)="next()">Next</button>
+        <div class="signup-form-google">
+          <div class="signup-form-divider">
+            <hr><p class="text caption-14 reg">Or Sign Up with</p><hr>
+          </div>
+          <div class="btn signup-form-google-btn" (click)="signupWithGoogle()">
+            <img src="../../../assets/images/google_icon.png" alt="">
+            <p class="text caption-14 reg">Or Sign Up with Google</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
