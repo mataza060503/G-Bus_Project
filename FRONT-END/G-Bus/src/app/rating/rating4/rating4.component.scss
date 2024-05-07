@@ -1,0 +1,171 @@
+.rating3 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  margin: 0px auto;
+}
+.border-div {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 246px;
+  height: 500px;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-right: 20px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+
+.border-div3 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-right: 20px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+
+.border-div4 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  flex-shrink: 0;
+  padding: 16px;
+  margin-right: 80px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+
+
+.accountmanagementbox{
+  display: flex;
+}
+
+.ratingbox{
+  display: flex;
+}
+
+.oneselect{
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.childselect{
+  gap: 8px;
+}
+.optionselect{
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+.border-div2 {
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  width: 775px;
+  height: 610px;
+  flex-shrink: 0;
+  padding: 16px;
+  &-div{
+      float: left;
+      position: absolute;
+  }
+}
+.fixedinfoscope{
+  gap: 16px;
+}
+.formlist{
+
+}
+.formtitle{
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.inp-name {
+  width: 743px;
+  height:fit-content;
+  border-radius: 8px;
+  border: 1px solid var(--Neutral-Grey100, #E2E4E7);
+  background: var(--Neutral-White, #FFF);
+  outline: none;
+  padding: 16px;
+}
+.inp-name:focus {
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid var(--Primary-Purple500, #4D56BE);
+  background: var(--Neutral-White, #FFF);
+}
+.inp-name::placeholder {
+  color: black;
+}
+input{
+  color: #ACAFB8;
+  font-size: 14px;
+  font-weight: 400px;
+  font-family: 'Roboto';
+}
+.formmargin{
+  margin-bottom: 16px;
+}
+.button {
+  background-color: #4D56BE;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  width: 743px;
+  height: 48px;
+  border-color: #4D56BE;
+}
+
+.rating-wrapper{
+  border: thin soid #555;
+  margin-bottom: 20px;
+  align-items: center;
+  align-self: center;   
+  margin-left: 260px; 
+
+  
+}
+.ratings span{
+  cursor: pointer;
+  transition: color .2s, transform .2s;
+  align-items: center;
+  font-size: 50px;
+  
+}
+
+.checked {
+  color: orange;
+}
+
+.Tellus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto;
+  gap: 8px;
+  margin: 0px auto;
+  margin-left: 576px;
+}

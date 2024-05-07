@@ -1,0 +1,71 @@
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.background {
+  background-color: black;
+  opacity: 50%;
+  width: 100vw;
+  height: 100vh;
+}
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  margin: auto;
+  background-color: white;
+  width: 726px;
+  flex-shrink: 0;
+  padding: 36px 20px;
+  border-radius: 12px;
+  background: var(--Neutral-White, #FFF);
+}
+
+.checked {
+  color: orange;
+}
+
+.colorBlack{
+  color: #000;
+}
+
+.rating-wrapper{
+  border: thin soid #555;
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  align-items: center;
+}
+
+.ratings{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.ratings span{
+  cursor: pointer;
+  transition: color .2s, transform .2s;
+  font-size: 50px;
+}
+
+.rating span:hover{
+  color: orange;
+
+}
+
+.ratings span[data-clicked]{
+  color: orange;
+}
+
+igc-rating {
+  padding: 100px;
+  padding-left: 200px;
+}
+
+
