@@ -167,6 +167,14 @@ app.post("/driver",cors(), async (req,res) => {
   res.send(data)
 })
 
+//** POST UNPAID TICKET */
+app.post("/getOrder",cors(), async (req,res) => {
+  const accountId = req.body.accountId
+  const status = req.body.status
+  const data = await database.collection("Order").find({CustomerId: accountId ,Status: status}).toArray()
+  res.send(data)
+})
+
 ///* ORTHER *///
 
 // Function to generate a unique transaction number

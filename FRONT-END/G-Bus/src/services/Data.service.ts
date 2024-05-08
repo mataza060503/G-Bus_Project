@@ -181,6 +181,18 @@ postOrder(order: OrderTicket):Observable<any> {
     catchError(this.handleError)
   )
 }
+getAllOrderByStatus(accountId: string, status: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/getOrder",JSON.stringify({"accountId":accountId,"status":status}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as OrderTicket),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
 
 handleError(error:HttpErrorResponse){
   return throwError(()=>new Error(error.message))
