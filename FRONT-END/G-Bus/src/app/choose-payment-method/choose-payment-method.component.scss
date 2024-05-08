@@ -195,6 +195,38 @@ input[type="radio"]:checked + label:before {
   left: 50%;
   
 }
+
+/* Hide the default radio button */
+.custom-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 24px; /* Adjust width */
+  height: 24px; /* Adjust height */
+  border: 2px solid black; /* Border for the radio button */
+  border-radius: 50%; /* Make it circular */
+  position: relative;
+  outline: none;
+  margin-right: 5px; /* Adjust spacing */
+}
+
+/* Style the dot inside the radio button */
+.radio-indicator {
+  width: 12px; /* Diameter of the dot */
+  height: 12px;
+  border-radius: 50%; /* Make it circular */
+  background-color: black; /* Color of the dot */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(50%, 50%); /* Center the dot */
+  display: none; /* Hide the dot by default */
+}
+
+/* Make the dot visible when the radio button is checked */
+.custom-radio:checked + .radio-indicator {
+  display: block;
+}
 .border-div4{
   border-radius: 8px;
   border: 1px solid var(--Neutral-Grey100, #E2E4E7);

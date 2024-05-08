@@ -29,12 +29,14 @@
   display: inline;
 }
 .childselect{
-  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .optionselect{
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  margin: 0px 8px;
 }
 .ticket-div {
 
