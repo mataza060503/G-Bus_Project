@@ -10,7 +10,6 @@
   border: 1px solid var(--Neutral-Grey100, #E2E4E7);
   background: var(--Neutral-White, #FFF);
   width: 246px;
-  height: 500px;
   flex-shrink: 0;
   padding: 16px;
   margin-right: 20px;
@@ -27,12 +26,14 @@
   margin-bottom: 12px;
 }
 .childselect{
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 .optionselect{
   display: flex;
   gap: 8px;
-  padding: 8px;
+  margin: 0px 8px;
 }
 .border-div2 {
   border-radius: 8px;
