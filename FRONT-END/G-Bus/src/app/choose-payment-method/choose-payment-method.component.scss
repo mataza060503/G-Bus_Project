@@ -219,7 +219,7 @@ input[type="radio"]:checked + label:before {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(50%, 50%); /* Center the dot */
+  transform: translate(184%, 50%); /* Center the dot */
   display: none; /* Hide the dot by default */
 }
 
