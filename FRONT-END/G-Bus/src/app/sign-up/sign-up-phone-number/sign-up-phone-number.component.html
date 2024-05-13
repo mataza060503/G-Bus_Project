@@ -29,12 +29,13 @@
             <input id="phoneNumber" class="inp-phone-number text caption-14 reg" type="text" placeholder="Please enter your phone number" [(ngModel)]="phoneNumber">
           </div>
         </div>
-        <button class="btn button-primary large signup-form-btn" (click)="next()">Next</button>
+        <button class="button-primary large signup-form-btn" (click)="next()">Next</button>
+        <div id="recaptcha-container"></div>
         <div class="signup-form-google">
           <div class="signup-form-divider">
             <hr><p class="text caption-14 reg">Or Sign Up with</p><hr>
           </div>
-          <div class="btn signup-form-google-btn" (click)="signupWithGoogle()">
+          <div class="btn signup-form-google-btn" (click)="signInWithGoogle()">
             <img src="../../../assets/images/google_icon.png" alt="">
             <p class="text caption-14 reg">Or Sign Up with Google</p>
           </div>

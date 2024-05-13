@@ -326,9 +326,9 @@ export class SearchingResultComponent implements OnInit{
     } else {
       this.returnTrip = "One-way-trip"
     }
-
     if (this.returnTrip === "Round-trip") {
       if (this.departureTicket.Ticket === "") {
+        alert(this.departureTicket.Ticket)
         this.departureTicket = {
           Ticket:  ticket.Ticket._id,
           Date: ticket.Ticket.DTime +"-"+ this.formatDate(ticket.Ticket.Date,3),
@@ -350,6 +350,7 @@ export class SearchingResultComponent implements OnInit{
         }
         this.resetTickets()
         window.scrollTo({ top: 150, behavior: 'smooth' });
+        return
       } else {
         this.returnTicket = {
           Ticket:  ticket.Ticket._id,
@@ -370,8 +371,8 @@ export class SearchingResultComponent implements OnInit{
           PickUpPoints: ticket.Route.PickUpPoints,
         DropOffPoints: ticket.Route.DropOffPoints
         }
+        this.router.navigate(["passengerInfo"])
       }
-      this.router.navigate(["passengerInfo"])
     } else if (this.returnTrip === "One-way-trip") {
       this.departureTicket = {
         Ticket:  ticket.Ticket._id,
@@ -554,9 +555,19 @@ export class SearchingResultComponent implements OnInit{
     return new Date(year, month, day);
   }
 
-  formatDate(dateInput: string | Date, type:number): string {
-    // If the input is a string, convert it to a Date object
-    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  formatDate(dateInput: string | Date, type: number): string {
+    let date;
+
+    // Explicitly parse the input if it's a string in "DD/MM/YYYY" format
+    if (typeof dateInput === 'string') {
+        const parts = dateInput.split('/');
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Adjust month index (JavaScript months are 0-indexed)
+        const year = parseInt(parts[2], 10);
+        date = new Date(year, month, day);
+    } else {
+        date = dateInput;
+    }
 
     // Check if the date is valid
     if (isNaN(date.getTime())) {
@@ -569,18 +580,18 @@ export class SearchingResultComponent implements OnInit{
     const year = date.getFullYear();
     const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
 
-
-    if (type === 1 ) {
-      return `${day}/${month}/${year}`;
-    } else if (type === 2) {
-      return `${day}/${month}`;
-    } else if (type === 3) {
-      return `${dayOfWeek}, ${day}/${month}/${year}`;
+    switch (type) {
+        case 1:
+            return `${day}/${month}/${year}`;
+        case 2:
+            return `${day}/${month}`;
+        case 3:
+            return `${dayOfWeek}, ${day}/${month}/${year}`;
+        default:
+            return `${day}/${month}/${year}`; // Fallback to full date
     }
+}
 
-    // Return the formatted date string
-    return `${day}/${month}/${year}`;
-  }
 
   timeDifference(time1Str: string, time2Str: string): string {
     // Parse the input strings into Date objects

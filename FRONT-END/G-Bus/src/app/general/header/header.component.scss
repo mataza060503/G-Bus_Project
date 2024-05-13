@@ -18,9 +18,42 @@
     display: flex;
     align-items: center;
     gap: 36px;
-    
+    &-signed {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+    }
   }
 }
+
+.notification {
+  position: relative;
+  &-number {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DD1F13;
+    border-radius: 100rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(30%,-20%);
+    font-weight: 500;
+    line-height: 0px; 
+    letter-spacing: 0px;
+    text-align: center;
+    color: white;
+  }
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
 .btn{
   border: solid 1px white;
   padding: 0px;
@@ -58,18 +91,51 @@
   &-item a {
     text-decoration: none;
     color: var(--Neutral-Grey300, #6F757F);
+    
     &:hover {
       color: var(--Primary-Purple500, #4D56BE);
     }
   }
   &-item.active {
     color: var(--Primary-Purple500, #4D56BE);
+    cursor: none;
+    pointer-events: none;
   }
   &-item-sub {
     color: var(--Neutral-Grey300, #6F757F);
+    cursor: pointer;
   }
 }
 
 .active {
   color: var(--Primary-Purple500, #4D56BE);
+}
+
+section.popup {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  top: 0;
+  
+}
+.popup-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+.background {
+  position: absolute;
+  background-color: black;
+  opacity: 50%;
+  width: 100vw;
+  height: 100vh;
+}
+.popup-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: fit-content;
+  height: fit-content;
+  transform: translate(-50%,-50%)
 }

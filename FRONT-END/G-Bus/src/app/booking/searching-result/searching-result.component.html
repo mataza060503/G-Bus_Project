@@ -921,8 +921,8 @@
                         <label [for]="'dropOffPoint_' + i" class="radio-indicator"></label>
                         <label [for]="'dropOffPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;width: 282px;">
                           <div>
-                            <div class="text caption-14 reg shuttle-bus-tag" [class.active]="item.ShuttleBus">Shuttle Bus</div>
                             <div class="text sub-16 sem" style="color: black;"> {{calculateTimePoint(ticket.Ticket.ATime,item.Time)}} - {{item.Point}}  </div>
+                            <div class="text caption-14 reg shuttle-bus-tag" [class.active]="item.ShuttleBus">Shuttle Bus</div>
                           </div>
                           <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{item.Address}} </div>
                         </label>

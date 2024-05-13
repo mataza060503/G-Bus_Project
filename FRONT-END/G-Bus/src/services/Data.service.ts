@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { FeedbackItem, PartnerPromotion, PromotionItem, RouteItem } from '../models/Item';
-import { Amenities, BookedTicket, Bus, Driver, OrderTicket, PassengerInfo, PostBookedTicket, RawTicket, Route } from '../models/ticket';
+import { Amenities, BookedTicket, Bus, Driver, Invoice, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, Voucher } from '../models/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +86,31 @@ getAllTicket():Observable<any> {
   } 
   return this._http.post<any>(this.API+"/allTicket",requestOptions).pipe(
     map(res=> JSON.parse(res) as RawTicket[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+getTicket(ticketId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text",
+  } 
+  return this._http.get<any>(this.API+"/ticket/"+ticketId,requestOptions).pipe(
+    map(res=> JSON.parse(res) as RawTicket),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+postInvoice(orderId: string, invoice: Invoice):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text",
+  } 
+  return this._http.post<any>(this.API+"/invoice/"+orderId,JSON.stringify(invoice),requestOptions).pipe(
+    map(res=> res as string),
     retry(3),
     catchError(this.handleError)
   )
@@ -176,7 +201,7 @@ postOrder(order: OrderTicket):Observable<any> {
     responseType:"text"
   } 
   return this._http.post<any>(this.API+"/order",JSON.stringify(order),requestOptions).pipe(
-    map(res=> JSON.parse(res) as string),
+    map(res=> JSON.parse(res)),
     retry(3),
     catchError(this.handleError)
   )
@@ -188,7 +213,135 @@ getAllOrderByStatus(accountId: string, status: string):Observable<any> {
     responseType:"text"
   } 
   return this._http.post<any>(this.API+"/getOrder",JSON.stringify({"accountId":accountId,"status":status}),requestOptions).pipe(
-    map(res=> JSON.parse(res) as OrderTicket),
+    map(res=> JSON.parse(res) as RawOrderTicket),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getOrderUnPaid(orderId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/getOrder/"+orderId,requestOptions).pipe(
+    map(res=> JSON.parse(res) as RawOrderTicket),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getBookedTicket(ticketId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/getBookedTicket",JSON.stringify({"ticketId":ticketId}),requestOptions).pipe(
+    map(res=> JSON.parse(res) as PostBookedTicket),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+patchOrderStatus(orderId: string, status: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.patch<any>(this.API+"/order",JSON.stringify({"orderId":orderId, "status": status}),requestOptions).pipe(
+    map(res=> res as String),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+patchInvoice(orderId: string, invoiceId: string, status: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.patch<any>(this.API+"/invoice",JSON.stringify({"orderId":orderId, "invoiceId": invoiceId, "status": status}),requestOptions).pipe(
+    map(res=> res as String),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getInvoice(invoiceId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text",
+  } 
+  return this._http.get<any>(this.API+"/invoice/"+invoiceId,requestOptions).pipe(
+    map(res=> JSON.parse(res) as Invoice),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getAllVoucher():Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/voucher",requestOptions).pipe(
+    map(res=> JSON.parse(res) as Voucher[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+postAccount(phoneNumber: string, password: string, userId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/account",JSON.stringify({"phoneNumber": phoneNumber, "password": password, "userId": userId}),requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+checkExistAccount(phoneNumber: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/checkAccount/"+phoneNumber,requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+checkPassword(password: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/checkPassword",{"password": password},requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+patchPassword(phoneNumber: string, password: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.patch<any>(this.API+"/password",{"phoneNumber": phoneNumber, "password": password},requestOptions).pipe(
+    map(res=> res as string),
     retry(3),
     catchError(this.handleError)
   )

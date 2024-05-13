@@ -1,3 +1,11 @@
+<section class="popup" id="popup" *ngIf="isPopup === true">
+  <div class="popup-container">
+    <div class="background" (click)="cancelPopup()"></div>
+    <div class="popup-item">
+      <router-outlet name="auth-popup"></router-outlet>
+    </div>
+  </div>
+</section>
 <section class="header">
   <div class="header-container">
     <div class="header-image">
@@ -21,12 +29,30 @@
       
     </div>
     <div class="header-auth">
-      <div class="header-auth-icon">
+      <div class="header-auth-icon" >
         <span class="material-symbols-outlined icon-find sub">
           search
           </span>
       </div>
-      <button type="button" class="btn auth head-24 med text sub" id="btnHeaderLogin">Log in</button>
+      <div *ngIf="isSigned === false">
+        <div class="button auth head-24 med text sub" id="btnHeaderLogin" (click)="openLoginPopup()">Log in</div>
+      </div>
+      <div class="header-auth-signed" *ngIf="isSigned === true">
+        <div class="notification">
+          <span class="material-symbols-outlined icon-find sub">
+            notifications
+          </span>
+          <div class="notification-number text">9</div>
+        </div>
+        <div class="account" >
+          <span class="material-symbols-outlined icon-find sub">
+            account_circle
+          </span>
+          <span class="material-symbols-outlined icon-find sub" style="font-size: 24px;">
+            expand_more
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
