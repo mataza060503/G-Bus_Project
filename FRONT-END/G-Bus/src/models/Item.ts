@@ -56,3 +56,7 @@ export interface SlideItem {
   Percent: number
 }
 
+export interface account {
+  
+}
+

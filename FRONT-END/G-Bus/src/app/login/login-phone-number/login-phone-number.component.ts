@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { DataService } from '../../../services/Data.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-login-phone-number',
@@ -13,7 +16,7 @@ export class LoginPhoneNumberComponent implements OnInit{
   portTextSelected:string = ""
   phoneNumber:string = ""
 
-  constructor(private router:Router) {
+  constructor(private router:Router, private authService: AuthService, private dataService: DataService) {
     
   }
 
@@ -33,18 +36,39 @@ export class LoginPhoneNumberComponent implements OnInit{
   }
 
   next() {
-    const phoneNumberRegex = /^\+?0\d{9}$/; // Updated regex to allow optional '+' before '0'
+    const phoneNumberRegex = /^\+?0\d{9}$/;  
+  
     if (this.phoneNumber && phoneNumberRegex.test(this.phoneNumber)) {
-      this.router.navigate(["/login-password"])
+      this.checkExistAccount(this.phoneNumber).subscribe(isExist => {
+        if (isExist) {
+          this.router.navigate([{ outlets: { 'auth-popup': ['login-password'] } }]);
+        } else {
+          alert('Phone number not found');
+        }
+      });
     } else {
       alert("Your phone number is invalid!");
-      localStorage.setItem("phoneNumber",this.phoneNumber)
-      localStorage.setItem("token","true")
     }
   }
 
   loginWithGoogle() {
-
+    this.authService.loginWithGoogle()
   }
 
+  cancelPopup() {
+    this.router.navigate([{ outlets: { 'auth-popup': null } }]);
+  }
+
+  signUp() {
+    this.router.navigate([{ outlets: { 'auth-popup': ['sign-up-phone-number'] } }]);
+  }
+
+  checkExistAccount(phoneNumber: string): Observable<boolean> {
+    return this.dataService.checkExistAccount(phoneNumber).pipe(
+      map(data => {
+        console.log(data);
+        return data === "true";
+      })
+    );
+  }
 }

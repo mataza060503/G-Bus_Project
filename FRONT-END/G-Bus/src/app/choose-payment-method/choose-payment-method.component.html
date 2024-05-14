@@ -1,4 +1,38 @@
 <div class="wrapper">
+  <ng-template #editVoucher let-offPcanvas>
+    <div style="background-color: white; height: 100vh;">
+      <div class="offcanvas-header" style="display: flex;align-items: center;gap: 24px; width: 100%;padding: 24px;background-color: #4D56BE;">
+        <span class="material-symbols-outlined" style="color: white;font-size: 30px;cursor: pointer;" (click)="offPcanvas.dismiss('Cross click')">
+          arrow_left_alt
+        </span>
+        <div class="text sub-16 sem" style="display: flex;flex-direction: column;gap: 8px; color: white;">
+          <div class="body-20 reg">Edit Voucher</div>
+        </div>
+      </div>
+      <div class="offcanvas-body" style="display: flex;flex-direction: column;padding: 24px;gap: 16px;width: 100%;">
+        <div class="ticket-item-booking-location-item-list" style="overflow-y: scroll;width: 100%;height: 100vh;margin-bottom: 136px;gap: 16px">
+          <div class="voucher"  *ngFor="let voucher of vouchers;let i = index" >
+            <div class="voucher-flex" [class.invalid]="checkValidVoucher(voucher)">
+                <div class="voucher-ic1">
+                    <div><img src={{voucher.image}}></div>
+                    <div clas="sub-14 sem" style="font-weight: 600;"> {{voucher.percentage}} off</div>
+                </div>
+                <div style="height: 80px;">
+                    <div class="head-24 med" style="margin-bottom: 16px;"> {{voucher.description}} </div>
+                    <div class="sub-10 reg" style="margin-bottom: 12px;">Expired in {{voucher.expired}} </div>
+                    <div class="sub-10 reg" style="margin-bottom: 12px; color:#0D6EFD;cursor: pointer;width: fit-content;">Condition</div>
+                </div>
+                <div style="position: relative;" style="margin-left: auto;">
+                  <input type="radio" class="custom-radio" name="voucher" value="Visa" (click)="selectVoucher(voucher)">
+                  <div class="radio-indicator"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="button button-primary update-button" (click)="offPcanvas.dismiss('Cross click')">Update</div>
+      </div>
+    </div>
+  </ng-template>
   <div class="choosepaymentmethod">
       <div class="caption-14 reg">
           <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -21,7 +55,7 @@
                       <div class="method-flex">
                           <div style="gap: 24px;" class="rad-method">
                             <label style="position: relative;">
-                                <input type="radio" class="custom-radio" name="payment_method" value="momo">
+                                <input type="radio" checked class="custom-radio" name="payment_method" value="momo" (click)="selectPaymentMethod('Momo')">
                                 <div class="radio-indicator"></div>
                             
                             </label>
@@ -56,7 +90,7 @@
                           <div style="gap: 24px;" class="rad-method">
                               <label>
                                 <div style="position: relative;">
-                                    <input type="radio" class="custom-radio" name="payment_method" value="Zalo">
+                                    <input type="radio" class="custom-radio" name="payment_method" value="Zalo" (click)="selectPaymentMethod('Zalo')">
                                     <div class="radio-indicator"></div>
                                 </div>
                               </label>
@@ -81,7 +115,7 @@
                           <div style="gap: 24px;" class="rad-method">
                               <label>
                                 <div style="position: relative;">
-                                    <input type="radio" class="custom-radio" name="payment_method" value="Visa">
+                                    <input type="radio" class="custom-radio" name="payment_method" value="Visa" (click)="selectPaymentMethod('VISA')">
                                     <div class="radio-indicator"></div>
                                 </div>
                                   
@@ -108,7 +142,7 @@
                           <div style="gap: 24px;" class="rad-method">
                               <label>
                                 <div style="position: relative;">
-                                    <input type="radio" class="custom-radio" name="payment_method" value="momo">
+                                    <input type="radio" class="custom-radio" name="payment_method" value="momo" (click)="selectPaymentMethod('PayPal')">
                                     <div class="radio-indicator"></div>
                                 </div>
                               </label>
@@ -134,7 +168,7 @@
                           <div style="gap: 24px;" class="rad-method">
                               <label>
                                 <div style="position: relative;">
-                                    <input type="radio" class="custom-radio" name="payment_method" value="Mastercard">
+                                    <input type="radio" class="custom-radio" name="payment_method" value="Mastercard" (click)="selectPaymentMethod('Mastercard')">
                                     <div class="radio-indicator"></div>
                                 </div>
                               </label>
@@ -153,11 +187,42 @@
                               </div>
                           </div>
                       </div>
+                      <div class="mastercard" *ngIf="paymentMethod === 'Mastercard'">
+                        <div class="mastercard-notice">
+                          <span class="material-symbols-outlined" style="color: #4D56BE;font-size: 16px;">
+                            admin_panel_settings
+                          </span>
+                          <div class="caption-14 reg text">To ensure account security, GBus will not save your bank account</div>
+                        </div>
+                        <div class="passenger-input">
+                          <label for="name" class="text sub-16 med">Card Number<b style="color: #DD1F13;">*</b></label>
+                          <input class="text cption-14 reg" type="text" id="name" placeholder="Insert card number" [(ngModel)]="cardNumber">
+                        </div>
+                        <div class="passenger-input">
+                          <label for="name" class="text sub-16 med">Cardholder Name<b style="color: #DD1F13;">*</b></label>
+                          <input class="text cption-14 reg" type="text" id="name" placeholder="Insert cardholder name" [(ngModel)]="cardHolderName">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px;">
+                          <div class="passenger-input">
+                            <label for="name" class="text sub-16 med">Expire Date<b style="color: #DD1F13;">*</b></label>
+                            <input class="text cption-14 reg" type="text" id="name" placeholder="--/--" [(ngModel)]="expireDate">
+                          </div>
+                          <div class="passenger-input">
+                            <label for="name" class="text sub-16 med">CVV<b style="color: #DD1F13;">*</b></label>
+                            <div style="position: relative;">
+                              <input class="text cption-14 reg" type="text" id="name" placeholder="--" [(ngModel)]="cvv" style="width: 100%;padding-right: 48px;">
+                              <span class="material-symbols-outlined icon-help" style="position: absolute;">
+                                help
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                   </div>
                   
               </div>
               <div class="" style="display: flex; flex-direction: column;gap:24px;margin-top:40px">
-                  <div class="btn btn-primary sub-14 sem" style="padding:17px 0px;background-color:#4D56BE;">
+                  <div class="btn btn-primary sub-14 sem" style="padding:17px 0px;background-color:#4D56BE;" (click)="payNow()">
                       Pay now
                   </div>
                   <div class="caption-14 reg" style="text-align: center;">
@@ -168,183 +233,188 @@
                   </div>
               </div>
           </div>
-          <div class="column-2">
-              <div class="border-div2">
-                  <div class="text body-20 reg">Sub Total</div>
-                  <div class="head-24 med" style="color: #4D56BE;">1.200.000VND</div>
+          <div class="column-2" style="width: 422px;">
+              <div class="border-div2" style="display: flex;flex-direction: column;gap: 16px;height: fit-content;padding: 16px 0px;" > 
+                  <div style="display: flex; align-items: center;justify-content: space-between;width: inherit;padding: 0px 16px;">
+                    <div class="text body-20 reg">Sub Total ({{count(orderData.Departure.Seat) + count(orderData.Return.Seat)}} tickets)</div>
+                    <div class="head-24 med color-primary" [class.active]="isVoucher"> {{convertMoney(orderData.Departure.Subtotal + orderData.Return.Subtotal)}} VND</div>
+                  </div>
+                  <div style="display: flex; align-items: center;justify-content: space-between;width: inherit;padding: 0px 16px;" *ngIf="isVoucher === true">
+                    <div class="text body-20 reg">Discount</div>
+                    <div class="head-24 reg" style="color: #ACAFB8;text-decoration: line-through;font-size: 20px;"> {{convertMoney(discount)}} VND</div>
+                  </div>
+                  <div style="display: flex; align-items: center;justify-content: space-between;width: inherit;padding: 0px 16px;border-top: solid 1px #E2E4E7;padding-top: 16px;" *ngIf="isVoucher === true">
+                    <div class="text body-20 reg">Total</div>
+                    <div class="head-24 med" style="color: #4D56BE;"> {{convertMoney(orderData.Departure.Subtotal + orderData.Return.Subtotal - discount)}} VND</div>
+                  </div>
               </div>
               <div class="border-div3">
                   <div style="display: flex; align-items:center;justify-content:space-between;width:100%;margin-bottom:8px">
                       <div class="button-20 bold">Voucher</div>
-                      <div onclick="togglePopup('popup1')" class="body-16 reg" style="text-decoration:underline; cursor:pointer">
+                      <div onclick="togglePopup('popup1')" class="body-16 reg" style="text-decoration:underline; cursor:pointer" (click)="openStaticBackdrop(editVoucher)">
                           View all
                       </div>
                   </div>
                   <div>
                       <div class="voucher-container">
-                          <div class="voucher">
-                              <div class="voucher-flex">
+                          <div class="voucher"  *ngFor="let voucher of vouchers;let i = index" >
+                              <div class="voucher-flex" [class.invalid]="checkValidVoucher(voucher)">
                                   <div class="voucher-ic1">
-                                      <div><img src="./assets/images/choosepaymentmethod\choosepaymentmethod_directions_bus.png"></div>
-                                      <div clas="sub-14 sem" style="font-weight: 600;">40% off</div>
+                                      <div><img src={{voucher.image}}></div>
+                                      <div clas="sub-14 sem" style="font-weight: 600;"> {{voucher.percentage}} off</div>
                                   </div>
                                   <div>
-                                      <div class="sub-14 sem" style="margin-bottom: 16px;">GBUS50 - Discount 40%</div>
-                                      <div class="sub-10 reg" style="margin-bottom: 12px;">Expired in 23:59, 20/03/2024</div>
-                                      <div class="sub-10 reg" style="margin-bottom: 12px; color:#0D6EFD">Condition</div>
+                                      <div class="sub-14 sem" style="margin-bottom: 16px;"> {{voucher.description}} </div>
+                                      <div class="sub-10 reg" style="margin-bottom: 12px;">Expired in {{voucher.expired}} </div>
+                                      <div class="sub-10 reg" style="margin-bottom: 12px; color:#0D6EFD;cursor: pointer;width: fit-content;">Condition</div>
                                   </div>
                                   <div style="position: relative;">
-                                    <input type="radio" class="custom-radio" name="payment_method" value="Visa">
+                                    <input type="radio" class="custom-radio" name="voucher" value="Visa" (click)="selectVoucher(voucher)">
                                     <div class="radio-indicator"></div>
                                 </div>
                               </div>
-                              
                           </div>
                       </div>
                   </div>
               </div>
-              <div class="border-div4">
-                  <div class="button-20 bold" style="margin-bottom: 24px;">Booking Preview</div>
-                  <div class="booking-preview">
-                      <div class="booking-title">
-                          <div class="text sub-16 sem">Departure Trip</div>
-                          <div>
-                              <div style="display: flex; align-items:center">
-                                  <div>
-                                      <img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_group.png" style="margin-right: 4px;">
-                                  </div>
-                                  <div class="body-12 reg" style="color: #6F757F;">2</div>
-                              </div>
-                          </div>
+              <div class="passenger-ticket-item">
+                <div style="display: flex;flex-direction: column; gap: 16px;">
+                  <div class="text button-20 bold">Booking Preview</div>
+                  <div class="passenger-ticket-booked" *ngIf="orderData?.Departure?.Ticket !== ''">
+                    <div class="passenger-ticket-booked-header">
+                      <div class="text sub-16 sem">Departure Trip</div>
+                      <div style="display: flex;align-items: center;gap: 4px;color: var(--neutral-grey-300);">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; color: var(--neutral-grey-300);font-size: 16px;">
+                          group
+                        </span>
+                        <div class="text body-12 reg"> {{count(orderData.Departure.Seat)}} </div>
                       </div>
-                      <hr>
-                      <div class="booking-img">
-                          <div>
-                              <img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_bookingtrip.png">
+                    </div>
+                    <div style="width: 100%;height: 1px;background-color: var(--neutral-grey-100);"></div>
+                    <div class="passenger-ticket-booked-body">
+                      <div style="display: flex;gap: 12px;">
+                        <div style="width: 61px;height: 61px;text-align: center;border-radius: 4px;overflow: hidden;">
+                          <img src={{orderData.DepartImage}} alt="" style="width: 61px;min-height: 61px;">
+                        </div>
+                        <div style="display: flex;flex-direction: column;justify-content: space-between">
+                          <div class="text sub-16 sem">Limousine Single Room</div>
+                          <div style="display: flex;align-items: center;justify-content: space-between; width: 283px;">
+                            <div class="text caption-16 reg" style="color: var(--neutral-grey-300);">Seat number</div>
+                            <div class="text sub-16 med"> {{orderData.Departure.Seat.toString()}} </div>
                           </div>
-                          <div class="booking-info">
-                              <div class="text sub-16 sem" style="margin-bottom: 4px;">Limousine Single Room</div>
-                              <div class="text caption-16 reg" style="color: #6F757F;margin-bottom: 4px;">20 seats, 1 bathroom</div>
-                              <div class="booking-seat-number">
-                                  <div class="text caption-16 reg" style="color: #6F757F;">Seat number</div>
-                                  <div class="sub-14 med">4A, 4B</div>
-                              </div>
-                          </div>
+                        </div>
                       </div>
-                      <div class="booking-details">
-                          <div class="booking-time">
-                              <div style="margin-bottom: 62px;">
-                                  <div class="sub-16 sem" style="margin-bottom: 4px;">6:50</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
-                              </div>
-                              <div>
-                                  <div class="sub-16 sem" style="margin-bottom: 4px;">16:00</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
-                              </div>
+                      
+                      <div style="display: flex;flex-direction: column;gap: 24px;position: relative;">
+                        <div style="border: dashed 0.5px var(--neutral-grey-300);height: 100%;position: absolute;z-index: 0;left: 62.5px;"></div>
+                        <div style="display: flex;align-items: start;gap: 8px;background-color: transparent;z-index: 1;">
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: center;">
+                            <div class="text sub-16 sem"> {{convertDateTime(orderData.Departure.DTime,"time")}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> ({{convertDateTime(orderData.Departure.DTime,"date")}}) </div>
                           </div>
-                          <div>
-                              <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_my_location.png"></div>
-                              <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_line 52.png"> </div>
-                              <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_location_on.png"></div>
+                          <span class="material-symbols-outlined" style="color: black; font-size: 16px;background-color: white;">
+                            my_location
+                          </span>
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
+                            <div class="text sub-16 sem" > {{orderData.Departure.PickUpLocation.Point}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{orderData.Departure.PickUpLocation.Address}} </div>
                           </div>
-                          <div style="margin-left:8px;">
-                              <div>
-                                  <div class="booking-name-trip">
-                                      <div class="sub-16 sem">Ben Xe Mien Dong</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;padding-right:13px;">Edit</div>
-                                  </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px;width:243px;">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
-                                  <div class="sub-14 med" style="margin-bottom:26px;">Ba Chieu Market</div>
-                              </div>
-                              <div>
-                                  <div class="booking-name-trip">
-                                      <div class="sub-16 sem">Nha Trang Office</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;padding-right:13px;">Edit</div>
-                                  </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px">10 Yersin, Van Thanh Ward, Nha Trang</div>
-                              </div>
+                          <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" >Edit</div>
+                        </div>
+                        <div style="display: flex;align-items: start;gap: 8px;background-color: white;z-index: 1;">
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: center;">
+                            <div class="text sub-16 sem"> {{convertDateTime(orderData.Departure.ATime, "time")}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> ({{convertDateTime(orderData.Departure.ATime,"date")}}) </div>
                           </div>
-                      </div>
+                          <span class="material-symbols-outlined" style="color: black; font-size: 16px;">
+                            location_on
+                          </span>
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
+                            <div class="text sub-16 sem"> {{orderData.Departure.DropOffLocation.Point}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{orderData.Departure.DropOffLocation.Address}} </div>
+                          </div>
+                          <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" >Edit</div>
+                        </div>
+                    </div>
+                    </div>
                   </div>
-                  <div class="booking-preview2">
-                      <div class="booking-title">
-                          <div class="text sub-16 sem">Return Trip</div>
-                          <div>
-                              <div style="display: flex; align-items:center">
-                                  <div>
-                                      <img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_group.png" style="margin-right: 4px;">
-                                  </div>
-                                  <div class="body-12 reg" style="color: #6F757F;">2</div>
-                              </div>
-                          </div>
+                  <div class="passenger-ticket-booked" *ngIf="orderData?.Return?.Ticket !== ''">
+                    <div class="passenger-ticket-booked-header">
+                      <div class="text sub-16 sem">Return Trip</div>
+                      <div style="display: flex;align-items: center;gap: 4px;color: var(--neutral-grey-300);">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; color: var(--neutral-grey-300);font-size: 16px;">
+                          group
+                        </span>
+                        <div class="text body-12 reg"> {{count(orderData.Return.Seat)}} </div>
                       </div>
-                      <hr>
-                      <div class="booking-img">
-                          <div>
-                              <img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_bookingtrip.png">
+                    </div>
+                    <div style="width: 100%;height: 1px;background-color: var(--neutral-grey-100);"></div>
+                    <div class="passenger-ticket-booked-body">
+                      <div style="display: flex;gap: 12px;">
+                        <div style="width: 61px;height: 61px;text-align: center;border-radius: 4px;overflow: hidden;">
+                          <img src={{orderData.ReturnImage}} alt="" style="width: 61px;min-height: 61px;">
+                        </div>
+                        <div style="display: flex;flex-direction: column;justify-content: space-between">
+                          <div class="text sub-16 sem">Limousine Single Room</div>
+                          <div style="display: flex;align-items: center;justify-content: space-between; width: 283px;">
+                            <div class="text caption-16 reg" style="color: var(--neutral-grey-300);">Seat number</div>
+                            <div class="text sub-16 med"> {{orderData.Return.Seat.toString()}} </div>
                           </div>
-                          <div class="booking-info">
-                              <div class="text sub-16 sem" style="margin-bottom: 4px;">Limousine Single Room</div>
-                              <div class="text caption-16 reg" style="color: #6F757F;margin-bottom: 4px;">20 seats, 1 bathroom</div>
-                              <div class="booking-seat-number">
-                                  <div class="text caption-16 reg" style="color: #6F757F;">Seat number</div>
-                                  <div class="sub-14 med">2C, 2D</div>
-                              </div>
-                          </div>
+                        </div>
                       </div>
-                      <div class="booking-details">
-                          <div class="booking-time">
-                              <div style="margin-bottom: 62px;">
-                                  <div class="sub-16 sem" style="margin-bottom: 4px;">6:50</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
-                              </div>
-                              <div>
-                                  <div class="sub-16 sem" style="margin-bottom: 4px;">16:00</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
-                              </div>
+                      
+                      <div style="display: flex;flex-direction: column;gap: 24px;position: relative;">
+                        <div style="border: dashed 0.5px var(--neutral-grey-300);height: 100%;position: absolute;z-index: 0;left: 62.5px;"></div>
+                        <div style="display: flex;align-items: start;gap: 8px;background-color: transparent;z-index: 1;">
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: center;">
+                            <div class="text sub-16 sem"> {{convertDateTime(orderData.Return.DTime ,"time")}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> ({{convertDateTime(orderData.Return.DTime ,"date")}}) </div>
                           </div>
-                          <div>
-                              <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_my_location.png"></div>
-                              <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_line 52.png"> </div>
-                              <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_location_on.png"></div>
+                          <span class="material-symbols-outlined" style="color: black; font-size: 16px;background-color: white;">
+                            my_location
+                          </span>
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
+                            <div class="text sub-16 sem"> {{orderData.Return.PickUpLocation.Point}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{orderData.Return.PickUpLocation.Address}} </div>
                           </div>
-                          <div style="margin-left:8px;">
-                              <div>
-                                  <div class="booking-name-trip">
-                                      <div class="sub-16 sem">Nha Trang Office</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;padding-right:13px;">Edit</div>
-                                  </div>
-                                  <div class="caption-14 reg" style="margin-bottom:58px;">10 Yersin, Van Thanh Ward, Nha Trang</div>
-                              </div>
-                              <div>
-                                  <div class="booking-name-trip">
-                                      <div class="sub-16 sem">Ben Xe Mien Dong</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;padding-right:13px;">Edit</div>
-                                  </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px;width:243px;">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
-                                  <div class="sub-14 med">Ba Chieu Market</div>
-                              </div>
+                          <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" >Edit</div>
+                        </div>
+                        <div style="display: flex;align-items: start;gap: 8px;background-color: white;z-index: 1;">
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: center;">
+                            <div class="text sub-16 sem"> {{convertDateTime(orderData.Return.ATime, "time")}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> ({{convertDateTime(orderData.Return.ATime, "date")}}) </div>
                           </div>
-                      </div>
+                          <span class="material-symbols-outlined" style="color: black; font-size: 16px;">
+                            location_on
+                          </span>
+                          <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
+                            <div class="text sub-16 sem"> {{orderData.Return.DropOffLocation.Point}} </div>
+                            <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{orderData.Return.DropOffLocation.Address}} </div>
+                          </div>
+                          <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" >Edit</div>
+                        </div>
+                    </div>
+                    </div>
                   </div>
+                </div>
               </div>
-              <div class="border-div5">
+              <div class="border-div5" style="margin-top: 16px;">
                   <div class="button-20 bold">
                       Passenger Information
                   </div>
                   <hr>
-                  <div>
+                  <div *ngIf="orderData?.PassengerInfo !== undefined">
                       <div class="info-flex" style="margin-bottom: 16px;">
                           <div class="body-16 reg" style="color: #6F757F;">Name</div>
-                          <div class="body-16 reg">Nguyen Quoc Khanh </div>
+                          <div class="body-16 reg"> {{orderData.PassengerInfo.FullName}} </div>
                       </div>
                       <div class="info-flex" style="margin-bottom: 16px;">
                           <div class="body-16 reg" style="color: #6F757F;">Phone number</div>
-                          <div class="body-16 reg">(+84) 123 456 789</div>
+                          <div class="body-16 reg">{{orderData.PassengerInfo.PhoneNumber}}</div>
                       </div>
                       <div class="info-flex">
                           <div class="body-16 reg" style="color: #6F757F;">Email</div>
-                          <div class="body-16 reg">khanhnq21411ca&commat;st.uel.edu.vn</div>
+                          <div class="body-16 reg">{{orderData.PassengerInfo.Email}}</div>
                       </div>
                   </div>
               </div>

@@ -13,13 +13,12 @@ import 'slick-carousel/slick/slick.min.js';
 
 export class AppComponent implements OnInit{
   title = 'G-Bus';
-  
+  isPopup: boolean = false
   constructor(private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.router.navigate([{ outlets: { 'auth-popup': ['login-phoneNumber'] } }]);
 
     const btnHeaderLogin = document.getElementById("btnHeaderLogin")
     const screenBackground = document.getElementById("screenBackground") as HTMLElement

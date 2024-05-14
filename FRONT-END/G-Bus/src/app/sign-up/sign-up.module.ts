@@ -5,6 +5,10 @@ import { SignUpPhoneNumberComponent } from './sign-up-phone-number/sign-up-phone
 import { SignUpVerificationComponent } from './sign-up-verification/sign-up-verification.component';
 import { FormsModule } from '@angular/forms';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { environment } from '../../environments/environment';
+
 
 
 @NgModule({
@@ -15,7 +19,9 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule, 
   ], exports: [
     SignUpPasswordComponent,
     SignUpPhoneNumberComponent,

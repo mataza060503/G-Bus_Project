@@ -13,6 +13,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'; 
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,9 @@ import { SignUpModule } from './sign-up/sign-up.module';
 import { GeneralModule } from './general/general.module';
 import { BookingModule } from './booking/booking.module';
 import { BookingHistoryModule } from './booking-history/booking-history.module';
+import { SignInModule } from './sign-in/sign-in.module';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +36,8 @@ import { Notification2Component } from './notification2/notification2.component'
 import { PopupComponent } from './popup/popup.component';
 import { SuccesfulPaymentComponent } from './succesful-payment/succesful-payment.component';
 import { UnsuccessfulPaymentComponent } from './unsuccessful-payment/unsuccessful-payment.component';
+import { PaymentEWalletComponent } from './payment-ewallet/payment-ewallet.component';
+
 
 
 @NgModule({
@@ -44,7 +50,8 @@ import { UnsuccessfulPaymentComponent } from './unsuccessful-payment/unsuccessfu
     Notification2Component,
     PopupComponent,
     SuccesfulPaymentComponent,
-    UnsuccessfulPaymentComponent
+    UnsuccessfulPaymentComponent,
+    PaymentEWalletComponent,
   ],
   imports: [
     CommonModule,
@@ -52,21 +59,25 @@ import { UnsuccessfulPaymentComponent } from './unsuccessful-payment/unsuccessfu
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    LoginModule,
-    SignUpModule,
-    GeneralModule,
-    BookingModule,
+    QRCodeModule,
+    
     MatFormFieldModule,
     MatInputModule, 
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
     SlickCarouselModule,
-    AngularFireModule.initializeApp(environment.firebase),
     NgbModule,
-    BookingHistoryModule,
 
-    SignUpModule
+    AngularFireModule.initializeApp(environment.firebase),
+
+    LoginModule,
+    SignUpModule,
+    GeneralModule,
+    BookingModule,
+    BookingHistoryModule,
+    SignUpModule,
+    ForgotPasswordModule
   ],
   providers: [
     provideNativeDateAdapter(),

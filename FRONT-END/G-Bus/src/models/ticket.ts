@@ -48,6 +48,11 @@ export interface BookedTicket {
 
 export interface PostBookedTicket {
   Ticket: string,
+  DLocation: string,
+  ALocation: string,
+  DTime: string,
+  ATime: string,
+  Date: string,
   State: string,
   Seat: string[],
   Subtotal: number,
@@ -59,10 +64,36 @@ export interface OrderTicket {
   PassengerInfo: PassengerInfo,
   Status: string,
   CustomerId: string,
-  Departure: String;
-  Return: String;
-  BookedTime: Date;
-  TransactionNumber: String;
+  Departure: String,
+  Return: String,
+  BookedTime: Date,
+  TransactionNumber: String
+}
+export interface RawOrderTicket {
+  _id: string,
+  PassengerInfo: PassengerInfo,
+  Status: string,
+  CustomerId: string,
+  Departure: String,
+  Return: String,
+  BookedTime: Date,
+  TransactionNumber: String
+}
+
+export interface OrderTicketLoaded {
+  _id: string,
+  PassengerInfo: PassengerInfo,
+  Status: string,
+  CustomerId: string,
+  Departure: PostBookedTicket,
+  DepartImage: string,
+  DepartBusType: Bus,
+  Return: PostBookedTicket,
+  ReturnImage: string,
+  ReturnBusType: Bus,
+  BookedTime: Date,
+  TransactionNumber: String,
+  TimeRemaining?: string
 }
 
 export interface Route {
@@ -94,6 +125,15 @@ export interface Amenities {
   Image: string
 }
 
+export interface Invoice {
+  _id: string,
+  timeOfPayment: string,
+  paymentMethod: string,
+  paymentStatus: string,
+  subtotal: number,
+  discount: number
+}
+
 export interface Bus {
   _id: string,
   Name: string,
@@ -118,4 +158,16 @@ export interface Driver {
 export interface Tag {
   Image: string,
   Text: string
+}
+
+export interface Voucher {
+  _id: string,
+  amount: number,
+  condition: string,
+  condition_value: number,
+  description: string,
+  expired: string,
+  id: string,
+  image: string,
+  percentage: string
 }

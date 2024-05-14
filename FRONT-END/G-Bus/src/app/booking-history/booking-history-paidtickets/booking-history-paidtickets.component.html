@@ -164,75 +164,83 @@
         </div>
     </div>
 </div>
-<div style="display: flex; flex-direction: column; gap: 36px;">
-  <div class="ticket-div" style="position: relative; display: grid; grid-template-columns: 1fr 1fr 1fr;">
-    <button class="ticket-button" style="padding: 16px 0px;">
-      <span class="unpaid-span">Unpaid Tickets</span>
-      <div class="unpaid-divider"></div>      
+<div style="display: flex; flex-direction: column; gap: 36px;width: 775px;">
+  <div class="ticket-div" style="position: relative; display: grid; grid-template-columns: 1fr 1fr 1fr;border-radius: 8px;width: 100%;">
+    <button class="other-ticket-button" [class.selected]="isSelected[0]" style="padding: 16px 0px; border-radius: 0px 0px 0px 8px;" (click)="selectedOrderStatus(0);loadOrderData(accountId,'Unpaid')">
+      Unpaid Tickets      
     </button>
-    <button class="other-ticket-button" style="padding: 16px 0px;">
+    <button class="other-ticket-button" [class.selected]="isSelected[1]" style="padding: 16px 0px;border-radius: 0px 0px 0px 0px;" (click)="selectedOrderStatus(1);loadOrderData(accountId,'Paid')">
       Paid Tickets
     </button>
-    <button class="other-ticket-button" style="padding: 16px 0px;">
+    <button class="other-ticket-button" [class.selected]="isSelected[2]" style="padding: 16px 0px;border-radius: 0px 0px 8px 0px;" (click)="selectedOrderStatus(2);loadOrderData(accountId,'Cancelled')">
       Cancellations
     </button>
   </div>
-  <div class="frameofticket" style="position: relative;">      
-    <div class="ticket-frame">
-      <div class="total">Total</div>
-      <div class="total-value">1.000.000VND</div>
-    </div>
-
-    <div class="ticket-frame">
-      <div style="flex: 1 1 0">
-        <span class="info-label">Need to pay before:</span>
-        <span class="info-important">10:00 - T2/06/02/2024</span>
+  <div style="display: flex;flex-direction: column; gap:16px">
+    <div class="frameofticket" style="position: relative;width: 100%;" *ngFor="let order of ordersData">      
+      <div class="ticket-frame">
+        <div class="total">Total</div>
+        <div class="total-value"> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
       </div>
-      <div class="timeleft-info-container">
-        <div class="timeleft-label">Time left</div>
-        <div class="timeleft-important">13:34</div>
-      </div>
-    </div>
-    <div class="departure-frame">
-      <div class="time-inline-flex-container">
-        <div class="time-inline-flex-item">
-          <div class="time-bigtext">07:00</div>
-          <div class="time-date">(07/05)</div>            
+  
+      <div class="ticket-frame">
+        <div style="flex: 1 1 0">
+          <span class="info-label">Need to pay before:</span>
+          <span class="info-important"> {{formatNewTime(order.BookedTime.toString(),15)}} </span>
         </div>
-        <div class="ticket-info">
-          <div class="frame-info">
-            <div class="ticket-title">Ho Chi Minh - Nha Trang</div>
-            <div class="ticket-description">Limousine Double Room</div>              
-          </div>
-          <div class="ticket-container">
-            <div class="label-ticket">Seat</div>
-            <div class="value-ticket">3A, 4A</div>              
-          </div>
+        <div class="timeleft-info-container">
+          <div class="timeleft-label">Time left</div>
+          <div class="timeleft-important"> {{order.TimeRemaining}} </div>
         </div>
       </div>
-
-      <div class="time-inline-flex-container">
-        <div class="time-inline-flex-item">
-          <div class="time-bigtext">12:00</div>
-          <div class="time-date">(18/05)</div>     
-        </div>
-
-        <div class="ticket-info">
-          <div class="frame-info">
-            <div class="ticket-title">Nha Trang - Ho Chi Minh</div>
-            <div class="ticket-description">Limousine Double Room</div>              
+      <div class="departure-frame">
+        <div class="time-inline-flex-container">
+          <div class="time-inline-flex-item" style="width: 145px;">
+            <div class="time-bigtext"> {{convertDateTime(order.Departure.DTime,"time")}} </div>
+            <div class="time-date">{{convertDateTime(order.Departure.DTime,"date")}}</div>            
           </div>
-          <div class="ticket-container">
-            <div class="label-ticket">Seat</div>
-            <div class="value-ticket">1C</div>       
+          <div class="ticket-info">
+            <div class="frame-info">
+              <div class="ticket-title"> {{order.Departure.DLocation }} - {{order.Departure.ALocation}} </div>
+              <div class="ticket-description"> Limousine Double Room </div>              
+            </div>
+            <div class="ticket-container">
+              <div class="label-ticket">Seat</div>
+              <div class="value-ticket"> {{order.Departure.Seat}} </div>              
+            </div>
           </div>
         </div>
+  
+        <div class="time-inline-flex-container" *ngIf="order.Return.Ticket != ''">
+          <div class="time-inline-flex-item" style="width: 145px;">
+            <div class="time-bigtext">{{convertDateTime(order.Return.DTime,"time")}}</div>
+            <div class="time-date">{{convertDateTime(order.Return.DTime,"date")}}</div>     
+          </div>
+  
+          <div class="ticket-info">
+            <div class="frame-info">
+              <div class="ticket-title">{{order.Return.DLocation }} - {{ order.Return.ALocation}}</div>
+              <div class="ticket-description">Limousine Double Room</div>              
+            </div>
+            <div class="ticket-container">
+              <div class="label-ticket">Seat</div>
+              <div class="value-ticket">{{order.Return.Seat}}</div>       
+            </div>
+          </div>
+        </div>
+  
       </div>
-
-    </div>
-    <div class="ticket-relative-container">
-      <button class="primary-button">View Invoice</button>
-      <button class="secondary-button">Cancel</button>  
+      <div class="ticket-relative-container" *ngIf="order.Status === 'Unpaid'">
+        <button class="secondary-button" (click)="cancelOrder(order)">Cancel</button>  
+        <button class="primary-button">Pay Now</button>
+      </div>
+      <div class="ticket-relative-container" *ngIf="order.Status === 'Paid'">
+        <button class="secondary-button" (click)="cancelOrder(order)">Cancel</button>
+        <button class="primary-button">View Invoice</button>
+      </div>
+      <div class="ticket-relative-container" *ngIf="order.Status === 'Cancelled'" >
+        <button class="primary-button" style="width: 100%">Repurchase</button>
+      </div>
     </div>
   </div>
   

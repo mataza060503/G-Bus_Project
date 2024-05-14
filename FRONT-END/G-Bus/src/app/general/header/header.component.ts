@@ -11,12 +11,18 @@ import { LoginPhoneNumberComponent } from '../../login/login-phone-number/login-
 
 export class HeaderComponent implements OnInit{
   selectedLink: boolean[] = [];
+  isSigned: boolean = false;
+  isPopup: boolean = false;
+
   constructor(private router: Router) {
     for (let i = 0; i < 4; i++) {
       this.selectedLink.push(false)
     }
     this.selectedLink[0] = true
-
+    const token = localStorage.getItem("token")
+    if (token != null && token != "") {
+      this.isSigned = true
+    }
   }
   
 
@@ -36,7 +42,16 @@ export class HeaderComponent implements OnInit{
   if (target.textContent === "Schedule") {
     this.router.navigate(["searchResult","","","",""])
   }
+ }
 
+ openLoginPopup() {
+  this.isPopup = true
+  this.router.navigate([{ outlets: { 'auth-popup': ['login-phone-number'] } }]);
+ }
+
+ cancelPopup() {
+  this.router.navigate([{ outlets: { 'auth-popup': null } }]);
+  this.isPopup = false
  }
 
 }

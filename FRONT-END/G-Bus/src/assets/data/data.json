@@ -8,7 +8,7 @@
     "provinces": [
       { "value": "Ba Ria - Vung Tau", "viewValue": "Ba Ria - Vung Tau" },
       { "value": "Da Lat", "viewValue": "Da Lat" },
-      { "value": "Ho Chi Minh", "viewValue": "Ho Chi Minh" }
-      
+      { "value": "Ho Chi Minh", "viewValue": "Ho Chi Minh" },
+      { "value": "Nha Trang", "viewValue": "Nha Trang" }
     ]       
 }

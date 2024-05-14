@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import firebase from 'firebase/compat/app';
+import { DataService } from '../../../services/Data.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up-phone-number',
@@ -12,16 +16,41 @@ export class SignUpPhoneNumberComponent implements OnInit{
   portImageSelected:string = ""
   portTextSelected:string = ""
   phoneNumber:string = ""
+  verificationCode: string = "";
+  confirmationResult?: firebase.auth.ConfirmationResult;
+  recaptchaVerifier!: firebase.auth.RecaptchaVerifier; 
 
-  constructor(private router:Router) {}
+
+  constructor(private router:Router, private authService: AuthService, private dataService: DataService) {}
 
   ngOnInit(): void {
     const SignUpPhoneNumberPopup = document.querySelector("#signupPhoneNumber") as HTMLElement
     console.log(SignUpPhoneNumberPopup)
 
-    this.phoneNumber = localStorage.getItem("phoneNumber") || ""
     this.portImageSelected = "./assets/images/login/vn.png 2x"
     this.portTextSelected = "+84"
+  }
+
+  initRecaptcha() {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'size': 'normal',
+      'callback': () => {
+        console.log('reCAPTCHA solved, automatically sending verification code');
+        this.sendVerificationCode();  // Call your function directly here
+      } 
+    });
+    this.recaptchaVerifier.render();
+  }
+
+  async sendVerificationCode() {
+    try {
+      const internationalNumber = `+84${this.phoneNumber.substring(1)}`; 
+      await this.authService.signUpWithPhoneNumber(internationalNumber, this.recaptchaVerifier);
+      localStorage.setItem("phoneNumber", this.phoneNumber)
+      this.router.navigate([{ outlets: { 'auth-popup': ['sign-up-verify'] } }]);
+    } catch (error) {
+      console.error('Failed to send verification code:', error);
+    }
   }
 
   select() {
@@ -30,18 +59,32 @@ export class SignUpPhoneNumberComponent implements OnInit{
   }
 
   next() {
-    const phoneNumberRegex = /^\+?0\d{9}$/; 
+    const phoneNumberRegex = /^\+?0\d{9}$/;  
+  
     if (this.phoneNumber && phoneNumberRegex.test(this.phoneNumber)) {
-      this.router.navigate(["/sign-up-password"])
+      this.checkExistAccount(this.phoneNumber).subscribe(isExist => {
+        if (isExist) {
+          alert("This phone number has already registed")
+        } else {
+          this.initRecaptcha()
+        }
+      });
     } else {
       alert("Your phone number is invalid!");
-      localStorage.setItem("phoneNumber",this.phoneNumber)
-      localStorage.setItem("token","true")
     }
   }
 
-  signupWithGoogle() {
+  signInWithGoogle() {
+    this.authService.loginWithGoogle()
+  }
 
+  checkExistAccount(phoneNumber: string): Observable<boolean> {
+    return this.dataService.checkExistAccount(phoneNumber).pipe(
+      map(data => {
+        console.log(data);
+        return data === "true";
+      })
+    );
   }
 
 }

@@ -23,6 +23,7 @@ export class PassengerInfoComponent {
   psgMail: string = ""
 
   constructor(private service: DataService, private router: Router) {
+    this.initializeTickets()
     const dStr = localStorage.getItem("departureTicket")
     const rStr = localStorage.getItem("returnTicket")
     if (dStr != null) {
@@ -43,12 +44,91 @@ export class PassengerInfoComponent {
     console.log(this.returnTicket)
   }
 
+  initializeTickets() {
+    this.departureTicket = {
+      Ticket: "",
+      Date: "",
+      State: "",
+      Seat: [],
+      Subtotal: 0,
+      PickUpLocation: {  
+        Point: "",
+        Address: "",
+        ShuttleBus: false,
+        Time: 0
+      } as Point,
+      DropOffLocation: { 
+        Point: "",
+        Address: "",
+        ShuttleBus: false,
+        Time: 0
+       } as Point,
+      PickUpTime: "",
+      DropOffTime: "",
+      Status: "unpaid",
+      Passenger: {} as PassengerInfo,
+      BusType: "",
+      DLocation: "",
+      ALocation: "",
+      Image: "",
+      PickUpPoints: [],
+      DropOffPoints: []
+    }
+    this.returnTicket = {
+      Ticket: "",
+      Date: "",
+      State: "",
+      Seat: [],
+      Subtotal: 0,
+      PickUpLocation: {
+        Point: "",
+        Address: "",
+        ShuttleBus: false,
+        Time: 0
+      },
+      DropOffLocation: { 
+        Point: "",
+        Address: "",
+        ShuttleBus: false,
+        Time: 0
+       } as Point,
+      PickUpTime: "",
+      DropOffTime: "",
+      Status: "unpaid",
+      Passenger: {} as PassengerInfo,
+      BusType: "",
+      DLocation: "",
+      ALocation: "",
+      Image: "",
+      PickUpPoints: [],
+      DropOffPoints: []
+    }
+  }
+
   navigate(path: string) {
     this.router.navigate([path])
   }
 
   ///** Main Functions */
   continue() {
+    if (this.psgName === "" || this.psgPhone === "" || this.psgMail === "") {
+      alert("Please fill the passenger information");
+      return;
+    } else if (this.psgPhone != "") {
+        // Regex for a general US phone number format
+        var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (!phoneRegex.test(this.psgPhone)) {
+            alert("Please enter a valid phone number.");
+            return;
+        }
+    } else if (this.psgMail != "") {
+        // Simple regex for email validation
+        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(this.psgMail)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+    }
     this.passengerInfo = {
       Account: "account1",
       PhoneNumber: this.psgPhone,
@@ -66,6 +146,11 @@ export class PassengerInfoComponent {
     }
     const postDeparture:PostBookedTicket = {
       Ticket: this.departureTicket.Ticket,
+      DLocation: this.departureTicket.DLocation,
+      ALocation: this.departureTicket.ALocation,
+      DTime: this.departureTicket.PickUpTime,
+      ATime: this.departureTicket.DropOffTime,
+      Date: this.departureTicket.Date,
       State:this.departureTicket.State,
       Seat:this.departureTicket.Seat,
       Subtotal:this.departureTicket.Subtotal,
@@ -74,11 +159,16 @@ export class PassengerInfoComponent {
     }
     const postReturn:PostBookedTicket = {
       Ticket: this.returnTicket.Ticket,
-      State:this.returnTicket.State,
-      Seat:this.returnTicket.Seat,
-      Subtotal:this.returnTicket.Subtotal,
-      PickUpLocation:this.returnTicket.PickUpLocation,
-      DropOffLocation:this.returnTicket.DropOffLocation,
+      DLocation: this.returnTicket.DLocation,
+      ALocation: this.returnTicket.ALocation,
+      DTime: this.returnTicket.PickUpTime,
+      ATime: this.returnTicket.DropOffTime,
+      Date: this.returnTicket.Date,
+      State: this.returnTicket.State,
+      Seat: this.returnTicket.Seat,
+      Subtotal: this.returnTicket.Subtotal,
+      PickUpLocation: this.returnTicket.PickUpLocation,
+      DropOffLocation: this.returnTicket.DropOffLocation,
     }
     this.service.postBookedTickets(postDeparture).subscribe({
       next: (data) => {
@@ -88,7 +178,9 @@ export class PassengerInfoComponent {
             order.Return = data
             this.service.postOrder(order).subscribe({
               next: (data) => {
-                console.log(data)
+                alert(data.insertedId)
+                localStorage.setItem("orderId",data.insertedId)
+                this.router.navigate(["payment"])
               }, error: (err) => {
                 this.errMessage = err
               }
@@ -186,9 +278,19 @@ export class PassengerInfoComponent {
     return new Date(year, month, day);
   }
 
-  formatDate(dateInput: string | Date, type:number): string {
-    // If the input is a string, convert it to a Date object
-    const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  formatDate(dateInput: string | Date, type: number): string {
+    let date;
+
+    // Explicitly parse the input if it's a string in "DD/MM/YYYY" format
+    if (typeof dateInput === 'string') {
+        const parts = dateInput.split('/');
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Adjust month index (JavaScript months are 0-indexed)
+        const year = parseInt(parts[2], 10);
+        date = new Date(year, month, day);
+    } else {
+        date = dateInput;
+    }
 
     // Check if the date is valid
     if (isNaN(date.getTime())) {
@@ -201,34 +303,40 @@ export class PassengerInfoComponent {
     const year = date.getFullYear();
     const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
 
+    switch (type) {
+        case 1:
+            return `${day}/${month}/${year}`;
+        case 2:
+            return `${day}/${month}`;
+        case 3:
+            return `${dayOfWeek}, ${day}/${month}/${year}`;
+        default:
+            return `${day}/${month}/${year}`; // Fallback to full date
+    }
+}
 
-    if (type === 1 ) {
-      return `${day}/${month}/${year}`;
-    } else if (type === 2) {
-      return `${day}/${month}`;
-    } else if (type === 3) {
-      return `${dayOfWeek}, ${day}/${month}/${year}`;
+  convertDateTime(inputString: string, type: string): string {
+    if (!inputString) {
+        console.error('Input string is null or undefined.');
+        return 'Input string is invalid';
     }
 
-    // Return the formatted date string
-    return `${day}/${month}/${year}`;
+    const match = inputString.match(/(\d+:\d+) - \w+, (\d+)\/(\d+)\/(\d+)/);
+    if (!match) {
+        return 'Input format is invalid';
+    }
 
-  }
-  convertDateTime(inputString: string, type: string): string {
-    // Parse the input string
-    const [, time, day, month, year] = inputString.match(/(\d+:\d+) - \w+, (\d+)\/(\d+)\/(\d+)/)!;
+    const [, time, day, month, year] = match;
 
     if (type === "time") {
-        // Convert time to HH:MM format
         const [hours, minutes] = time.split(":");
         return `${hours}:${minutes}`;
     } else if (type === "date") {
-        // Convert date to DD/MM format
         return `${day.padStart(2, '0')}/${month.padStart(2, '0')}`;
     } else {
-        // Handle invalid type
         return "Invalid type. Please provide 'time' or 'date'.";
     }
-  }
+}
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

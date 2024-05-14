@@ -36,7 +36,7 @@
 .optionselect{
   display: flex;
   gap: 8px;
-  margin: 0px 8px;
+  margin: 16px 0px;
 }
 .ticket-div {
 
@@ -76,7 +76,7 @@ font-weight: 600;
 letter-spacing: 0.03px;
 }
 .unpaid-divider {
-position: absolute;
+
 bottom: 0;
 left: 0;
 right: 0;
@@ -84,6 +84,8 @@ height: 2px;
 background-color: #4D56BE;
 border-radius: 0 0 8px 8px;
 }
+
+
 
 .other-ticket-button {
 padding-left: 80px;
@@ -105,6 +107,10 @@ font-weight: 600;
 letter-spacing: 0.03px;
 word-wrap: break-word;
 position: relative;
+&.selected {
+  color: #4D56BE;
+  border-bottom: solid 2px #4D56BE;
+}
 }
   .sidebar-div {
 width: 246px;
@@ -188,7 +194,7 @@ word-wrap: break-word;
 }
 
 .ticket-frame {
-width: 743px;
+width: inherit;
 justify-content: flex-start;
 align-items: center;
 display: inline-flex;
@@ -268,6 +274,7 @@ word-wrap: break-word;
 }
 
 .departure-frame {
+width: inherit;
 flex-direction: column;
 justify-content: flex-start;
 align-items: flex-start;
@@ -282,6 +289,7 @@ justify-content: flex-start;
 align-items: center;
 gap: 24px;
 display: inline-flex;
+width: inherit;
 }
 .time-inline-flex-item {
 padding-left: 26px;
@@ -294,6 +302,7 @@ justify-content: flex-start;
 align-items: center;
 gap: 4px;
 display: inline-flex;
+border-radius: 8px 0px 0px 8px;
 }
 .time-bigtext {
 color: #4D56BE;
@@ -374,16 +383,18 @@ letter-spacing: 0.04px;
 word-wrap: break-word;
 }
 .ticket-relative-container {
-width: 743px;
+width: inherit;
 height: 53px;
 position: relative;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 .primary-button {
 width: 427px;
 height: 53px;
 left: 316px;
 top: 0px;
-position: absolute;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -403,7 +414,6 @@ word-wrap: break-word;
 .secondary-button {
 width: 300px;
 height: 53px;
-position: absolute;
 flex-direction: column;
 justify-content: center;
 align-items: center;

@@ -24,15 +24,15 @@
       </div>
       <div class="displayflex">
           <div style="width:598px;">
-              <div style="display: flex; gap:2px;margin-bottom:16px;">
-                  <div class="text-body 16 reg">Trip information has been sent to your email of</div>
-                  <div class="text sub-16 sem">khanhnq&#64;st.uel.edu.vn</div>
-                  <div class="text-body 16 reg">!</div>
+              <div style="display: flex; gap:8px;margin-bottom:16px; align-items: center;">
+                  <div class="text-body 16 reg">Trip information has been sent to your email of </div>
+                  <div class="text sub-16 sem"> {{orderData.PassengerInfo.Email}} !</div>
+                  <div class="text-body 16 reg"></div>
               </div>
               <div style="display: flex; gap:2px;margin-bottom:16px;">
                   <div>
                       <p>
-                          <b>Note: </b>Vehicle license plate and driver’s phone number will be updated on History of GBus 24 hours before departure time. 
+                          <b style="font-weight: 700;">Note: </b>Vehicle license plate and driver’s phone number will be updated on History of GBus 24 hours before departure time. 
                       </p>
                   </div>
               </div>
@@ -68,26 +68,26 @@
                               <img src="\assets\images\successfulpayment\img_successfulpayment_img.png">
                           </div>
                           <div class="booking-info">
-                              <div class="button-20 bold" style="margin-bottom: 8px;">Limousine Single Room</div>
+                              <div class="button-20 bold" style="margin-bottom: 8px;"> {{orderData.DepartBusType.Name}} </div>
                               <div class="text body-16 reg" style="color: #6F757F;margin-bottom: 4px;">20 seats, 1 bathroom</div>
                               <div class="booking-seat-number">
                                   <div class="text body-16 reg" style="color: #6F757F;">Seat number</div>
-                                  <div class="sub-16 sem">4A, 4B</div>
+                                  <div class="sub-16 sem"> {{orderData.Departure.Seat.toString()}} </div>
                               </div>
                           </div>
                       </div>
                       <div class="booking-details">
                           <div class="booking-time">
-                              <div style="margin-bottom: 62px;">
-                                  <div class="button-20 bold" style="margin-bottom: 4px;">6:50</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
+                              <div style="margin-bottom: 62px; display: flex;flex-direction: column;align-items: center;">
+                                  <div class="button-20 bold" style="margin-bottom: 4px;"> {{convertDateTime(orderData.Departure.DTime,"time")}} </div>
+                                  <div class="caption-14 reg" style="color: #6F757F;">({{convertDateTime(orderData.Departure.DTime,"date")}})</div>
                               </div>
-                              <div>
-                                  <div class="button-20 bold" style="margin-bottom: 4px;">16:00</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
+                              <div style="display: flex;flex-direction: column;align-items: center;">
+                                  <div class="button-20 bold" style="margin-bottom: 4px;">{{convertDateTime(orderData.Departure.ATime,"time")}} </div>
+                                  <div class="caption-14 reg" style="color: #6F757F;">({{convertDateTime(orderData.Departure.ATime,"date")}})</div>
                               </div>
                           </div>
-                          <div>
+                          <div style="display: flex;flex-direction: column;align-items: center;">
                               <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_my_location.png"></div>
                               <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_line 52.png"> </div>
                               <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_location_on.png"></div>
@@ -95,24 +95,22 @@
                           <div style="margin-left:8px;">
                               <div>
                                   <div class="booking-name-trip">
-                                      <div class="button-20 bold">Ben Xe Mien Dong</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;">Edit</div>
+                                      <div class="button-20 bold"> {{orderData.Departure.PickUpLocation.Point}} </div>
                                   </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px;width:243px;">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
-                                  <div class="sub-14 med" style="margin-bottom:26px;">Expected pick-up at 11:50 - Mon, 18/05/2024</div>
+                                  <div class="caption-14 reg" style="margin-bottom:4px;width:243px;width: inherit;">{{orderData.Departure.PickUpLocation.Address}}</div>
+                                  <div class="sub-14 med" style="margin-bottom:26px;">Expected pick-up at {{orderData.Departure.DTime}} </div>
                               </div>
                               <div>
                                   <div class="booking-name-trip">
-                                      <div class="button-20 bold">Nha Trang Office</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;">Edit</div>
+                                      <div class="button-20 bold"> {{orderData.Departure.DropOffLocation.Point}} </div>
                                   </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px">10 Yersin, Van Thanh Ward, Nha Trang</div>
-                                  <div class="sub-14 med" style="margin-bottom:16px;">Expected drop-off at 19:30 - Mon, 07/05/2024</div>
+                                  <div class="caption-14 reg" style="margin-bottom:4px">{{orderData.Departure.DropOffLocation.Address}}</div>
+                                  <div class="sub-14 med" style="margin-bottom:16px;">Expected drop-off at {{orderData.Departure.ATime}}</div>
                               </div>
                           </div>
                       </div>
                   </div>
-                  <div class="booking-preview">
+                  <div class="booking-preview" *ngIf="orderData.Return.Ticket != ''">
                       <div class="booking-title">
                           <div class="button-20 bold">Return Trip</div>
                           <div>
@@ -137,26 +135,26 @@
                               <img src="\assets\images\successfulpayment\img_successfulpayment_img.png">
                           </div>
                           <div class="booking-info">
-                              <div class="button-20 bold" style="margin-bottom: 8px;">Limousine Single Room</div>
+                              <div class="button-20 bold" style="margin-bottom: 8px;"> {{orderData.ReturnBusType.Name}} </div>
                               <div class="text body-16 reg" style="color: #6F757F;margin-bottom: 4px;">20 seats, 1 bathroom</div>
                               <div class="booking-seat-number">
                                   <div class="text body-16 reg" style="color: #6F757F;">Seat number</div>
-                                  <div class="sub-16 sem">2C, 2D</div>
+                                  <div class="sub-16 sem"> {{orderData.Return.Seat.toString()}} </div>
                               </div>
                           </div>
                       </div>
                       <div class="booking-details">
                           <div class="booking-time">
-                              <div style="margin-bottom: 62px;">
-                                  <div class="button-20 bold" style="margin-bottom: 4px;">6:50</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
+                              <div style="margin-bottom: 62px;display: flex;flex-direction: column;align-items: center;">
+                                  <div class="button-20 bold" style="margin-bottom: 4px;"> {{convertDateTime(orderData.Return.DTime, "time")}} </div>
+                                  <div class="caption-14 reg" style="color: #6F757F;">( {{convertDateTime(orderData.Return.DTime, "date")}})</div>
                               </div>
-                              <div>
-                                  <div class="button-20 bold" style="margin-bottom: 4px;">16:00</div>
-                                  <div class="caption-14 reg" style="color: #6F757F;">(07/05)</div>
+                              <div style="display: flex;flex-direction: column;align-items: center;">
+                                  <div class="button-20 bold" style="margin-bottom: 4px;"> {{convertDateTime(orderData.Return.ATime, "time")}}</div>
+                                  <div class="caption-14 reg" style="color: #6F757F;">( {{convertDateTime(orderData.Return.ATime, "date")}})</div>
                               </div>
                           </div>
-                          <div>
+                          <div style="display: flex;flex-direction: column;align-items: center;">
                               <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_my_location.png"></div>
                               <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_line 52.png"> </div>
                               <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_location_on.png"></div>
@@ -164,19 +162,17 @@
                           <div style="margin-left:8px;">
                               <div>
                                   <div class="booking-name-trip">
-                                      <div class="button-20 bold">Ben Xe Mien Dong</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;">Edit</div>
+                                      <div class="button-20 bold"> {{orderData.Return.PickUpLocation.Point}} </div>
                                   </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px;width:243px;">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</div>
-                                  <div class="sub-14 med" style="margin-bottom:26px;">Expected pick-up at 11:50 - Mon, 18/05/2024</div>
+                                  <div class="caption-14 reg" style="margin-bottom:4px;width:243px;">{{orderData.Return.PickUpLocation.Address}}</div>
+                                  <div class="sub-14 med" style="margin-bottom:26px;">Expected pick-up at {{orderData.Return.DTime}} </div>
                               </div>
-                              <div>
+                              <div style="width: inherit;">
                                   <div class="booking-name-trip">
-                                      <div class="button-20 bold">Nha Trang Office</div>
-                                      <div class="caption-14 reg" style="text-decoration: underline;">Edit</div>
+                                      <div class="button-20 bold">{{orderData.Return.DropOffLocation.Point}}</div>
                                   </div>
-                                  <div class="caption-14 reg" style="margin-bottom:4px">10 Yersin, Van Thanh Ward, Nha Trang</div>
-                                  <div class="sub-14 med" style="margin-bottom:16px;">Expected drop-off at 19:30 - Mon, 07/05/2024</div>
+                                  <div class="caption-14 reg" style="margin-bottom:4px">{{orderData.Return.DropOffLocation.Address}}</div>
+                                  <div class="sub-14 med" style="margin-bottom:16px;">Expected drop-off at {{orderData.Return.ATime}}</div>
                               </div>
                           </div>
                       </div>
@@ -197,7 +193,7 @@
               </div>
           </div>
           <div>
-              <div class="border-div2">
+              <div class="border-div2" style="height: fit-content;">
                   <div class="heading">
                       <div class="text button-20 bold">
                           Trip Information
@@ -208,56 +204,45 @@
                       <div class="">
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Name</div>
-                              <div class="body-16 reg">Nguyen Quoc Khanh</div>
+                              <div class="body-16 reg"> {{orderData.PassengerInfo.FullName}} </div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Phone number</div>
-                              <div class="body-16 reg"> (+84)123 456 789</div>
+                              <div class="body-16 reg"> {{orderData.PassengerInfo.PhoneNumber}}</div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Email</div>
-                              <div class="body-16 reg">khanhnq&#64;gmail.com</div>
+                              <div class="body-16 reg">{{orderData.PassengerInfo.Email}}</div>
                           </div>
                       </div>
                   </div>
-                  <div style="margin-top: 8px;">
+                  <div style="margin-top: 8px;" >
                       <div class="text sub-16 sem" style="margin-bottom:16px;">Trip Details</div>
-                      <div class="">
-                          <div class="detail-content">
-                              <div class="text body-16 reg" style="color: #6F757F;">Time of payment</div>
-                              <div class="body-16 reg">Feb 05, 2024 at 10:17AM</div>
-                          </div>
-                          <div class="detail-content">
-                              <div class="text body-16 reg" style="color: #6F757F;">Transaction Number</div>
-                              <div class="body-16 reg">49156JA835</div>
-                          </div>
+                      <div class="" >
+                          
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Trip</div>
-                              <div class="body-16 reg">Round-trip</div>
-                          </div>
-                          <div class="detail-content">
-                              <div class="text body-16 reg" style="color: #6F757F;">Bus Type</div>
-                              <div class="body-16 reg">Limousine Double Room</div>
+                              <div class="body-16 reg"> {{tripType}} </div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Quantity</div>
-                              <div class="body-16 reg">4 tickets</div>
+                              <div class="body-16 reg"> {{orderData.Departure.Seat.length + orderData.Return.Seat.length}} tickets</div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Seat Numbers</div>
                               <div class="body-16 reg">
                                   <p style="margin-bottom: 8px;">
-                                      4A, 4B (Departure Trip)
+                                      {{orderData.Departure.Seat.toString()}} (Departure Trip)
                                   </p>
-                                  <p>
-                                      2C, 2D (Return Trip)
+                                  <p *ngIf="orderData.Return.Ticket != ''">
+                                      {{orderData.Return.Seat.toString()}} (Return Trip)
                                   </p>
                               </div>
                           </div>
                       </div>
                   </div>
               </div>
-              <div class="border-div3">
+              <div class="border-div3" style="height: fit-content;">
                   <div class="heading">
                       <div class="text button-20 bold">
                           Payment Details
@@ -265,30 +250,34 @@
                   </div>
                   <div>
                       <div class="">
+                        <div class="detail-content">
+                            <div class="text body-16 reg" style="color: #6F757F;">Transaction Number</div>
+                            <div class="body-16 reg"> {{invoice._id}} </div>
+                        </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Time of payment</div>
-                              <div class="body-16 reg">Feb 05, 2024 at 10:17AM</div>
+                              <div class="body-16 reg"> {{invoice.timeOfPayment}} </div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Payment method</div>
-                              <div class="body-16 reg">MoMo</div>
+                              <div class="body-16 reg"> {{invoice.paymentMethod}} </div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Payment status</div>
-                              <div class="body-16 reg" style="color:#068238">Successful payment</div>
+                              <div class="body-16 reg" style="color:#068238"> {{invoice.paymentStatus}} </div>
                           </div>
                           <div class="detail-content">
-                              <div class="text body-16 reg" style="color: #6F757F;">Subtotal (4 tickets)</div>
-                              <div class="body-16 reg">1.200.000VND</div>
+                              <div class="text body-16 reg" style="color: #6F757F;">Subtotal ({{orderData.Departure.Seat.length + orderData.Return.Seat.length}} tickets)</div>
+                              <div class="body-16 reg"> {{convertMoney(invoice.subtotal)}} VND</div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Discount</div>
-                              <div class="body-16 reg" style="text-decoration: line-through;">200.000VND</div>
+                              <div class="body-16 reg" style="text-decoration: line-through;"> {{convertMoney(invoice.discount)}} VND</div>
                           </div>
                           <hr>
                           <div class="detail-content">
                               <div class="text sub-16 sem" style="color: #6F757F;">Total</div>
-                              <div class="body-16 reg">1.000.000VND</div>
+                              <div class="body-16 reg"> {{convertMoney(invoice.subtotal - invoice.discount)}} VND</div>
                           </div>
                       </div>
                   </div>
