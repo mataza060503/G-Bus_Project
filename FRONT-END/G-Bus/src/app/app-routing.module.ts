@@ -13,6 +13,8 @@ import { SignUpPasswordComponent } from './sign-up/sign-up-password/sign-up-pass
 import { ForgotPasswordComponent } from './forgot-password/forgot-password-1/forgot-password-1.component';
 import { ForgotPassword2Component } from './forgot-password/forgot-password-2/forgot-password-2.component';
 import { ForgotPassword3Component } from './forgot-password/forgot-password-3/forgot-password-3.component';
+import { AccountManagement1Component } from './account-management1/account-management1.component';
+import { BookingHistoryPaidticketsComponent } from './booking-history/booking-history-paidtickets/booking-history-paidtickets.component';
 
 const routes: Routes = [
   {path:'',component:HomepageComponent},
@@ -29,7 +31,9 @@ const routes: Routes = [
   {path:'sign-up-password', component: SignUpPasswordComponent, outlet:'auth-popup'},
   {path:'forgot-password-phone-number', component:ForgotPasswordComponent, outlet:'auth-popup'},
   {path:'forgot-password-verify', component:ForgotPassword2Component, outlet:'auth-popup'},
-  {path:'forgot-password-password', component:ForgotPassword3Component, outlet:'auth-popup'}
+  {path:'forgot-password-password', component:ForgotPassword3Component, outlet:'auth-popup'},
+  {path:'account',component:AccountManagement1Component},
+  {path:'booking-history', component:BookingHistoryPaidticketsComponent},
 ];
 
 @NgModule({

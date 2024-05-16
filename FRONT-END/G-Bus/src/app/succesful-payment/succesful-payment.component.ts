@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RawOrderTicket, OrderTicketLoaded, Invoice } from '../../models/ticket';
 import { DataService } from '../../services/Data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-succesful-payment',
@@ -16,7 +17,7 @@ export class SuccesfulPaymentComponent {
 
   tripType: string = ""
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private router: Router) {
     const orderId = localStorage.getItem("orderId")
 
     this.initializeInvoice()
@@ -113,6 +114,10 @@ export class SuccesfulPaymentComponent {
     } else {
       console.log("Invalid OrderId")
     }
+  }
+
+  backToHomepage() {
+    this.router.navigate([""])
   }
 
   isValidId(id: string): boolean {

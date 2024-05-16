@@ -20,19 +20,19 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
 
-    const btnHeaderLogin = document.getElementById("btnHeaderLogin")
-    const screenBackground = document.getElementById("screenBackground") as HTMLElement
-    const popup = document.getElementById("popup")
-    console.log(popup)
+    // const btnHeaderLogin = document.getElementById("btnHeaderLogin")
+    // const screenBackground = document.getElementById("screenBackground") as HTMLElement
+    // const popup = document.getElementById("popup")
+    // console.log(popup)
 
-    btnHeaderLogin?.addEventListener("click", () => {
-      if (popup !== null) {
-        popup.style.display = "block";
-        screenBackground.addEventListener("click", () => {
-          popup.style.display = "none";
-        })
-      }
-    })
+    // btnHeaderLogin?.addEventListener("click", () => {
+    //   if (popup !== null) {
+    //     popup.style.display = "block";
+    //     screenBackground.addEventListener("click", () => {
+    //       popup.style.display = "none";
+    //     })
+    //   }
+    // })
     
   }
 }

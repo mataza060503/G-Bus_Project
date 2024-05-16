@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
+import { DataService } from './Data.service';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ import firebase from 'firebase/compat/app';
 export class AuthService {
   private confirmationResult: firebase.auth.ConfirmationResult | undefined;
 
-  constructor(private fireAuth: AngularFireAuth, private router: Router) { }
+  constructor(private fireAuth: AngularFireAuth, private router: Router, private dataService: DataService) { }
 
   loginWithEmail(email: string, password: string) {
     this.fireAuth.signInWithEmailAndPassword(email, password).then(() => {
@@ -24,10 +26,34 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     this.fireAuth.signInWithPopup(provider).then((userCredential) => {
       localStorage.setItem("token", JSON.stringify(userCredential.user?.uid));
-      this.router.navigate(['homepageWithSignIn']);
+      // window.location.reload()
+      const userId = userCredential.user?.uid
+      if (userId) {
+        this.checkExistUserId(userId).subscribe(exists => {
+          if (exists) {
+            console.log("Account exist");
+            window.location.reload()
+          } else {
+            this.dataService.postAccount("", "", userId).subscribe( () => {
+              window.location.reload()
+            });
+          }
+        });
+      } else {
+        console.log("UserId is null");
+      }
     }).catch((err) => {
       console.log("Login failed: ", err);
     });
+  }
+
+  checkExistUserId(userId: string): Observable<boolean> {
+    return this.dataService.checkExistUserId(userId).pipe(
+      map(data => {
+        console.log(data);
+        return data === "true";
+      })
+    );
   }
 
   signUpWithEmail(email: string, password: string) {

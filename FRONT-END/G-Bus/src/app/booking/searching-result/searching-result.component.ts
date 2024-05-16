@@ -643,6 +643,9 @@ export class SearchingResultComponent implements OnInit{
     var subLocation = this.DLocation
     this.DLocation= this.ALocation
     this.ALocation = subLocation
+    var subDate = this.DDate
+    this.DDate = this.RDate
+    this.RDate = subDate
   }
   search() {
     var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate}

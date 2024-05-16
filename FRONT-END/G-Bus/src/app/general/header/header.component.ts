@@ -14,7 +14,9 @@ export class HeaderComponent implements OnInit{
   isSigned: boolean = false;
   isPopup: boolean = false;
 
+
   constructor(private router: Router) {
+    this.router.navigate([{ outlets: { 'auth-popup': null } }]);
     for (let i = 0; i < 4; i++) {
       this.selectedLink.push(false)
     }
@@ -39,9 +41,10 @@ export class HeaderComponent implements OnInit{
     this.selectedLink[i] = false
   }
   this.selectedLink[index] = true
-  if (target.textContent === "Schedule") {
-    this.router.navigate(["searchResult","","","",""])
+  if (target.textContent === "Homepage") {
+    this.router.navigate([""])
   }
+
  }
 
  openLoginPopup() {
@@ -52,6 +55,10 @@ export class HeaderComponent implements OnInit{
  cancelPopup() {
   this.router.navigate([{ outlets: { 'auth-popup': null } }]);
   this.isPopup = false
+ }
+
+ goToAccountManagement() {
+  this.router.navigate(["account"])
  }
 
 }
