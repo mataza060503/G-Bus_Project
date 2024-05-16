@@ -1,0 +1,14 @@
+{
+    "countryPort" : [
+      {"image":"./asset/images/login/phone-port-vn.png","port":"+84"},
+      {"image":"./asset/images/login/phone-port-vn.png","port":"+54"},
+      {"image":"./asset/images/login/phone-port-vn.png","port":"+61"},
+      {"image":"./asset/images/login/phone-port-vn.png","port":"+43"}
+    ],
+    "provinces": [
+      { "value": "Ba Ria - Vung Tau", "viewValue": "Ba Ria - Vung Tau" },
+      { "value": "Da Lat", "viewValue": "Da Lat" },
+      { "value": "Ho Chi Minh", "viewValue": "Ho Chi Minh" },
+      { "value": "Nha Trang", "viewValue": "Nha Trang" }
+    ]       
+}
