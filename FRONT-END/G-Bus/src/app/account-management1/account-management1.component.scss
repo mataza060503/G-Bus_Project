@@ -33,7 +33,9 @@
 .optionselect{
   display: flex;
   gap: 8px;
-  margin: 0px 8px;
+  margin: 16px 0px;
+  cursor: pointer;
+  align-items: center;
 }
 .border-div2 {
   border-radius: 8px;
@@ -52,14 +54,16 @@
   display: flex;
   gap: 32px;
   margin-bottom: 24px;
+  align-items: center;
 }
-.fixedinfo-2{
-  display: flex;
-  text-align: center;
-  
-}
+
 .fixedinfoscope{
+  height: 86px;
   gap: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: auto 0px;
+  justify-content: center;
 }
 
 .formtitle{
@@ -107,4 +111,55 @@ input{
   border-radius: 8px;
   width: 743px;
   height: 48px;
+}
+
+.image {
+  &-frame {
+    position: relative;
+    width: 86px; 
+    height: 86px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 100rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &:hover .image-input {
+      display: block; // Display image-input when image-frame is hovered
+    }
+  }
+  &-input {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 86px;
+    height: 86px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none; // Hide by default
+  }
+  &-background {
+    width: 86px;
+    height: 86px;
+    background-color: black;
+    opacity: 0.25;
+  }
+  &-icon {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    color: white;
+  }
 }

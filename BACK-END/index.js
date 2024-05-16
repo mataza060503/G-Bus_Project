@@ -300,6 +300,15 @@ app.get("/checkAccount/:phoneNumber", cors(), async (req, res) => {
     res.send(false)
   } 
 })
+app.get("/checkUserId/:userId", cors(), async (req, res) => {
+  const userId = req.params.userId
+  const data = await database.collection("Account").find({userId: userId}).toArray()
+  if (data.length > 0) {
+    res.send(true)
+  } else {
+    res.send(false)
+  } 
+})
 app.post("/checkPassword", cors(), async (req, res) => {
   const password = req.body.password
   const data = await database.collection("Account").find({password: password}).toArray()
@@ -324,6 +333,41 @@ app.patch("/password", cors(), async (req, res) => {
     res.send("fail")
   }
 })
+
+app.post("/account/:id", cors(), async (req, res) => {
+  const userId = req.params.id;
+  const userInfo = req.body;
+
+  try {
+    const data = await database.collection("Account").updateOne(
+      {userId: userId},
+      {$set: {userInfo: userInfo}}
+    );
+
+    if (data.matchedCount === 0) {
+      return res.status(404).send("No user found with the given ID.");
+    }
+
+    res.status(200).send("User info updated successfully.");
+  } catch (error) {
+    res.status(500).send("Failed to update user info due to an error: " + error.message);
+  }
+});
+
+app.get("/account/:id", cors(), async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const data = await database.collection("Account").find({userId: userId}).toArray();
+    if (data.length > 0) {
+      res.send(data[0].userInfo)
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    res.status(500).send("Failed to load user info due to an error: " + error.message);
+  }
+});
+
 
 ///* ORTHER *///
 

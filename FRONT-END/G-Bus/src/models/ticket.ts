@@ -171,3 +171,10 @@ export interface Voucher {
   image: string,
   percentage: string
 }
+
+export interface UserInfo {
+  Image: string,
+  FullName: string,
+  Email: string,
+  PhoneNumber: string,
+}

@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { FeedbackItem, PartnerPromotion, PromotionItem, RouteItem } from '../models/Item';
-import { Amenities, BookedTicket, Bus, Driver, Invoice, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, Voucher } from '../models/ticket';
+import { Amenities, BookedTicket, Bus, Driver, Invoice, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, UserInfo, Voucher } from '../models/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -310,6 +310,32 @@ postAccount(phoneNumber: string, password: string, userId: string):Observable<an
   )
 }
 
+postAccountInfo(userId: string, userInfo: UserInfo):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/account/"+userId,JSON.stringify(userInfo),requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getAccountInfo(userId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/account/"+userId,requestOptions).pipe(
+    map(res=> JSON.parse(res) as UserInfo),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
 checkExistAccount(phoneNumber: string):Observable<any> {
   const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
   const requestOptions:Object={
@@ -322,6 +348,20 @@ checkExistAccount(phoneNumber: string):Observable<any> {
     catchError(this.handleError)
   )
 }
+
+checkExistUserId(userId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/checkUserId/"+userId,requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
 checkPassword(password: string):Observable<any> {
   const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
   const requestOptions:Object={

@@ -226,6 +226,8 @@ export class ChoosePaymentMethodComponent {
     }
   }
 
+  
+
   checkValidVoucher(voucher: Voucher) {
     const total = this.orderData.Departure.Subtotal + this.orderData.Return.Subtotal
     if (voucher.condition_value == null) {

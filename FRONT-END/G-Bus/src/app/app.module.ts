@@ -22,7 +22,6 @@ import { SignUpModule } from './sign-up/sign-up.module';
 import { GeneralModule } from './general/general.module';
 import { BookingModule } from './booking/booking.module';
 import { BookingHistoryModule } from './booking-history/booking-history.module';
-import { SignInModule } from './sign-in/sign-in.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';

@@ -11,13 +11,18 @@ export class BookingHistoryPaidticketsComponent {
   orders!: RawOrderTicket[]
   ordersData!: OrderTicketLoaded[]
   errMessage: string = ""
-  accountId: string = "account1"
+  accountId: string = ""
   intervalIds: any[] = []; // Store interval IDs for cleanup
 
   isSelected: boolean[] = [true, false, false]
 
   constructor(private dataService: DataService) {
     this.loadOrderData(this.accountId, "Unpaid")
+    const userIdRaw = localStorage.getItem("userId")
+    if (userIdRaw != null) {
+      const userId = userIdRaw.replace(/"/g,'');
+      this.accountId = userId
+    }
   }
   loadOrderData(accountId: string, status: string) {
     this.dataService.getAllOrderByStatus(accountId, status).subscribe({

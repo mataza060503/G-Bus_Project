@@ -18,8 +18,9 @@ export class SignUpPasswordComponent {
     if (phoneNumber != null) {
       this.phoneNumber = phoneNumber      
     }
-    const userId = localStorage.getItem("userId")
-    if (userId != null) {
+    const userIdRaw = localStorage.getItem("userId")
+    if (userIdRaw != null) {
+      const userId = userIdRaw.replace(/"/g,'');
       this.userId = userId
     }
   }

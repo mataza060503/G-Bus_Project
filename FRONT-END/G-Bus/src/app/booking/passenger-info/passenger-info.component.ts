@@ -16,6 +16,7 @@ export class PassengerInfoComponent {
   departureTicket!: BookedTicket
   returnTicket!: BookedTicket
   passengerInfo!: PassengerInfo
+  userId: string = ""
 
   ///** Passenger Variables */
   psgName: string = ""
@@ -31,6 +32,11 @@ export class PassengerInfoComponent {
     }
     if (rStr != null) {
       this.returnTicket = JSON.parse(rStr)
+    }
+    const userIdRaw = localStorage.getItem("userId")
+    if (userIdRaw != null) {
+      const userId = userIdRaw.replace(/"/g,'');
+      this.userId = userId
     }
 
     this.passengerInfo = {
@@ -130,7 +136,7 @@ export class PassengerInfoComponent {
         }
     }
     this.passengerInfo = {
-      Account: "account1",
+      Account: this.userId,
       PhoneNumber: this.psgPhone,
       Email: this.psgMail,
       FullName: this.psgName
@@ -140,7 +146,7 @@ export class PassengerInfoComponent {
       Departure: "",
       Return: "",
       Status: "Unpaid",
-      CustomerId: "account1",
+      CustomerId: this.userId,
       BookedTime: new Date(),
       TransactionNumber: ""
     }
