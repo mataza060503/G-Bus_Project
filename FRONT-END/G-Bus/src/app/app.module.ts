@@ -23,6 +23,7 @@ import { GeneralModule } from './general/general.module';
 import { BookingModule } from './booking/booking.module';
 import { BookingHistoryModule } from './booking-history/booking-history.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { CancellationModule } from './cancellation/cancellation.module';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
@@ -76,7 +77,8 @@ import { PaymentEWalletComponent } from './payment-ewallet/payment-ewallet.compo
     BookingModule,
     BookingHistoryModule,
     SignUpModule,
-    ForgotPasswordModule
+    ForgotPasswordModule,
+    CancellationModule
   ],
   providers: [
     provideNativeDateAdapter(),

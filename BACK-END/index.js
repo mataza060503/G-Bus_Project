@@ -284,6 +284,25 @@ app.patch("/invoice", cors(), async (req, res) => {
     }
   }
 })
+app.patch("/order/:id", cors(), async (req, res) => {
+  const orderId = req.params.id;
+  const cancelInfo = req.body;
+
+  try {
+    const data = await database.collection("Order").updateOne(
+      {_id: new ObjectId(orderId)},
+      {$set: {Cancellation: cancelInfo, Status: "Cancelled"}}
+    );
+
+    if (data.matchedCount === 0) {
+      return res.status(404).send("No user found with the given ID.");
+    }
+
+    res.status(200).send("User info updated successfully.");
+  } catch (error) {
+    res.status(500).send("Failed to update user info due to an error: " + error.message);
+  }
+});
 
 ///* ACCOUNT *///
 app.post("/account", cors(), async (req, res) => {

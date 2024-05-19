@@ -1,295 +1,292 @@
-<div style="width: 598px; justify-content: flex-start; align-items: center; display: inline-flex; color:#6C757D">
-    <img src="../../../assets/images/side-bar/house.png" alt="" id="home_tag">
-    <a href="" id="nav">Home</a>
-    <div style="padding: 8px;">/</div> 
-    <a href="" id="nav">History</a>
-    <div style="padding: 8px;">/</div> 
-    Cancellation
-</div>
-
-
-<div style="width: 598px;">
-    <h2>Cancellation Details</h2>
-    <table style="width: 598px; flex-direction: column; margin-top: 16px; margin-bottom: 16px;line-height: 20px;">
-        <tr>
-            <td class="title" style="padding-bottom: 16px;">Cancellation Information</td>
-        </tr>
-        <tr>
-            <td id ="body16gray">Reason</td>
-            <td style=" text-align: right; width: 230px;">Wrong time/date selected</td>
-        </tr>
-        <tr>
-            <td id ="body16gray">Transaction Number</td>
-            <td style=" text-align: right; width: 230px;">49156JA835</td>
-        </tr>
-        <tr>
-            <td id ="body16gray">Time of cancel</td>
-            <td style="text-align: right;">Feb 05, 2024 at 22:17PM</td>
-        </tr>
-        <tr>
-            <td id ="body16gray">Total Payment</td>
-            <td style="text-align: right;">1.700.000VND</td>
-        </tr>
-        <tr>
-            <td id ="body16gray">Cancellation fee</td>
-            <td style="text-align: right;">850.000VND</td>
-        </tr>
-        <tr>
-            <td id ="body16gray">Refundable Amount</td>
-            <td style="text-align: right; font-weight: 600;">850.000VND</td>
-        </tr>
-    </table>
-
-        <div class ="departure_tag">
-            <table style="width: 598px;">
-                <tr>
-                    <td colspan="2">
-                        <div class="departure-trip">
-                            <div class="title">Departure Trip</div>
-                            <div class="trip-icon">
-                                <div class="icon-container">
-                                    <img src="../../../assets/images/side-bar/group.png" alt="" width="16px" height="16px"> 
-                                    <div class="icon-letter">2</div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <hr class="custom-hr">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div class="trip-info">
+<div class="wrapper">
+    <div class="successfulpayment">
+        <div class="caption-14 reg">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item"><a href="#">History</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Cancellation</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="title-success">
+            <div class="head-24 med">Cancellation Details</div>
+        </div>
+        <div class="displayflex">
+            <div style="width:598px;">
+                <div>
+                    <table style="width: 100%;">
+                        <tr >
+                            <td colspan="2" class="text sub-16 sem" style="padding: 8px 0px;">Cancellation Information</td>
+                        </tr>
+                        <tr>
+                            <td class="text body-16 reg" style="color: #6F757F; padding: 8px 0px;">Reason</td>
+                            <td class="text body-16 reg" style="text-align: right; padding: 8px 0px;"> {{orderData.Cancellation?.Reason}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text body-16 reg" style="color: #6F757F; padding: 8px 0px;">Transaction Number</td>
+                            <td class="text body-16 reg" style="text-align: right; padding: 8px 0px;"> {{orderData.TransactionNumber}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text body-16 reg" style="color: #6F757F; padding: 8px 0px;">Time of cancel</td>
+                            <td class="text body-16 reg" style="text-align: right; padding: 8px 0px;"> {{orderData.Cancellation?.TimeOfCancel}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text body-16 reg" style="color: #6F757F; padding: 8px 0px;">Total Payment</td>
+                            <td class="text body-16 reg" style="text-align: right; padding: 8px 0px;"> {{convertMoney(orderData.Departure.Subtotal + orderData.Return.Subtotal)}}VND</td>
+                        </tr>
+                        <tr>
+                            <td class="text body-16 reg" style="color: #6F757F; padding: 8px 0px;">Cancellation fee</td>
+                            <td class="text body-16 reg" style="text-align: right; padding: 8px 0px;"> {{(orderData.Departure.Subtotal + orderData.Return.Subtotal)*(100-parseNull(orderData.Cancellation?.Percentage))/100}} </td>
+                        </tr>
+                        <tr>
+                            <td class="text body-16 reg" style="color: #6F757F; padding: 8px 0px;">Refundable Amount</td>
+                            <td class="text body-16 sem" style="text-align: right; padding: 8px 0px;"> {{(orderData.Departure.Subtotal + orderData.Return.Subtotal)*(parseNull(orderData.Cancellation?.Percentage))/100}} </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <div class="booking-preview">
+                        <div class="booking-title">
+                            <div class="button-20 bold">Departure Trip</div>
                             <div>
-                                <img src="images/Group 5743.png" alt="" class="trip-image">
-                            </div>
-                            <div class="trip-details">
-                                <div class="title">Limousine Single Room</div>
-                                <div id ="body16gray">20 seats, 1 bathroom</div>
-                                <div class="seat-details">
-                                    <div id ="body16gray">Seat number</div>
-                                    <div class="seat-numbers">4A, 4B</div>
+                                <div style="display: flex; align-items:center">
+                                    <div style="margin-right:4px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <mask id="mask0_2153_22155" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                            <rect width="24" height="24" fill="#D9D9D9"/>
+                                            </mask>
+                                            <g mask="url(#mask0_2153_22155)">
+                                            <path d="M0.999023 21.1354V18.3233C0.999023 17.7542 1.14486 17.2311 1.43652 16.7541C1.72819 16.277 2.11569 15.913 2.59902 15.6619C3.63236 15.143 4.68236 14.7538 5.74902 14.4944C6.81569 14.2349 7.89902 14.1052 8.99902 14.1052C10.099 14.1052 11.1824 14.2349 12.249 14.4944C13.3157 14.7538 14.3657 15.143 15.399 15.6619C15.8824 15.913 16.2699 16.277 16.5615 16.7541C16.8532 17.2311 16.999 17.7542 16.999 18.3233V21.1354H0.999023ZM18.999 21.1354V18.1224C18.999 17.3859 18.7949 16.6787 18.3865 16.0008C17.9782 15.3229 17.399 14.7413 16.649 14.2558C17.499 14.3563 18.299 14.5278 19.049 14.7706C19.799 15.0133 20.499 15.3104 21.149 15.6619C21.749 15.9967 22.2074 16.3691 22.524 16.7792C22.8407 17.1893 22.999 17.637 22.999 18.1224V21.1354H18.999ZM8.99902 13.1009C7.89902 13.1009 6.95736 12.7075 6.17402 11.9208C5.39069 11.1341 4.99902 10.1884 4.99902 9.08365C4.99902 7.97891 5.39069 7.03318 6.17402 6.24647C6.95736 5.45976 7.89902 5.06641 8.99902 5.06641C10.099 5.06641 11.0407 5.45976 11.824 6.24647C12.6074 7.03318 12.999 7.97891 12.999 9.08365C12.999 10.1884 12.6074 11.1341 11.824 11.9208C11.0407 12.7075 10.099 13.1009 8.99902 13.1009ZM18.999 9.08365C18.999 10.1884 18.6074 11.1341 17.824 11.9208C17.0407 12.7075 16.099 13.1009 14.999 13.1009C14.8157 13.1009 14.5824 13.08 14.299 13.0381C14.0157 12.9963 13.7824 12.9502 13.599 12.9C14.049 12.3644 14.3949 11.7702 14.6365 11.1174C14.8782 10.4646 14.999 9.78666 14.999 9.08365C14.999 8.38063 14.8782 7.70272 14.6365 7.04992C14.3949 6.39712 14.049 5.8029 13.599 5.26727C13.8324 5.18358 14.0657 5.12918 14.299 5.10407C14.5324 5.07896 14.7657 5.06641 14.999 5.06641C16.099 5.06641 17.0407 5.45976 17.824 6.24647C18.6074 7.03318 18.999 7.97891 18.999 9.08365ZM2.99902 19.1268H14.999V18.3233C14.999 18.1392 14.9532 17.9718 14.8615 17.8211C14.7699 17.6705 14.649 17.5533 14.499 17.4696C13.599 17.0177 12.6907 16.6787 11.774 16.4528C10.8574 16.2268 9.93236 16.1138 8.99902 16.1138C8.06569 16.1138 7.14069 16.2268 6.22402 16.4528C5.30736 16.6787 4.39902 17.0177 3.49902 17.4696C3.34902 17.5533 3.22819 17.6705 3.13652 17.8211C3.04486 17.9718 2.99902 18.1392 2.99902 18.3233V19.1268ZM8.99902 11.0923C9.54902 11.0923 10.0199 10.8956 10.4115 10.5022C10.8032 10.1089 10.999 9.63602 10.999 9.08365C10.999 8.53128 10.8032 8.05841 10.4115 7.66506C10.0199 7.2717 9.54902 7.07503 8.99902 7.07503C8.44902 7.07503 7.97819 7.2717 7.58652 7.66506C7.19486 8.05841 6.99902 8.53128 6.99902 9.08365C6.99902 9.63602 7.19486 10.1089 7.58652 10.5022C7.97819 10.8956 8.44902 11.0923 8.99902 11.0923Z" fill="#6F757F"/>
+                                            </g>
+                                            </svg>
+                                    </div>
+                                    <div class="body-16 reg" style="color: #6F757F;">2</div>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <table>
-                            <tr>
-                                <td class="title" style="padding-left: 16px;">06:50</td>
-                                <td style="padding-left: 24px; padding-right: 24px;"><img src="../../../assets/images/side-bar/my_location.png" alt=""></td>
-                                <td class="title" style="width: 400px;">Ben Xe Mien Dong</td>
-                                <td><a href="" style="color: #6F757F; font-weight: 400; font-size: 14px;">Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td style="color: #6F757F; font-size: 14px;padding-left: 16px;vertical-align: top;" rowspan="3">(07/05)</td>
-                                <td rowspan="3"></div></td>
-                            <td style="color: #6F757F; font-weight: 400; font-size: 14px;">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 14px; font-weight: 500">Expected pick-up at 11:50 - Mon, 18/05/2024</td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td class="title" style="padding-left: 16px;">16:00</td>
-                                <td style="padding-left: 24px; padding-right: 24px;padding-top: 16px;"><img src="../../../assets/images/side-bar/location_on.png" alt=""></td>
-                                <td class="title" style="width: 400px;">Nha Trang Office</td>
-                                <td><a href="" style="color: #6F757F; font-weight: 400; font-size: 14px;">Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td style="color: #6F757F; font-size: 14px;padding-left: 16px;vertical-align: top;" rowspan="3">(07/05)</td>
-                                <td rowspan="3"></td>
-                                <td id="body14">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 14px; font-weight: 500; padding-bottom: 16px;">Expected pick-up at 11:50 - Mon, 18/05/2024</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-
-            
-        </div>
-
-        <div class ="departure_tag" style="margin-top: 16px;">
-            <table style="width: 598px; height: 325px;">
-                <tr>
-                    <td colspan="2">
-                        <div class="departure-trip">
-                            <div class="title">Return Trip</div>
-                            <div class="trip-icon">
-                                <div class="icon-container">
-                                    <img src="../../../assets/images/side-bar/group.png" alt="" width="16px" height="16px"> 
-                                    <div class="icon-letter">2</div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <hr class="custom-hr">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div class="trip-info">
+                        <hr>
+                        <div class="booking-img">
                             <div>
-                                <img src="../../../assets/images/side-bar/Group 5743.png" alt="" class="trip-image">
+                                <img src="\assets\images\successfulpayment\img_successfulpayment_img.png">
                             </div>
-                            <div class="trip-details">
-                                <div class="title">Limousine Double Room</div>
-                                <div id ="body16gray">20 seats, 1 bathroom</div>
-                                <div class="seat-details">
-                                    <div id ="body16gray">Seat number</div>
-                                    <div class="seat-numbers">1C, 2C</div>
+                            <div class="booking-info">
+                                <div class="button-20 bold" style="margin-bottom: 8px;"> {{orderData.DepartBusType.Name}} </div>
+                                <div class="text body-16 reg" style="color: #6F757F;margin-bottom: 4px;">20 seats, 1 bathroom</div>
+                                <div class="booking-seat-number">
+                                    <div class="text body-16 reg" style="color: #6F757F;">Seat number</div>
+                                    <div class="sub-16 sem"> {{orderData.Departure.Seat.toString()}} </div>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <table>
-                            <tr>
-                                <td class="title" style="padding-left: 16px;">16:00</td>
-                                <td style="padding-left: 24px; padding-right: 24px;"><img src="../../../assets/images/side-bar/my_location.png" alt=""></td>
-                                <td class="title" style="width: 400px;">Nha Trang Office</td>
-                                <td><a href="" id ="body14">Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td style="color: #6F757F; font-size: 14px;padding-left: 16px;vertical-align: top;" rowspan="3">(18/05)</td>
-                                <td rowspan="3"></div></td>
-                            <td style="color: #6F757F; font-weight: 400; font-size: 14px;">10 Yersin, Van Thanh Ward, Nha Trang</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 14px; font-weight: 500">Expected pick-up at 11:50 - Mon, 18/05/2024</td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td class="title" style="padding-left: 16px;">20:00</td>
-                                <td style="padding-left: 24px; padding-right: 24px;padding-top: 16px;"><img src="../../../assets/images/side-bar/location_on.png" alt=""></td>
-                                <td class="title" style="width: 400px;">Ben Xe Mien Dong</td>
-                                <td><a href="" style="color: #6F757F; font-weight: 400; font-size: 14px;">Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td style="color: #6F757F; font-size: 14px;padding-left: 16px;vertical-align: top;" rowspan="3">(18/05)</td>
-                                <td rowspan="3"></td>
-                                <td style="color: #6F757F; font-weight: 400; font-size: 14px;">292 Dinh Bo Linh Street, Ward 26, Binh Thanh</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 14px; font-weight: 500; padding-bottom: 16px;">Expected drop-off at 19:30 - Mon, 18/05/2024</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                
-            </table>
+                        <div class="booking-details">
+                            <div class="booking-time">
+                                <div style="margin-bottom: 62px; display: flex;flex-direction: column;align-items: center;">
+                                    <div class="button-20 bold" style="margin-bottom: 4px;"> {{convertDateTime(orderData.Departure.DTime,"time")}} </div>
+                                    <div class="caption-14 reg" style="color: #6F757F;">({{convertDateTime(orderData.Departure.DTime,"date")}})</div>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;transform: translateY(-36px);">
+                                    <div class="button-20 bold" style="margin-bottom: 4px;">{{convertDateTime(orderData.Departure.ATime,"time")}} </div>
+                                    <div class="caption-14 reg" style="color: #6F757F;">({{convertDateTime(orderData.Departure.ATime,"date")}})</div>
+                                </div>
+                            </div>
+                            <div style="display: flex;flex-direction: column;align-items: center;">
+                                <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_my_location.png"></div>
+                                <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_line 52.png"> </div>
+                                <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_location_on.png"></div>
+                            </div>
+                            <div >
+                                <div>
+                                    <div class="booking-name-trip">
+                                        <div class="button-20 bold"> {{orderData.Departure.PickUpLocation.Point}} </div>
+                                    </div>
+                                    <div class="caption-14 reg" style="margin-bottom:4px;width:243px;width: inherit;">{{orderData.Departure.PickUpLocation.Address}}</div>
+                                    <div class="sub-14 med" style="margin-bottom:26px;">Expected pick-up at {{orderData.Departure.DTime}} </div>
+                                </div>
+                                <div>
+                                    <div class="booking-name-trip">
+                                        <div class="button-20 bold"> {{orderData.Departure.DropOffLocation.Point}} </div>
+                                    </div>
+                                    <div class="caption-14 reg" style="margin-bottom:4px">{{orderData.Departure.DropOffLocation.Address}}</div>
+                                    <div class="sub-14 med" style="margin-bottom:16px;">Expected drop-off at {{orderData.Departure.ATime}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="booking-preview" *ngIf="orderData.Return.Ticket != ''">
+                        <div class="booking-title">
+                            <div class="button-20 bold">Return Trip</div>
+                            <div>
+                                <div style="display: flex; align-items:center">
+                                    <div style="margin-right:4px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <mask id="mask0_2153_22155" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                            <rect width="24" height="24" fill="#D9D9D9"/>
+                                            </mask>
+                                            <g mask="url(#mask0_2153_22155)">
+                                            <path d="M0.999023 21.1354V18.3233C0.999023 17.7542 1.14486 17.2311 1.43652 16.7541C1.72819 16.277 2.11569 15.913 2.59902 15.6619C3.63236 15.143 4.68236 14.7538 5.74902 14.4944C6.81569 14.2349 7.89902 14.1052 8.99902 14.1052C10.099 14.1052 11.1824 14.2349 12.249 14.4944C13.3157 14.7538 14.3657 15.143 15.399 15.6619C15.8824 15.913 16.2699 16.277 16.5615 16.7541C16.8532 17.2311 16.999 17.7542 16.999 18.3233V21.1354H0.999023ZM18.999 21.1354V18.1224C18.999 17.3859 18.7949 16.6787 18.3865 16.0008C17.9782 15.3229 17.399 14.7413 16.649 14.2558C17.499 14.3563 18.299 14.5278 19.049 14.7706C19.799 15.0133 20.499 15.3104 21.149 15.6619C21.749 15.9967 22.2074 16.3691 22.524 16.7792C22.8407 17.1893 22.999 17.637 22.999 18.1224V21.1354H18.999ZM8.99902 13.1009C7.89902 13.1009 6.95736 12.7075 6.17402 11.9208C5.39069 11.1341 4.99902 10.1884 4.99902 9.08365C4.99902 7.97891 5.39069 7.03318 6.17402 6.24647C6.95736 5.45976 7.89902 5.06641 8.99902 5.06641C10.099 5.06641 11.0407 5.45976 11.824 6.24647C12.6074 7.03318 12.999 7.97891 12.999 9.08365C12.999 10.1884 12.6074 11.1341 11.824 11.9208C11.0407 12.7075 10.099 13.1009 8.99902 13.1009ZM18.999 9.08365C18.999 10.1884 18.6074 11.1341 17.824 11.9208C17.0407 12.7075 16.099 13.1009 14.999 13.1009C14.8157 13.1009 14.5824 13.08 14.299 13.0381C14.0157 12.9963 13.7824 12.9502 13.599 12.9C14.049 12.3644 14.3949 11.7702 14.6365 11.1174C14.8782 10.4646 14.999 9.78666 14.999 9.08365C14.999 8.38063 14.8782 7.70272 14.6365 7.04992C14.3949 6.39712 14.049 5.8029 13.599 5.26727C13.8324 5.18358 14.0657 5.12918 14.299 5.10407C14.5324 5.07896 14.7657 5.06641 14.999 5.06641C16.099 5.06641 17.0407 5.45976 17.824 6.24647C18.6074 7.03318 18.999 7.97891 18.999 9.08365ZM2.99902 19.1268H14.999V18.3233C14.999 18.1392 14.9532 17.9718 14.8615 17.8211C14.7699 17.6705 14.649 17.5533 14.499 17.4696C13.599 17.0177 12.6907 16.6787 11.774 16.4528C10.8574 16.2268 9.93236 16.1138 8.99902 16.1138C8.06569 16.1138 7.14069 16.2268 6.22402 16.4528C5.30736 16.6787 4.39902 17.0177 3.49902 17.4696C3.34902 17.5533 3.22819 17.6705 3.13652 17.8211C3.04486 17.9718 2.99902 18.1392 2.99902 18.3233V19.1268ZM8.99902 11.0923C9.54902 11.0923 10.0199 10.8956 10.4115 10.5022C10.8032 10.1089 10.999 9.63602 10.999 9.08365C10.999 8.53128 10.8032 8.05841 10.4115 7.66506C10.0199 7.2717 9.54902 7.07503 8.99902 7.07503C8.44902 7.07503 7.97819 7.2717 7.58652 7.66506C7.19486 8.05841 6.99902 8.53128 6.99902 9.08365C6.99902 9.63602 7.19486 10.1089 7.58652 10.5022C7.97819 10.8956 8.44902 11.0923 8.99902 11.0923Z" fill="#6F757F"/>
+                                            </g>
+                                            </svg>
+                                    </div>
+                                    <div class="body-16 reg" style="color: #6F757F;">2</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="booking-img">
+                            <div>
+                                <img src="\assets\images\successfulpayment\img_successfulpayment_img.png">
+                            </div>
+                            <div class="booking-info">
+                                <div class="button-20 bold" style="margin-bottom: 8px;"> {{orderData.ReturnBusType.Name}} </div>
+                                <div class="text body-16 reg" style="color: #6F757F;margin-bottom: 4px;">20 seats, 1 bathroom</div>
+                                <div class="booking-seat-number">
+                                    <div class="text body-16 reg" style="color: #6F757F;">Seat number</div>
+                                    <div class="sub-16 sem"> {{orderData.Return.Seat.toString()}} </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-details">
+                            <div class="booking-time">
+                                <div style="display: flex;flex-direction: column;align-items: center;">
+                                    <div class="button-20 bold" style="margin-bottom: 4px;"> {{convertDateTime(orderData.Return.DTime, "time")}} </div>
+                                    <div class="caption-14 reg" style="color: #6F757F;">( {{convertDateTime(orderData.Return.DTime, "date")}})</div>
+                                </div>
+                                <div style="display: flex;flex-direction: column;align-items: center;transform: translateY(-36px);">
+                                    <div class="button-20 bold" style="margin-bottom: 4px;"> {{convertDateTime(orderData.Return.ATime, "time")}}</div>
+                                    <div class="caption-14 reg" style="color: #6F757F;width: 52px;">( {{convertDateTime(orderData.Return.ATime, "date")}})</div>
+                                </div>
+                            </div>
+                            <div style="display: flex;flex-direction: column;align-items: center;">
+                                <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_my_location.png"></div>
+                                <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_line 52.png"> </div>
+                                <div><img src="\assets\images\choosepaymentmethod\img_choosepaymentmethod_location_on.png"></div>
+                            </div>
+                            <div >
+                                <div>
+                                    <div class="booking-name-trip">
+                                        <div class="button-20 bold"> {{orderData.Return.PickUpLocation.Point}} </div>
+                                    </div>
+                                    <div class="caption-14 reg" style="margin-bottom:4px;width: inherit;">{{orderData.Return.PickUpLocation.Address}}</div>
+                                    <div class="sub-14 med" style="margin-bottom:26px;">Expected pick-up at {{orderData.Return.DTime}} </div>
+                                </div>
+                                <div style="width: inherit;">
+                                    <div class="booking-name-trip">
+                                        <div class="button-20 bold">{{orderData.Return.DropOffLocation.Point}}</div>
+                                    </div>
+                                    <div class="caption-14 reg" style="margin-bottom:4px">{{orderData.Return.DropOffLocation.Address}}</div>
+                                    <div class="sub-14 med" style="margin-bottom:16px;">Expected drop-off at {{orderData.Return.ATime}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="" style="display: flex; flex-direction: column;gap:24px;margin-top:40px">
+                            <div class="btn btn-primary sub-14 sem" style="padding:17px 0px;background-color:#4D56BE;" (click)="backToHomepage()">
+                                Back to Homepage
+                            </div>
+                            <div class="caption-14 reg" style="text-align: center;">
+                                Having issues?
+                                <b class="sub-14 med" style="color: #4D56BE;cursor:pointer;">
+                                    Tell us
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="border-div2" style="height: fit-content;">
+                    <div class="heading">
+                        <div class="text button-20 bold">
+                            Trip Information
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text sub-16 sem" style="margin-bottom:16px;">Passenger Details</div>
+                        <div class="">
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Name</div>
+                                <div class="body-16 reg"> {{orderData.PassengerInfo.FullName}} </div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Phone number</div>
+                                <div class="body-16 reg"> {{orderData.PassengerInfo.PhoneNumber}}</div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Email</div>
+                                <div class="body-16 reg">{{orderData.PassengerInfo.Email}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px;" >
+                        <div class="text sub-16 sem" style="margin-bottom:16px;">Trip Details</div>
+                        <div class="" >
+                            
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Trip</div>
+                                <div class="body-16 reg"> {{tripType}} </div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Quantity</div>
+                                <div class="body-16 reg"> {{orderData.Departure.Seat.length + orderData.Return.Seat.length}} tickets</div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Seat Numbers</div>
+                                <div class="body-16 reg">
+                                    <p style="margin-bottom: 8px;">
+                                        {{orderData.Departure.Seat.toString()}} (Departure Trip)
+                                    </p>
+                                    <p *ngIf="orderData.Return.Ticket != ''">
+                                        {{orderData.Return.Seat.toString()}} (Return Trip)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-div3" style="height: fit-content;">
+                    <div class="heading">
+                        <div class="text button-20 bold">
+                            Payment Details
+                        </div>
+                    </div>
+                    <div>
+                        <div class="">
+                          <div class="detail-content">
+                              <div class="text body-16 reg" style="color: #6F757F;">Transaction Number</div>
+                              <div class="body-16 reg"> {{invoice._id}} </div>
+                          </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Time of payment</div>
+                                <div class="body-16 reg"> {{invoice.timeOfPayment}} </div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Payment method</div>
+                                <div class="body-16 reg"> {{invoice.paymentMethod}} </div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Payment status</div>
+                                <div class="body-16 reg" style="color:#068238"> {{orderData.Status}} </div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Subtotal ({{orderData.Departure.Seat.length + orderData.Return.Seat.length}} tickets)</div>
+                                <div class="body-16 reg"> {{convertMoney(invoice.subtotal)}} VND</div>
+                            </div>
+                            <div class="detail-content">
+                                <div class="text body-16 reg" style="color: #6F757F;">Discount</div>
+                                <div class="body-16 reg" style="text-decoration: line-through;"> {{convertMoney(invoice.discount)}} VND</div>
+                            </div>
+                            <hr>
+                            <div class="detail-content">
+                                <div class="text sub-16 sem" style="color: #6F757F;">Total</div>
+                                <div class="body-16 reg"> {{convertMoney(invoice.subtotal - invoice.discount)}} VND</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="padding-top: 40px;">
-            <button  class="primary-button">
-                Book Other Ticket
-            </button> 
-        </div>
-        <div class="issues-text-container">
-            <div class="centered-text">Having issues?</div>
-            <div class="issues-text">Tell us</div>
-        </div>
-</div>
-<div class="trip-info-container">
-        <table class="trip-info-table">
-            <tr>
-                <td class="title" style="padding-bottom: 16px;" colspan="2">Trip Information</td>
-            </tr>
-            <tr>
-                <td class="sub-header" colspan="2">Passenger Details</td>
-            </tr>
-            <tr>
-                <td class="label">Name</td>
-                <td class="value">Nguyen Quoc Khanh</td>
-            </tr>
-            <tr>
-                <td class="label">Phone Number</td>
-                <td class="value">(+84)123 456 789</td>
-            </tr>
-            <tr>
-                <td class="label">Email</td>
-                <td class="value">khanhnq@gmail.com</td>
-            </tr>
-            <tr>
-                <td class="sub-header" colspan="2">Trip Details</td>
-            </tr>
-            <tr>
-                <td class="label">Time of payment</td>
-                <td class="value">Feb 05, 2024 at 10:17AM</td>
-            </tr>
-            <tr>
-                <td class="label">Transaction Number</td>
-                <td class="value">49156JA835</td>
-            </tr>
-            <tr>
-                <td class="label">Trip</td>
-                <td class="value">Round-trip</td>
-            </tr>
-            <tr>
-                <td class="label">Bus Type</td>
-                <td class="value">Limousine Double Room</td>
-            </tr>
-            <tr>
-                <td class="label">Quantity</td>
-                <td class="value">4 tickets</td>
-            </tr>
-            <tr>
-                <td class="label" rowspan="2">Seat Numbers</td>
-                <td class="value">4A, 4B (Departure Trip)</td>
-            </tr>
-            <tr>
-                <td class="value">2C, 2D (Return Trip)</td>
-            </tr>
-        </table>
     </div>
-
-<div>
-    <table class="payment-detail-box">
-        <tr>
-            <td class="title" style="padding-bottom: 16px;">Payment Details</td>
-        </tr>
-        <tr>
-            <td class="label" style="width: 200px;">Time of payment</td>
-            <td class="value">Feb 05, 2024 at 10:17AM</td>
-        </tr>
-        <tr>
-            <td class="label">Payment method</td>
-            <td class="value">MoMo</td>
-        </tr>
-        <tr>
-            <td class="label">Payment status</td>
-            <td style="text-align: right; color: #6F757F;">Cancelled</td>
-        </tr>
-        <tr>
-            <td class="label">Subtotal (4 tickets)</td>
-            <td style="text-align: right;">1.200.000VND</td>
-        </tr>
-        <tr>
-            <td class="label">Discount</td>
-            <td style="text-align: right;  text-decoration: line-through; color: #6F757F; ">200.000VND</td>
-        </tr>
-        <tr>
-            <td colspan="2"><hr></td>
-        </tr>
-        <tr>
-            <td style="font-weight: 600; color: #6F757F; ">Total</td>
-            <td style="text-align: right; font-weight: 600;">1.000.000VND</td>
-        </tr>
-
-
-    </table>
-</div>
+  </div>
+  

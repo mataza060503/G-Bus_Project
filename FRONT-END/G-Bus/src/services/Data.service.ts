@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { FeedbackItem, PartnerPromotion, PromotionItem, RouteItem } from '../models/Item';
-import { Amenities, BookedTicket, Bus, Driver, Invoice, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, UserInfo, Voucher } from '../models/ticket';
+import { Amenities, BookedTicket, Bus, Cancellation, Driver, Invoice, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, UserInfo, Voucher } from '../models/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -72,12 +72,17 @@ getRawTicket(DLocation:string, ALocation: string, DDate: string):Observable<any>
     headers:headers,
     responseType:"text",
   } 
-  return this._http.post<any>(this.API+"/ticket",{"DLocation":DLocation,"ALocation":ALocation,"DDate":DDate},requestOptions).pipe(
-    map(res=> JSON.parse(res) as RawTicket[]),
-    retry(3),
-    catchError(this.handleError)
-  )
+  return this._http.post<any>(
+      this.API+"/ticket",
+      {"DLocation":DLocation,"ALocation":ALocation,"DDate":DDate},
+      requestOptions
+    ).pipe(
+      map(res=> JSON.parse(res) as RawTicket[]),
+      retry(3),
+      catchError(this.handleError)
+    )
 }
+
 getAllTicket():Observable<any> {
   const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
   const requestOptions:Object={
@@ -381,6 +386,18 @@ patchPassword(phoneNumber: string, password: string):Observable<any> {
     responseType:"text"
   } 
   return this._http.patch<any>(this.API+"/password",{"phoneNumber": phoneNumber, "password": password},requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+patchCancellation(orderId: string, cancellation: Cancellation):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.patch<any>(this.API+"/order/"+orderId,JSON.stringify(cancellation),requestOptions).pipe(
     map(res=> res as string),
     retry(3),
     catchError(this.handleError)

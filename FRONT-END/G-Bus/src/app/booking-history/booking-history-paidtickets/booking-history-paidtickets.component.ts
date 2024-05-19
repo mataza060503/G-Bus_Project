@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Bus, OrderTicket, OrderTicketLoaded, PostBookedTicket, RawOrderTicket } from '../../../models/ticket';
 import { DataService } from '../../../services/Data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-history-paidtickets',
@@ -12,11 +13,12 @@ export class BookingHistoryPaidticketsComponent {
   ordersData!: OrderTicketLoaded[]
   errMessage: string = ""
   accountId: string = ""
+  isPopup: boolean = false
   intervalIds: any[] = []; // Store interval IDs for cleanup
 
   isSelected: boolean[] = [true, false, false]
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private router: Router) {
     this.loadOrderData(this.accountId, "Unpaid")
     const userIdRaw = localStorage.getItem("userId")
     if (userIdRaw != null) {
@@ -24,6 +26,7 @@ export class BookingHistoryPaidticketsComponent {
       this.accountId = userId
     }
   }
+  
   loadOrderData(accountId: string, status: string) {
     this.dataService.getAllOrderByStatus(accountId, status).subscribe({
       next: (data) => {
@@ -118,6 +121,22 @@ export class BookingHistoryPaidticketsComponent {
       }
     })
     
+  }
+
+  navigate(ref: string) {
+    this.router.navigate([ref])
+  }
+
+  openCancelPopup() {
+    this.isPopup = true
+    this.router.navigate([{ outlets: { 'auth-popup': ['cancel-confirm'] } }]);
+  }
+  cancelPopup() {
+    this.router.navigate([{ outlets: { 'auth-popup': [null] } }]);
+    this.isPopup = false
+  }
+  confirm() {
+    this.router.navigate(["cancel"])
   }
 
   selectedOrderStatus(id: number) {

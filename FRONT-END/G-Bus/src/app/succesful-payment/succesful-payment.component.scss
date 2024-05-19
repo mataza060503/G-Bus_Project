@@ -56,7 +56,6 @@
   border: 1px solid var(--Neutral-Grey100, #E2E4E7);
   background: var(--Neutral-White, #FFF);
   width: 598px;
-  height: 340px;
   align-items: center;
   padding:16px;
   margin-bottom: 16px;
@@ -72,8 +71,11 @@
   margin-bottom: 8px;
 }
 .booking-time{
+  display:flex;
   align-items:center;
-  margin-right: 8px;
+  justify-content:space-between;
+  flex-direction:column;
+  width: 52px;
 }
 .booking-img{
   display: flex;
