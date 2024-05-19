@@ -254,14 +254,14 @@
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Unpaid'">
         <button class="secondary-button" (click)="cancelOrder(order)">Cancel</button>  
-        <button class="primary-button">Pay Now</button>
+        <button class="primary-button" (click)="payNow(order)">Pay Now</button>
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Paid'">
         <button class="secondary-button" (click)="openCancelPopup()">Cancel</button>
-        <button class="primary-button">View Invoice</button>
+        <button class="primary-button" (click)="viewInvoice(order)">View Invoice</button>
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Cancelled'" >
-        <button class="primary-button" style="width: 100%">Repurchase</button>
+        <button class="primary-button" style="width: 100%" >Repurchase</button>
       </div>
     </div>
   </div>

@@ -6,6 +6,8 @@ import { AngularFireModule } from '@angular/fire/compat'
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { Component, inject, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -14,6 +16,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +65,7 @@ import { PaymentEWalletComponent } from './payment-ewallet/payment-ewallet.compo
     FormsModule,
     ReactiveFormsModule,
     QRCodeModule,
+    BrowserAnimationsModule,
     
     MatFormFieldModule,
     MatInputModule, 
@@ -68,6 +74,7 @@ import { PaymentEWalletComponent } from './payment-ewallet/payment-ewallet.compo
     MatDatepickerModule,
     SlickCarouselModule,
     NgbModule,
+    ToastModule,
 
     AngularFireModule.initializeApp(environment.firebase),
 
@@ -82,7 +89,8 @@ import { PaymentEWalletComponent } from './payment-ewallet/payment-ewallet.compo
   ],
   providers: [
     provideNativeDateAdapter(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

@@ -200,6 +200,7 @@ export class ChoosePaymentMethodComponent {
         if (this.isValidId(data)) {
           this.postPayment(data)
           this.loadInvoice(data)
+          localStorage.setItem("orderId", this.orderData._id)
           this.router.navigate(["postPayment"])
         } else {
           console.log("invalid invoiceId")

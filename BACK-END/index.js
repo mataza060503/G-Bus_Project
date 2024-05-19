@@ -387,6 +387,20 @@ app.get("/account/:id", cors(), async (req, res) => {
   }
 });
 
+///* NOTIFICATIONS *///
+app.post("/notification", cors(), async (req, res) => {
+  try {
+      const notification = req.body;
+      const data = await database.collection("Notification").insertOne(notification);
+
+      console.log('Insertion successful:', data);
+      res.status(201).send(data.insertedId);
+  } catch (error) {
+      console.error('Insertion failed:', error);
+      res.status(500).send('Failed to insert notification');
+  }
+});
+
 
 ///* ORTHER *///
 

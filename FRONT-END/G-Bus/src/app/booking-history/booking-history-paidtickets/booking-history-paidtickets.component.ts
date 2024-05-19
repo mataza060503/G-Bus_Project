@@ -26,6 +26,16 @@ export class BookingHistoryPaidticketsComponent {
       this.accountId = userId
     }
   }
+
+  payNow(order: OrderTicketLoaded) {
+    localStorage.setItem("orderId", order._id)
+    this.router.navigate(["payment"])
+  }
+
+  viewInvoice(order: OrderTicketLoaded) {
+    localStorage.setItem("orderId", order._id)
+    this.router.navigate(["postPayment"])
+  }
   
   loadOrderData(accountId: string, status: string) {
     this.dataService.getAllOrderByStatus(accountId, status).subscribe({
