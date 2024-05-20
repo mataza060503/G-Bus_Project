@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import firebase from 'firebase/compat/app';
+
 
 @Component({
   selector: 'app-sign-up-verification',
@@ -10,9 +12,14 @@ import { AuthService } from '../../../services/auth.service';
 export class SignUpVerificationComponent {
   phoneNumber: string;
   verificationCode: string = '';
+  recaptchaVerifier!: firebase.auth.RecaptchaVerifier; 
 
   constructor(private router: Router, private authService: AuthService) {
-    this.phoneNumber = ''; // Initialize phoneNumber if needed
+    this.phoneNumber = ''; 
+    const phoneNumber = localStorage.getItem("phoneNumber") 
+    if (phoneNumber != null) {
+      this.phoneNumber = phoneNumber      
+    }
   }
 
   async verifyCode() {
@@ -23,11 +30,37 @@ export class SignUpVerificationComponent {
       this.router.navigate([{ outlets: { 'auth-popup': ['sign-up-password'] } }]);
     } catch (error) {
       console.error('Error verifying the code:', error);
-      // Handle verification failure
+      alert("Invalid OTP code, please resend!")
+    }
+  }
+
+  initRecaptcha() {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'size': 'normal',
+      'callback': () => {
+        console.log('reCAPTCHA solved, automatically sending verification code');
+        this.sendVerificationCode();  // Call your function directly here
+      } 
+    });
+    this.recaptchaVerifier.render();
+  }
+
+  async sendVerificationCode() {
+    try {
+      const internationalNumber = `+84${this.phoneNumber.substring(1)}`; 
+      await this.authService.signUpWithPhoneNumber(internationalNumber, this.recaptchaVerifier);
+      localStorage.setItem("phoneNumber", this.phoneNumber)
+      this.router.navigate([{ outlets: { 'auth-popup': ['sign-up-verify'] } }]);
+    } catch (error) {
+      console.error('Failed to send verification code:', error);
     }
   }
 
   goToSignUpPassword() {
     this.router.navigate([{ outlets: { 'auth-popup': ['sign-up-password'] } }]);
+  }
+
+  resend() {
+    this.initRecaptcha()
   }
 }

@@ -1,5 +1,5 @@
 import { Component, TemplateRef, inject } from '@angular/core';
-import { BookedTicket, Notification, OrderTicket, PassengerInfo, Point, PostBookedTicket } from '../../../models/ticket';
+import { BookedTicket, Notification, OrderTicket, PassengerInfo, Point, PostBookedTicket, UserInfo } from '../../../models/ticket';
 import { DataService } from '../../../services/Data.service';
 import { Router } from '@angular/router';
 
@@ -22,6 +22,8 @@ export class PassengerInfoComponent {
   psgName: string = ""
   psgPhone: string = ""
   psgMail: string = ""
+
+  userInfo!: UserInfo
 
   constructor(private service: DataService, private router: Router) {
     this.initializeTickets()
@@ -113,6 +115,28 @@ export class PassengerInfoComponent {
 
   navigate(path: string) {
     this.router.navigate([path])
+  }
+
+  loadAccountInfo() {
+    const userId = localStorage.getItem("token")
+    if (userId != null) {
+      const userIdStr = userId.replace(/"/g, '')
+      this.service.getAccountInfo(userIdStr).subscribe({
+        next: (data) => {
+          console.log(data)
+          if (data != null) {
+            this.userInfo = data
+            if (this.userInfo != null) {
+              this.psgPhone = this.userInfo.PhoneNumber
+              this.psgName = this.userInfo.FullName
+              this.psgMail = this.userInfo.Email
+            }
+          }
+        }, error: (err) => {
+          console.log("Load data failed: " + err)
+        }
+      })
+    }
   }
 
   ///** Main Functions */

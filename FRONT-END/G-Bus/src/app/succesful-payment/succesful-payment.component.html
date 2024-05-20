@@ -313,7 +313,7 @@
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Subtotal ({{orderData.Departure.Seat.length + orderData.Return.Seat.length}} tickets)</div>
-                              <div class="body-16 reg"> {{convertMoney(invoice.subtotal)}} VND</div>
+                              <div class="body-16 reg"> {{convertMoney(invoice.subtotal + invoice.discount)}} VND</div>
                           </div>
                           <div class="detail-content">
                               <div class="text body-16 reg" style="color: #6F757F;">Discount</div>
@@ -322,7 +322,7 @@
                           <hr>
                           <div class="detail-content">
                               <div class="text sub-16 sem" style="color: #6F757F;">Total</div>
-                              <div class="body-16 reg"> {{convertMoney(invoice.subtotal - invoice.discount)}} VND</div>
+                              <div class="body-16 reg"> {{convertMoney(invoice.subtotal)}} VND</div>
                           </div>
                       </div>
                   </div>

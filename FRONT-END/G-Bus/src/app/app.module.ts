@@ -29,6 +29,7 @@ import { BookingModule } from './booking/booking.module';
 import { BookingHistoryModule } from './booking-history/booking-history.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { CancellationModule } from './cancellation/cancellation.module';
+import { ViewInvoiceModule } from './view-invoice/view-invoice.module';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
@@ -85,7 +86,8 @@ import { PaymentEWalletComponent } from './payment-ewallet/payment-ewallet.compo
     BookingHistoryModule,
     SignUpModule,
     ForgotPasswordModule,
-    CancellationModule
+    CancellationModule,
+    ViewInvoiceModule
   ],
   providers: [
     provideNativeDateAdapter(),

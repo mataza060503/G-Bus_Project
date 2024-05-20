@@ -517,6 +517,19 @@ export class SearchingResultComponent implements OnInit{
     return this.formatDate(date+"",2)
   }
 
+  calculateDatePoint2(dateStr:string, timeStr: string, timeGap: number) {
+    const time = timeStr.split(":")
+    const timeData = parseInt(time[0])*60 + parseInt(time[1])
+    var resultTime = timeData + timeGap
+    let date = this.parseDateString(dateStr)
+    if (resultTime < 0) {
+      if (date != null) {
+        return this.formatDate2(new Date(date.getTime() - 86400000),2);
+      }
+    } 
+    return this.formatDate2(date+"",2)
+  }
+
   parseDateAndTimeString(dateStr: string) {
     const [datePart, timePart] = dateStr.split(' ');
     const [day, month, year] = datePart.split('/').map(Number);
@@ -555,8 +568,43 @@ export class SearchingResultComponent implements OnInit{
     return new Date(year, month, day);
   }
 
+  formatDate2(dateInput: string | Date, type: number): string {
+    let date;
+    console.log(dateInput)
+
+    // Explicitly parse the input if it's a string in "DD/MM/YYYY" format
+    if (typeof dateInput === 'string') {
+      date = new Date(dateInput);
+    } else {
+        date = dateInput;
+    }
+
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+        return 'Invalid Date';
+    }
+
+    // Get day, month, and year components
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Note: Months are zero-based
+    const year = date.getFullYear();
+    const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
+
+    switch (type) {
+        case 1:
+            return `${day}/${month}/${year}`;
+        case 2:
+            return `${day}/${month}`;
+        case 3:
+            return `${dayOfWeek}, ${day}/${month}/${year}`;
+        default:
+            return `${day}/${month}/${year}`; // Fallback to full date
+    }
+}
+
   formatDate(dateInput: string | Date, type: number): string {
     let date;
+    console.log(dateInput)
 
     // Explicitly parse the input if it's a string in "DD/MM/YYYY" format
     if (typeof dateInput === 'string') {
@@ -643,9 +691,6 @@ export class SearchingResultComponent implements OnInit{
     var subLocation = this.DLocation
     this.DLocation= this.ALocation
     this.ALocation = subLocation
-    var subDate = this.DDate
-    this.DDate = this.RDate
-    this.RDate = subDate
   }
   search() {
     var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate}
