@@ -137,13 +137,7 @@ export class ChoosePaymentMethodComponent implements OnInit{
           this.orderData._id = this.order._id
           this.orderData.PassengerInfo = this.order.PassengerInfo
 
-          this.dataService.checkExistOrder(this.orderData._id).subscribe(data=> {
-            if (data) {
-              return
-            } else {
-              this.pushNotification();
-            }
-          })
+          this.pushNotification();
           
           if (this.isValidId(this.order.Departure.toString())) {
             this.dataService.getBookedTicket(this.order.Departure.toString()).subscribe({

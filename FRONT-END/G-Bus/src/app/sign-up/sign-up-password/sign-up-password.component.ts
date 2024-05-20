@@ -30,6 +30,10 @@ export class SignUpPasswordComponent {
   }
 
   confirm() {
+    if (this.password === "") {
+      alert("Please input your password")
+      return
+    }
     if (this.confirmPassword !== this.password) {
       alert("Password does not match.")
       return
@@ -37,7 +41,7 @@ export class SignUpPasswordComponent {
       this.dataService.postAccount(this.phoneNumber, this.password, this.userId).subscribe( data => {
         localStorage.setItem('token',this.userId)
         this.router.navigate([{ outlets: { 'auth-popup': [null] } }]);
-        this.router.navigate([''])
+        window.location.reload()
       })
     }
   }

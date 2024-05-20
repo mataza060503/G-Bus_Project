@@ -512,7 +512,7 @@
                       <div class="ticket-item-booking-location-item-point" *ngFor="let point of ticket.Route.PickUpPoints;let i = index">
                         <div style="display: flex;flex-direction: column; align-items: center; gap: 4px;">
                           <div class="text sub-14 med"> {{calculateTimePoint(ticket.Ticket.DTime,point.Time)}} </div>
-                          <div class="text caption-14 reg"> {{calculateDatePoint(ticket.Ticket.Date,ticket.Ticket.DTime,point.Time)}} </div>
+                          <div class="text caption-14 reg"> {{calculateDatePoint2(ticket.Ticket.Date,ticket.Ticket.DTime,point.Time)}} </div>
                         </div>
                         <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
                           <div class="text sub-14 med" style="color: black;"> {{point.Point}} </div>
@@ -528,7 +528,7 @@
                       <div class="ticket-item-booking-location-item-point" *ngFor="let point of ticket.Route.DropOffPoints;let i = index">
                         <div style="display: flex;flex-direction: column; align-items: center; gap: 4px;">
                           <div class="text sub-14 med"> {{calculateTimePoint(ticket.Ticket.ATime,point.Time)}} </div>
-                          <div class="text caption-14 reg"> {{calculateDatePoint(ticket.Ticket.Date,ticket.Ticket.DTime,point.Time)}} </div>
+                          <div class="text caption-14 reg"> {{calculateDatePoint2(ticket.Ticket.Date,ticket.Ticket.DTime,point.Time)}} </div>
                         </div>
                         <label [for]="'pickUpPoint_' + i" style="display: flex; flex-direction: column;gap: 5px;">
                           <div class="text sub-14 med" style="color: black;"> {{point.Point}} </div>
