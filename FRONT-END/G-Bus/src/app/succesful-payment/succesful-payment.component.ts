@@ -1,3 +1,4 @@
+import { retry } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { RawOrderTicket, OrderTicketLoaded, Invoice, Notification } from '../../models/ticket';
 import { DataService } from '../../services/Data.service';
@@ -160,6 +161,10 @@ export class SuccesfulPaymentComponent implements OnInit{
 
   backToHomepage() {
     this.router.navigate([""])
+  }
+
+  retry() {
+    this.router.navigate(["payment"])
   }
 
   isValidId(id: string): boolean {
