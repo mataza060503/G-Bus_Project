@@ -201,16 +201,37 @@
   <div style="display: flex;flex-direction: column; gap:16px">
     <div class="frameofticket" style="position: relative;width: 100%;" *ngFor="let order of ordersData">      
       <div class="ticket-frame">
-        <div class="total">Total</div>
-        <div class="total-value"> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div class="total">Total:</div>
+        <div class="total-value" style="margin-left: 20px;" *ngIf="order.Status ==='Unpaid' "> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div class="total-value" style="margin-left: 20px;" *ngIf="order.Status ==='Cancelled' "> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div class="total-value2" style="margin-left: 20px;" *ngIf="order.Status ==='Paid'"> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div *ngIf="order.Status ==='Paid'" style="margin-left: auto;">
+          <div class="text head-16 reg"  [class.upcomming]="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Upcoming'" [class.ongoing]="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Ongoing'" [class.completed]="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Completed'">
+            {{calculateStatus(order.Departure.DTime, order.Departure.ATime)}}
+          </div>
+        </div>
       </div>
   
       <div class="ticket-frame">
-        <div style="flex: 1 1 0">
+        <div style="flex: 1 1 0" *ngIf="order.Status === 'Unpaid'">
           <span class="info-label">Need to pay before:</span>
           <span class="info-important"> {{formatNewTime(order.BookedTime.toString(),15)}} </span>
         </div>
-        <div class="timeleft-info-container">
+        <div style="flex: 1 1 0" *ngIf="order.Status === 'Paid'">
+          <div *ngIf="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Upcoming'">
+            <span class="info-label reg">Trip will depart in:</span>
+            <span class="info-important"> {{order.TimeRemaining}} </span>
+          </div>
+          <div *ngIf="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Ongoing'">
+            <span class="info-label reg">Expected drop-off at:</span>
+            <span class="info-important"> {{order.Departure.ATime}} </span>
+          </div>
+          <div *ngIf="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Completed'">
+            <span class="info-label reg">Trip completed at:</span>
+            <span class="info-important"> {{order.Departure.ATime}} </span>
+          </div>
+        </div>
+        <div class="timeleft-info-container" *ngIf="order.Status ==='Unpaid'">
           <div class="timeleft-label">Time left</div>
           <div class="timeleft-important"> {{order.TimeRemaining}} </div>
         </div>
@@ -261,7 +282,7 @@
         <button class="primary-button" (click)="viewInvoice(order)">View Invoice</button>
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Cancelled'" >
-        <button class="primary-button" style="width: 100%" >Repurchase</button>
+        <button class="primary-button" style="width: 100%" (click)="repurchase(order)">Repurchase</button>
       </div>
     </div>
   </div>

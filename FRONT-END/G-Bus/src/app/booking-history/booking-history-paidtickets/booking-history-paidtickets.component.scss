@@ -326,10 +326,9 @@ word-wrap: break-word;
 width: inherit;
 justify-content: flex-start;
 align-items: center;
-display: inline-flex;
+display: flex;
 }
 .total {
-flex: 1 1 0;
 color: #6F757F;
 font-size: 20px;
 font-family: Roboto;
@@ -348,6 +347,17 @@ letter-spacing: 0.04px;
 word-wrap: break-word;
 font-weight: bold;
 }
+.total-value2 {
+  flex: 1 1 0;
+  color: black;
+  font-size: 24px;
+  font-family: Roboto;
+  font-weight: 500;
+  letter-spacing: 0.04px;
+  word-wrap: break-word;
+  font-weight: bold;
+  margin-left: 20px;
+  }
 
 .container {
 flex: 1 1 0;
@@ -569,6 +579,25 @@ word-wrap: break-word;
   align-items: flex-start;
   gap: 16px;
   display: inline-flex;
+}
+
+.upcomming {
+  padding: 4px 22px;
+  border-radius: 2px;
+  color: black;
+  background-color: #FFDDB5;
+}
+.ongoing {
+  padding: 4px 22px;
+  border-radius: 2px;
+  color: #4D56BE;
+  background-color: #DCECFF;
+}
+.completed {
+  padding: 4px 22px;
+  border-radius: 2px;
+  color: #129C12;
+  background-color: #D8F7E0;
 }
 
   

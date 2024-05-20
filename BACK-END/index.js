@@ -304,6 +304,9 @@ app.patch("/order/:id", cors(), async (req, res) => {
   }
 });
 
+
+
+
 ///* ACCOUNT *///
 app.post("/account", cors(), async (req, res) => {
   const account = req.body
@@ -393,13 +396,43 @@ app.post("/notification", cors(), async (req, res) => {
       const notification = req.body;
       const data = await database.collection("Notification").insertOne(notification);
 
-      console.log('Insertion successful:', data);
       res.status(201).send(data.insertedId);
   } catch (error) {
       console.error('Insertion failed:', error);
       res.status(500).send('Failed to insert notification');
   }
 });
+app.get("/notification/:id", cors(), async (req, res) => {
+  const userId = req.params.id
+  try {
+      const data = await database.collection("Notification").find({UserId: userId}).toArray();
+      console.log('Insertion successful:', data);
+      if (data.length < 1) {
+        res.status(404).send("not thing found")
+      } else {
+        res.send(data);
+      }
+      
+  } catch (error) {
+      console.error('Insertion failed:', error);
+      res.status(500).send('Failed to insert notification');
+  }
+});
+app.get("/order/:id", cors(), async (req, res) => {
+  const orderId = req.params.id;
+  try {
+    const data = await database.collection("Notification").find({_id: new ObjectId(orderId)}).toArray()
+
+    if (data.length > 0) {
+      res.send(true)
+    } else {
+      res.send(false)
+    }
+  } catch (error) {
+    res.status(500).send("Failed to update user info due to an error: " + error.message);
+  }
+});
+
 
 
 ///* ORTHER *///

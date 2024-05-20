@@ -7,8 +7,9 @@
       <div>
         <img src="./assets/images/Gbus-logo-avt.png" style="width: 42px;" alt="">
       </div>
-      <div>
-        <div class="text body-16 reg" style="color: #4D56BE;">Your information has updated!</div>
+      <div style="display: flex;flex-direction: column; gap: 8px;align-items: start;">
+        <div class="text body-16 sem" style="color: black;">Account updated!</div>
+        <div class="text caption-14 reg" style="color: #6F757F;">Your information has updated!</div>
       </div>
     </div>
   </ng-template>
@@ -21,7 +22,9 @@
   <ng-template let-message pTemplate="message" >
     <div style="padding: 16px; width: 100%;display: flex;align-items: start;gap: 16px;">
       <div>
-        <img src="./assets/images/Gbus-logo-avt.png" style="width: 42px;" alt="">
+        <span class="material-symbols-outlined" style="font-size: 42px; color: #DD1F13;">
+          error
+          </span>
       </div>
       <div>
         <div class="text body-16 reg" style="color: #DD1F13"> {{toastMsg}} </div>
@@ -262,7 +265,7 @@
                                                   </div>
                                               </div>
                                           </label><br>
-                                          <input type="text" id="fname" name="fname" class="inp-name" placeholder="Nguyen Quoc Khanh" [(ngModel)]="userInfo.FullName"><br>
+                                          <input type="text" id="fname" name="fname" class="inp-name" placeholder="Please input your full name" [(ngModel)]="userInfo.FullName"><br>
                                       </form>
                                   </div>
                                   <div class="formmargin">
@@ -277,7 +280,7 @@
                                                   </div>
                                               </div>
                                           </label><br>
-                                          <input type="text" id="fname" name="fname" class="inp-name" placeholder="(+84) 123 456 789" [(ngModel)]="userInfo.PhoneNumber"><br>
+                                          <input type="text" id="fname" name="fname" class="inp-name" placeholder="please input your phone number" [(ngModel)]="userInfo.PhoneNumber"><br>
                                       </form>
                                   </div>
                                   <div style="margin-bottom: 24px;">
@@ -292,7 +295,7 @@
                                                   </div>
                                               </div>
                                           </label><br>
-                                          <input type="text" id="fname" name="fname" class="inp-name" placeholder="khanhnq&#64;gmail.com" [(ngModel)]="userInfo.Email"><br>
+                                          <input type="text" id="fname" name="fname" class="inp-name" placeholder="please input your email" [(ngModel)]="userInfo.Email"><br>
                                       </form>
                                   </div>
                               </div>

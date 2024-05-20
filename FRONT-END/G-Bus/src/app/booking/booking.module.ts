@@ -16,6 +16,11 @@ import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { PassengerInfoComponent } from './passenger-info/passenger-info.component';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { MessageService } from 'primeng/api';
+
 
 
 
@@ -38,12 +43,14 @@ import { PassengerInfoComponent } from './passenger-info/passenger-info.componen
     SlickCarouselModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ToastModule,
   ], 
   exports: [
     SearchingResultComponent
   ],providers: [
-    provideNativeDateAdapter()
+    provideNativeDateAdapter(),
+    MessageService
   ]
 })
 export class BookingModule { }

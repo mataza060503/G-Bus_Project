@@ -3,9 +3,7 @@ import { DataService } from '../../services/Data.service';
 import { Router } from '@angular/router';
 import { PassengerInfo, UserInfo } from '../../models/ticket';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
+
 
 @Component({
   selector: 'app-account-management1',
@@ -124,7 +122,10 @@ export class AccountManagement1Component {
 
   logOut() {
     localStorage.removeItem("token")
+    window.location.reload()
   }
+
+  
 
   initializeUserInfo() {
     this.userInfo.Email = ""

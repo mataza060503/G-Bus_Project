@@ -127,14 +127,29 @@ export class ChooseCancelReasonComponent {
   }
 
   calculateRefundPercentage(targetDateTimeStr: string): number {
-    const targetDate = new Date(targetDateTimeStr);
+    // Parsing the input date-time string "0:00 - Wed, 22/05/2024"
+    const regex = /(\d+:\d+) - \w+, (\d+)\/(\d+)\/(\d+)/;
+    const match = targetDateTimeStr.match(regex);
 
+    if (!match) {
+        console.error("Invalid date format");
+        return 0;  // Handle invalid format gracefully
+    }
+
+    const [_, time, day, month, year] = match;
+    const [hours, minutes] = time.split(':').map(Number);
+
+    // Construct a Date object from the parsed parts
+    const targetDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hours, minutes);
+
+    // Calculate the time difference in milliseconds
     const now = new Date();
-
     const timeDiff = targetDate.getTime() - now.getTime();
 
+    // Convert time difference from milliseconds to hours
     const hoursDiff = timeDiff / (1000 * 60 * 60);
 
+    // Determine the refund percentage based on the time difference
     if (hoursDiff > 24) {
         return 100;
     } else if (hoursDiff <= 24 && hoursDiff > 12) {
@@ -147,6 +162,7 @@ export class ChooseCancelReasonComponent {
 
     return 0;
   }
+
 
   confirm() {
     if (this.reason === "") {
@@ -161,9 +177,9 @@ export class ChooseCancelReasonComponent {
 
     this.dataService.patchCancellation(this.orderData._id, cancellation).subscribe(data => {
       console.log(data)
-      if (data === "User info updated successfully.") {
+      if (data) {
         this.router.navigate(["cancel_success"])
-        this.router.navigate([{ outlets: { 'auth-popup': [null] } }]);
+        this.cancelPopup()
       } else {
         alert("some thing went wrong")
         window.location.reload()
@@ -174,11 +190,8 @@ export class ChooseCancelReasonComponent {
 
   openCancelPopup() {
     this.isPopup = true
-    alert(this.orderData._id)
-    this.router.navigate([{ outlets: { 'auth-popup': ['cancel-confirm'] } }]);
   }
   cancelPopup() {
-    this.router.navigate([{ outlets: { 'auth-popup': [null] } }]);
     this.isPopup = false
   }
   

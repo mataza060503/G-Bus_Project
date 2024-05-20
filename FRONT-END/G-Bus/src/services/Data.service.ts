@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry, throwError } from 'rxjs';
 import { FeedbackItem, PartnerPromotion, PromotionItem, RouteItem } from '../models/Item';
-import { Amenities, BookedTicket, Bus, Cancellation, Driver, Invoice, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, UserInfo, Voucher } from '../models/ticket';
+import { Amenities, BookedTicket, Bus, Cancellation, Driver, Invoice, Notification, OrderTicket, PassengerInfo, PostBookedTicket, RawOrderTicket, RawTicket, Route, UserInfo, Voucher } from '../models/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -404,6 +404,44 @@ patchCancellation(orderId: string, cancellation: Cancellation):Observable<any> {
   )
 }
 
+postNotification(notification: Notification):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.post<any>(this.API+"/notification",JSON.stringify(notification),requestOptions).pipe(
+    map(res=> res as string),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+getNotification(userId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/notification/"+userId,requestOptions).pipe(
+    map(res=> JSON.parse(res) as Notification[]),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
+
+checkExistOrder(orderId: string):Observable<any> {
+  const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
+  const requestOptions:Object={
+    headers:headers,
+    responseType:"text"
+  } 
+  return this._http.get<any>(this.API+"/order/"+orderId,requestOptions).pipe(
+    map(res=> res as boolean),
+    retry(3),
+    catchError(this.handleError)
+  )
+}
 handleError(error:HttpErrorResponse){
   return throwError(()=>new Error(error.message))
 }

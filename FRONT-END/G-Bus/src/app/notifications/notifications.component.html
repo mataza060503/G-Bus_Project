@@ -13,7 +13,7 @@
           </div>
           <div class="notihead" style="display: flex; align-items:center;justify-content: space-between">
               <div class="body-20 reg">
-                  Total Notifcation: 250
+                  Total Notifcation: {{notifications.length}}
               </div>
               <div class="caption--14 reg">
                   <div class="btnhead" style="display: flex; align-items: center; gap: 16px">
@@ -23,47 +23,89 @@
               </div>
               
           </div>
-          <div class="notiline">
-              <hr>
-              <p>Today (25)</p>
+        <div style="width: 100%;" *ngIf="isDaily">
+            <div class="notiline" >
+                <hr>
+                <p  >Today ({{dailyNoti.length}})</p>
+            </div>
+            <div style="display: flex;flex-direction: column;gap: 16px;">
+              <div class="notiitem" *ngFor="let noti of dailyNoti">
+                  <div>
+                      <img src="\assets\images\notification1\img_notification1_ticket.png">
+                  </div>
+                  <div class="noticontent" style="display: flex; flex-direction:column;gap: 8px;width: 100%;">
+                      <div class="notititle" style="display: flex; align-items:center; justify-content:space-between">
+                          <p class="sub-14 " [class.med]="noti.isRead === false"> {{noti.Title}} </p>
+                          <p class="body-12 reg" style="color:rgb(111, 117, 127)"> {{formatTime(noti.Time,true)}} </p>
+                      </div>
+                      <div class="body-12 reg" style="color:rgb(111, 117, 127)">
+                          <p style="margin-top: auto;">
+                              {{noti.Message}}
+                          </p>
+                      </div>
+                  </div>
+              </div>
+            </div>
           </div>
-          <div class="notiitem">
-              <div>
-                  <img src="\assets\images\notification1\img_notification1_promotion.png">
-              </div>
-              <div class="noticontent" style="display: flex; flex-direction:column;justify-content:space-between">
-                  <div class="notititle" style="display: flex; align-items:center; justify-content:space-between">
-                      <p class="sub-14 med">You received 1 promotion from G-BUS!</p>
-                      <p class="body-12 reg" style="color:rgb(111, 117, 127)">21:59</p>
+          <div>
+            
+        </div>
+        <div style="width: 100%;" *ngIf="isWeekly">
+            <div class="notiline"  >
+                <hr>
+                <p >This Week ({{weeklyNoti.length}})</p>
+            </div>
+            <div style="display: flex;flex-direction: column;gap: 16px;">
+              <div class="notiitem" *ngFor="let noti of weeklyNoti">
+                  <div>
+                    <img src="\assets\images\notification1\img_notification1_promotion.png">
+                      
                   </div>
-                  <div class="body-12 reg" style="color:rgb(111, 117, 127)">
-                      <p style="margin-top: auto;">
-                          Your ticket from Da Nang to Ho Chi Minh City has been confirmed by the system. View to see details. Your ticket from Da Nang to Ho Chi Minh City has been confirmed by the system. View to see details. Your ticket from Da Nang to Ho Chi Minh City has been confirmed by the system. View to see details.
-                      </p>
+                  <div class="noticontent" style="display: flex; flex-direction:column;gap: 8px;width: 100%;">
+                      <div class="notititle" style="display: flex; align-items:center; justify-content:space-between">
+                          <p class="sub-14 " [class.med]="noti.isRead === false"> {{noti.Title}} </p>
+                          <p class="body-12 reg" style="color:rgb(111, 117, 127)"> {{formatTime(noti.Time,true)}} </p>
+                      </div>
+                      <div class="body-12 reg" style="color:rgb(111, 117, 127)">
+                          <p style="margin-top: auto;">
+                              {{noti.Message}}
+                          </p>
+                      </div>
                   </div>
               </div>
+            </div>
           </div>
-          <div class="notiitem">
-              <div>
-                  <img src="\assets\images\notification1\img_notification1_ticket.png">
-              </div>
-              <div class="noticontent" style="display: flex; flex-direction:column;justify-content:space-between">
-                  <div class="notititle" style="display: flex; align-items:center; justify-content:space-between">
-                      <p class="sub-14 med">You received 1 promotion from G-BUS!</p>
-                      <p class="body-12 reg" style="color:rgb(111, 117, 127)">21:59</p>
+          <div>
+            
+        </div>
+        <div style="width: 100%;" *ngIf="isMonthly">
+            <div class="notiline" >
+                <hr>
+                <p>This Month ({{monthlyNoti.length}})</p>
+            </div>
+            <div style="display: flex;flex-direction: column;gap: 16px;">
+              <div class="notiitem" *ngFor="let noti of monthlyNoti">
+                  <div>
+                    <img src="\assets\images\notification1\img_notification1_promotion.png">
+                      
                   </div>
-                  <div class="body-12 reg" style="color:rgb(111, 117, 127)">
-                      <p style="margin-top: auto;">
-                          Your ticket from Da Nang to Ho Chi Minh City has been confirmed by the system. View to see details. Your ticket from Da Nang to Ho Chi Minh City has been confirmed by the system. View to see details. Your ticket from Da Nang to Ho Chi Minh City has been confirmed by the system. View to see details.
-                      </p>
+                  <div class="noticontent" style="display: flex; flex-direction:column;gap: 8px;width: 100%;">
+                      <div class="notititle" style="display: flex; align-items:center; justify-content:space-between">
+                          <p class="sub-14 " [class.med]="noti.isRead === false"> {{noti.Title}} </p>
+                          <p class="body-12 reg" style="color:rgb(111, 117, 127)"> {{formatTime(noti.Time,true)}} </p>
+                      </div>
+                      <div class="body-12 reg" style="color:rgb(111, 117, 127)">
+                          <p style="margin-top: auto;">
+                              {{noti.Message}}
+                          </p>
+                      </div>
                   </div>
               </div>
+            </div>
           </div>
-      </div>
+          <div>
+            
+        </div>
+    </div>
   </section>
-  <div>
-      <dialog id="dialog" open>
-
-      </dialog>
-  </div>
 </div>

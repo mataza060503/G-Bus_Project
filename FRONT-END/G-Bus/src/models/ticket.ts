@@ -186,3 +186,13 @@ export interface Cancellation {
   Reason: string,
   TimeOfCancel: Date 
 }
+
+export interface Notification {
+  _id?: string
+  UserId: string,
+  Type: string,
+  Time: Date,
+  Title: string,
+  Message: string,
+  isRead: boolean
+}

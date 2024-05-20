@@ -19,6 +19,8 @@ import { PopUpConfirmCancelComponent } from './cancellation/pop-up-confirm-cance
 import { PopUpCancelCompleteComponent } from './cancellation/pop-up-cancel-complete/pop-up-cancel-complete.component';
 import { ChooseCancelReasonComponent } from './cancellation/choose-cancel-reason/choose-cancel-reason.component';
 import { CancellationDetailsComponent } from './cancellation/cancellation-details/cancellation-details.component';
+import { UnsuccessfulPaymentComponent } from './unsuccessful-payment/unsuccessful-payment.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {path:'',component:HomepageComponent},
@@ -42,6 +44,7 @@ const routes: Routes = [
   {path:'booking-history', component:BookingHistoryPaidticketsComponent},
   {path:'cancel', component:ChooseCancelReasonComponent},
   {path:'cancel_success', component:CancellationDetailsComponent},
+  {path:'notification', component:NotificationsComponent},
 ];
 
 @NgModule({
