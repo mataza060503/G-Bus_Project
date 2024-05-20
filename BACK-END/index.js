@@ -284,6 +284,28 @@ app.patch("/invoice", cors(), async (req, res) => {
     }
   }
 })
+app.patch("/order/:id", cors(), async (req, res) => {
+  const orderId = req.params.id;
+  const cancelInfo = req.body;
+
+  try {
+    const data = await database.collection("Order").updateOne(
+      {_id: new ObjectId(orderId)},
+      {$set: {Cancellation: cancelInfo, Status: "Cancelled"}}
+    );
+
+    if (data.matchedCount === 0) {
+      return res.status(404).send("No user found with the given ID.");
+    }
+
+    res.status(200).send("User info updated successfully.");
+  } catch (error) {
+    res.status(500).send("Failed to update user info due to an error: " + error.message);
+  }
+});
+
+
+
 
 ///* ACCOUNT *///
 app.post("/account", cors(), async (req, res) => {
@@ -367,6 +389,50 @@ app.get("/account/:id", cors(), async (req, res) => {
     res.status(500).send("Failed to load user info due to an error: " + error.message);
   }
 });
+
+///* NOTIFICATIONS *///
+app.post("/notification", cors(), async (req, res) => {
+  try {
+      const notification = req.body;
+      const data = await database.collection("Notification").insertOne(notification);
+
+      res.status(201).send(data.insertedId);
+  } catch (error) {
+      console.error('Insertion failed:', error);
+      res.status(500).send('Failed to insert notification');
+  }
+});
+app.get("/notification/:id", cors(), async (req, res) => {
+  const userId = req.params.id
+  try {
+      const data = await database.collection("Notification").find({UserId: userId}).toArray();
+      console.log('Insertion successful:', data);
+      if (data.length < 1) {
+        res.status(404).send("not thing found")
+      } else {
+        res.send(data);
+      }
+      
+  } catch (error) {
+      console.error('Insertion failed:', error);
+      res.status(500).send('Failed to insert notification');
+  }
+});
+app.get("/order/:id", cors(), async (req, res) => {
+  const orderId = req.params.id;
+  try {
+    const data = await database.collection("Notification").find({_id: new ObjectId(orderId)}).toArray()
+
+    if (data.length > 0) {
+      res.send(true)
+    } else {
+      res.send(false)
+    }
+  } catch (error) {
+    res.status(500).send("Failed to update user info due to an error: " + error.message);
+  }
+});
+
 
 
 ///* ORTHER *///

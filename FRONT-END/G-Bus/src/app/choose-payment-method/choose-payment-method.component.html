@@ -1,3 +1,19 @@
+<p-toast 
+  [life]="3000"
+  key="success"
+  severity="success">
+  <ng-template let-message pTemplate="message" >
+    <div style="padding: 16px; width: 100%;display: flex;align-items: start;gap: 16px;">
+      <div>
+        <img src="./assets/images/Gbus-logo-avt.png" style="width: 42px;" alt="">
+      </div>
+      <div style="display: flex;flex-direction: column; gap: 8px;align-items: start;">
+        <div class="text body-16 sem" style="color: black;">Your ticket is successful booked!</div>
+        <div class="text caption-14 reg" style="color: #6F757F;">Your seat(s) has be held for 15 minutes, please make payment to confirm order</div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
 <div class="wrapper">
   <ng-template #editVoucher let-offPcanvas>
     <div style="background-color: white; height: 100vh;">

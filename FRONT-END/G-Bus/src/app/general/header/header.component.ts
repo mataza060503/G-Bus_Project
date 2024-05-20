@@ -61,4 +61,8 @@ export class HeaderComponent implements OnInit{
   this.router.navigate(["account"])
  }
 
+ goToNotification() {
+  this.router.navigate(["notification"])
+ }
+
 }

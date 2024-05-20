@@ -15,6 +15,12 @@ import { ForgotPassword2Component } from './forgot-password/forgot-password-2/fo
 import { ForgotPassword3Component } from './forgot-password/forgot-password-3/forgot-password-3.component';
 import { AccountManagement1Component } from './account-management1/account-management1.component';
 import { BookingHistoryPaidticketsComponent } from './booking-history/booking-history-paidtickets/booking-history-paidtickets.component';
+import { PopUpConfirmCancelComponent } from './cancellation/pop-up-confirm-cancel/pop-up-confirm-cancel.component';
+import { PopUpCancelCompleteComponent } from './cancellation/pop-up-cancel-complete/pop-up-cancel-complete.component';
+import { ChooseCancelReasonComponent } from './cancellation/choose-cancel-reason/choose-cancel-reason.component';
+import { CancellationDetailsComponent } from './cancellation/cancellation-details/cancellation-details.component';
+import { UnsuccessfulPaymentComponent } from './unsuccessful-payment/unsuccessful-payment.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {path:'',component:HomepageComponent},
@@ -32,8 +38,13 @@ const routes: Routes = [
   {path:'forgot-password-phone-number', component:ForgotPasswordComponent, outlet:'auth-popup'},
   {path:'forgot-password-verify', component:ForgotPassword2Component, outlet:'auth-popup'},
   {path:'forgot-password-password', component:ForgotPassword3Component, outlet:'auth-popup'},
+  {path:'cancel-confirm', component:PopUpConfirmCancelComponent, outlet:'auth-popup'},
+  {path:'cancel-complete', component:PopUpCancelCompleteComponent, outlet:'auth-popup'},
   {path:'account',component:AccountManagement1Component},
   {path:'booking-history', component:BookingHistoryPaidticketsComponent},
+  {path:'cancel', component:ChooseCancelReasonComponent},
+  {path:'cancel_success', component:CancellationDetailsComponent},
+  {path:'notification', component:NotificationsComponent},
 ];
 
 @NgModule({

@@ -1,16 +1,17 @@
-import { Component, TemplateRef, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, inject } from '@angular/core';
 import { DataService } from '../../services/Data.service';
-import { Bus, Invoice, OrderTicketLoaded, PassengerInfo, PostBookedTicket, RawOrderTicket, Voucher } from '../../models/ticket';
+import { Bus, Invoice, Notification, OrderTicketLoaded, PassengerInfo, PostBookedTicket, RawOrderTicket, Voucher } from '../../models/ticket';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import emailjs from '@emailjs/browser';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-choose-payment-method',
   templateUrl: './choose-payment-method.component.html',
   styleUrl: './choose-payment-method.component.scss'
 })
-export class ChoosePaymentMethodComponent {
+export class ChoosePaymentMethodComponent implements OnInit{
   errMessage: string = ""
   vouchers!: Voucher[]
 
@@ -31,12 +32,14 @@ export class ChoosePaymentMethodComponent {
 
   invoice!: Invoice
 
-  constructor(private dataService: DataService, private router: Router) {
+  constructor(private dataService: DataService, private router: Router, private messageService: MessageService) {
     const orderId = localStorage.getItem("orderId")
 
+    this.pushNotification()
     this.InitializeOrderData()
     this.initializeInvoice()
     this.loadAllVoucher()
+
     if (orderId != null) {
       this.loadOrderData(orderId)
     }
@@ -50,6 +53,17 @@ export class ChoosePaymentMethodComponent {
         this.classReturn = "flex-row"
       }
     }
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  ngAfterViewInit(): void {
+    
+  }  
+
+  pushNotification() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your information has updated!' ,key:"success"});
   }
 
   send() {
@@ -122,6 +136,14 @@ export class ChoosePaymentMethodComponent {
           this.orderData.CustomerId = this.order.CustomerId
           this.orderData._id = this.order._id
           this.orderData.PassengerInfo = this.order.PassengerInfo
+
+          this.dataService.checkExistOrder(this.orderData._id).subscribe(data=> {
+            if (data) {
+              return
+            } else {
+              this.pushNotification();
+            }
+          })
           
           if (this.isValidId(this.order.Departure.toString())) {
             this.dataService.getBookedTicket(this.order.Departure.toString()).subscribe({
@@ -194,12 +216,14 @@ export class ChoosePaymentMethodComponent {
         subtotal: this.orderData.Departure.Subtotal + this.orderData.Return.Subtotal - this.discount,
         discount: this.discount
     };
+
     this.dataService.postInvoice(this.orderData._id, invoice).subscribe({
       next: (data) => {
         console.log(data)
         if (this.isValidId(data)) {
           this.postPayment(data)
           this.loadInvoice(data)
+          localStorage.setItem("orderId", this.orderData._id)
           this.router.navigate(["postPayment"])
         } else {
           console.log("invalid invoiceId")
@@ -211,16 +235,33 @@ export class ChoosePaymentMethodComponent {
   }
 
   postPayment(invoiceId: string) {
+    const successNotification: Notification = {
+      UserId: this.orderData.CustomerId,
+      Type: "success",
+      Time: new Date(),
+      Title: "Your ticket is successful verified!",
+      Message: "Your ticket from " + this.orderData.Departure.DLocation + " to " + this.orderData.Departure.ALocation + " has been confirmed by the system. View to see details.",
+      isRead: false
+    }
+    const unsuccessNotification: Notification = {
+      UserId: this.orderData.CustomerId,
+      Type: "unsuccess",
+      Time: new Date(),
+      Title: "Your payment is unsuccessful!",
+      Message: "Your seat(s) has be held for 15 minutes, please retry to payment or contact to us for support",
+      isRead: false
+    }
+
     if (this.paymentMethod === "Momo") {
       this.dataService.patchInvoice(this.orderData._id, invoiceId, "successful").subscribe({
         next: (data) => {
-          alert(data)
+          this.dataService.postNotification(successNotification).subscribe()
         } 
       })
     } else {
       this.dataService.patchInvoice(this.orderData._id, invoiceId, "unsuccessful").subscribe({
         next: (data) => {
-          alert(data)
+          this.dataService.postNotification(unsuccessNotification).subscribe()
         } 
       })
     }

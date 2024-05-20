@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import { RawOrderTicket, OrderTicketLoaded, Invoice } from '../../models/ticket';
+import { Component, OnInit } from '@angular/core';
+import { RawOrderTicket, OrderTicketLoaded, Invoice, Notification } from '../../models/ticket';
 import { DataService } from '../../services/Data.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-succesful-payment',
   templateUrl: './succesful-payment.component.html',
   styleUrl: './succesful-payment.component.scss'
 })
-export class SuccesfulPaymentComponent {
+export class SuccesfulPaymentComponent implements OnInit{
   errMessage: string = ""
 
   order!: RawOrderTicket
@@ -17,11 +18,12 @@ export class SuccesfulPaymentComponent {
 
   tripType: string = ""
 
-  constructor(private dataService: DataService, private router: Router) {
+  constructor(private dataService: DataService, private router: Router, private messageService: MessageService) {
     const orderId = localStorage.getItem("orderId")
 
     this.initializeInvoice()
     this.InitializeOrderData()
+    this.pushNotification()
 
     if (orderId != null) {
       this.loadOrderData(orderId)
@@ -32,13 +34,53 @@ export class SuccesfulPaymentComponent {
       }
     }
   }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  ngAfterViewInit(): void {
+  }  
+
+  pushNotification() {
+    if (this.invoice.paymentStatus === "Successful") {
+      const notification: Notification = {
+        UserId: this.orderData.CustomerId,
+        Type: "success",
+        Time: new Date(),
+        Title: "Your ticket is successful verified!",
+        Message: "Your ticket from " + this.orderData.Departure.DLocation + " to " + this.orderData.Departure.ALocation + " has been confirmed by the system. View to see details.",
+        isRead: false
+      }
+      this.messageService.add({key:"success"});
+      this.dataService.postNotification(notification)
+    } else {
+      const notificationFail: Notification = {
+        UserId: this.orderData.CustomerId,
+        Type: "error",
+        Time: new Date(),
+        Title: "Your payment is unsuccessful!",
+        Message: "Your seat(s) has be held for 15 minutes, please retry to payment or contact to us for support",
+        isRead: false
+      }
+      this.dataService.postNotification(notificationFail)
+      this.messageService.add({key:"error"});
+    }
+  }
+
 
   loadInvoice(invoiceId: string) {
     if (this.isValidId(invoiceId)) {
       this.dataService.getInvoice(invoiceId).subscribe({
         next: (data) => {
           this.invoice = data
-          console.log(this.invoice)
+          this.dataService.checkExistOrder(this.orderData._id).subscribe(data=> {
+            alert(data)
+            if (data) {
+              return
+            } else {
+              this.pushNotification();
+            }
+          })
         }, error: (err) => {
           this.errMessage = err
         }

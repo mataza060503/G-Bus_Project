@@ -72,6 +72,7 @@ export class HomepageComponent implements OnInit{
   }
 
   constructor(private localDataService: LocalDataService, private dbService: DataService, private router: Router) {
+    this.windowScroll(0)
     this.slideCurrentPercent = 3
     this.routeSlideCurrentPercent = 4
     this.promotionSlideCurrentPercent = 3
@@ -79,6 +80,13 @@ export class HomepageComponent implements OnInit{
     const currentDate = new Date();
     this.minDate = currentDate
     this.maxDate = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000)
+  }
+
+  windowScroll(topPosition: number) {
+    window.scrollTo({
+      top: topPosition,
+      behavior: 'smooth'
+    });
   }
 
   //Couseral 

@@ -16,6 +16,11 @@ import { PopUpCancelCompleteComponent } from './pop-up-cancel-complete/pop-up-ca
   ],
   imports: [
     CommonModule
+  ], exports: [
+    ChooseCancelReasonComponent,
+    CancellationDetailsComponent,
+    PopUpConfirmCancelComponent,
+    PopUpCancelCompleteComponent
   ]
 })
 export class CancellationModule { }

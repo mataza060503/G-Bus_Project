@@ -42,7 +42,7 @@
   border: 1px solid var(--Neutral-Grey100, #E2E4E7);
   background: var(--Neutral-White, #FFF);
   width: 775px;
-  height: 554px;
+  height: fit-content;
   flex-shrink: 0;
   padding: 16px;
   &-div{

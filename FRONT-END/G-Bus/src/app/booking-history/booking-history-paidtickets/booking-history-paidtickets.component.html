@@ -1,3 +1,25 @@
+<section class="popup" id="popup" *ngIf="isPopup === true">
+  <div class="popup-container">
+    <div class="background" (click)="cancelPopup()"></div>
+    <div class="popup-item">
+      <div class="wrapper">
+        <div class="container">
+            <div class="content">
+                <div class="icon-container">
+                    <img src="./assets/images/cancellation/help.png" alt="">
+                </div>
+                <div class="title">Confirm cancellation</div>
+                <div class="description">GBus will not hold your ticket anymore</div>
+            </div> <br>
+            <div class="button-container">
+                <button class="back-button" (click)="cancelPopup()">Back</button>
+                <button class="cancel-button" (click)="confirm()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
 <div class="paidtickets">
   <div class="caption-14 reg">
     <div class="br-flex">
@@ -38,7 +60,7 @@
                     <path d="M7.99996 7.99935C7.26663 7.99935 6.63885 7.73824 6.11663 7.21602C5.5944 6.69379 5.33329 6.06602 5.33329 5.33268C5.33329 4.59935 5.5944 3.97157 6.11663 3.44935C6.63885 2.92713 7.26663 2.66602 7.99996 2.66602C8.73329 2.66602 9.36107 2.92713 9.88329 3.44935C10.4055 3.97157 10.6666 4.59935 10.6666 5.33268C10.6666 6.06602 10.4055 6.69379 9.88329 7.21602C9.36107 7.73824 8.73329 7.99935 7.99996 7.99935ZM2.66663 11.9993V11.466C2.66663 11.0882 2.76385 10.741 2.95829 10.4243C3.15274 10.1077 3.41107 9.86602 3.73329 9.69935C4.42218 9.3549 5.12218 9.09657 5.83329 8.92435C6.5444 8.75213 7.26663 8.66602 7.99996 8.66602C8.73329 8.66602 9.45551 8.75213 10.1666 8.92435C10.8777 9.09657 11.5777 9.3549 12.2666 9.69935C12.5888 9.86602 12.8472 10.1077 13.0416 10.4243C13.2361 10.741 13.3333 11.0882 13.3333 11.466V11.9993C13.3333 12.366 13.2027 12.6799 12.9416 12.941C12.6805 13.2021 12.3666 13.3327 12 13.3327H3.99996C3.63329 13.3327 3.3194 13.2021 3.05829 12.941C2.79718 12.6799 2.66663 12.366 2.66663 11.9993Z" fill="#6F757F"/>
                     </g>
                     </svg>
-                    <p class="caption-14 reg" style="color: #6F757F;">Personal Information</p>
+                    <p class="caption-14 reg" style="color: #6F757F;" (click)="navigate('account')">Personal Information</p>
                 </div>
                 <div class="optionselect">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -179,16 +201,37 @@
   <div style="display: flex;flex-direction: column; gap:16px">
     <div class="frameofticket" style="position: relative;width: 100%;" *ngFor="let order of ordersData">      
       <div class="ticket-frame">
-        <div class="total">Total</div>
-        <div class="total-value"> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div class="total">Total:</div>
+        <div class="total-value" style="margin-left: 20px;" *ngIf="order.Status ==='Unpaid' "> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div class="total-value" style="margin-left: 20px;" *ngIf="order.Status ==='Cancelled' "> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div class="total-value2" style="margin-left: 20px;" *ngIf="order.Status ==='Paid'"> {{convertMoney(order.Departure.Subtotal + order.Return.Subtotal)}} </div>
+        <div *ngIf="order.Status ==='Paid'" style="margin-left: auto;">
+          <div class="text head-16 reg"  [class.upcomming]="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Upcoming'" [class.ongoing]="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Ongoing'" [class.completed]="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Completed'">
+            {{calculateStatus(order.Departure.DTime, order.Departure.ATime)}}
+          </div>
+        </div>
       </div>
   
       <div class="ticket-frame">
-        <div style="flex: 1 1 0">
+        <div style="flex: 1 1 0" *ngIf="order.Status === 'Unpaid'">
           <span class="info-label">Need to pay before:</span>
           <span class="info-important"> {{formatNewTime(order.BookedTime.toString(),15)}} </span>
         </div>
-        <div class="timeleft-info-container">
+        <div style="flex: 1 1 0" *ngIf="order.Status === 'Paid'">
+          <div *ngIf="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Upcoming'">
+            <span class="info-label reg">Trip will depart in:</span>
+            <span class="info-important"> {{order.TimeRemaining}} </span>
+          </div>
+          <div *ngIf="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Ongoing'">
+            <span class="info-label reg">Expected drop-off at:</span>
+            <span class="info-important"> {{order.Departure.ATime}} </span>
+          </div>
+          <div *ngIf="calculateStatus(order.Departure.DTime, order.Departure.ATime)==='Completed'">
+            <span class="info-label reg">Trip completed at:</span>
+            <span class="info-important"> {{order.Departure.ATime}} </span>
+          </div>
+        </div>
+        <div class="timeleft-info-container" *ngIf="order.Status ==='Unpaid'">
           <div class="timeleft-label">Time left</div>
           <div class="timeleft-important"> {{order.TimeRemaining}} </div>
         </div>
@@ -232,14 +275,14 @@
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Unpaid'">
         <button class="secondary-button" (click)="cancelOrder(order)">Cancel</button>  
-        <button class="primary-button">Pay Now</button>
+        <button class="primary-button" (click)="payNow(order)">Pay Now</button>
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Paid'">
-        <button class="secondary-button" (click)="cancelOrder(order)">Cancel</button>
-        <button class="primary-button">View Invoice</button>
+        <button class="secondary-button" (click)="openCancelPopup()">Cancel</button>
+        <button class="primary-button" (click)="viewInvoice(order)">View Invoice</button>
       </div>
       <div class="ticket-relative-container" *ngIf="order.Status === 'Cancelled'" >
-        <button class="primary-button" style="width: 100%">Repurchase</button>
+        <button class="primary-button" style="width: 100%" (click)="repurchase(order)">Repurchase</button>
       </div>
     </div>
   </div>

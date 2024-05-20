@@ -1,3 +1,19 @@
+<p-toast 
+  [life]="3000"
+  key="success"
+  severity="success">
+  <ng-template let-message pTemplate="message" >
+    <div style="padding: 16px; width: 100%;display: flex;align-items: start;gap: 16px;">
+      <div>
+        <img src="./assets/images/Gbus-logo-avt.png" style="width: 42px;" alt="">
+      </div>
+      <div style="display: flex;flex-direction: column; gap: 8px;align-items: start;">
+        <div class="text body-16 sem" style="color: black;">Notification</div>
+        <div class="text caption-14 reg" style="color: #6F757F;">Your information has updated!</div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
 <div class="wrapper">
   <ng-template #editPickUp let-offPcanvas>
     <div style="background-color: white; height: 100vh;">
@@ -146,15 +162,15 @@
             <div class="passenger-content">
               <div class="passenger-input">
                 <label for="name" class="text sub-16 med">Full Name<b style="color: #DD1F13;">*</b></label>
-                <input class="text cption-14 reg" type="text" id="name" placeholder="Nguyen Quoc Khanh" [(ngModel)]="psgName">
+                <input class="text cption-14 reg" type="text" id="name" placeholder="Please input your full name" [(ngModel)]="psgName">
               </div>
               <div class="passenger-input">
                 <label for="name" class="text sub-16 med">Phone Number<b style="color: #DD1F13;">*</b></label>
-                <input class="text cption-14 reg" type="text" id="name" placeholder="(+84) 123 456 789" [(ngModel)]="psgPhone">
+                <input class="text cption-14 reg" type="text" id="name" placeholder="please input your phone number" [(ngModel)]="psgPhone">
               </div>
               <div class="passenger-input">
                 <label for="name" class="text sub-16 med">Email<b style="color: #DD1F13;">*</b></label>
-                <input class="text cption-14 reg" type="email" id="name" placeholder="khanhnq@gmail.com" [(ngModel)]="psgMail">
+                <input class="text cption-14 reg" type="email" id="name" placeholder="please input your email" [(ngModel)]="psgMail">
               </div>
             </div>
             <div class="passenger-notice text caption-14 reg">

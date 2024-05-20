@@ -1,5 +1,5 @@
 import { Component, TemplateRef, inject } from '@angular/core';
-import { BookedTicket, OrderTicket, PassengerInfo, Point, PostBookedTicket } from '../../../models/ticket';
+import { BookedTicket, Notification, OrderTicket, PassengerInfo, Point, PostBookedTicket } from '../../../models/ticket';
 import { DataService } from '../../../services/Data.service';
 import { Router } from '@angular/router';
 
@@ -33,7 +33,7 @@ export class PassengerInfoComponent {
     if (rStr != null) {
       this.returnTicket = JSON.parse(rStr)
     }
-    const userIdRaw = localStorage.getItem("userId")
+    const userIdRaw = localStorage.getItem("token")
     if (userIdRaw != null) {
       const userId = userIdRaw.replace(/"/g,'');
       this.userId = userId
@@ -176,6 +176,14 @@ export class PassengerInfoComponent {
       PickUpLocation: this.returnTicket.PickUpLocation,
       DropOffLocation: this.returnTicket.DropOffLocation,
     }
+    const notification: Notification = {
+      UserId: this.userId,
+      Type: "success",
+      Time: new Date(),
+      Title: "Your ticket is successful booked!",
+      Message: "Your seat(s) has be held for 15 minutes, please make payment to confirm order",
+      isRead: false
+    }
     this.service.postBookedTickets(postDeparture).subscribe({
       next: (data) => {
         order.Departure = data
@@ -184,9 +192,10 @@ export class PassengerInfoComponent {
             order.Return = data
             this.service.postOrder(order).subscribe({
               next: (data) => {
-                alert(data.insertedId)
                 localStorage.setItem("orderId",data.insertedId)
-                this.router.navigate(["payment"])
+                this.service.postNotification(notification).subscribe(data => {
+                  this.router.navigate(["payment"])
+                })
               }, error: (err) => {
                 this.errMessage = err
               }

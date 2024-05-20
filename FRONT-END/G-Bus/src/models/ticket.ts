@@ -78,6 +78,7 @@ export interface RawOrderTicket {
   Return: String,
   BookedTime: Date,
   TransactionNumber: String
+  Cancellation?: Cancellation
 }
 
 export interface OrderTicketLoaded {
@@ -93,7 +94,8 @@ export interface OrderTicketLoaded {
   ReturnBusType: Bus,
   BookedTime: Date,
   TransactionNumber: String,
-  TimeRemaining?: string
+  TimeRemaining?: string,
+  Cancellation?: Cancellation
 }
 
 export interface Route {
@@ -177,4 +179,20 @@ export interface UserInfo {
   FullName: string,
   Email: string,
   PhoneNumber: string,
+}
+
+export interface Cancellation {
+  Percentage: number,
+  Reason: string,
+  TimeOfCancel: Date 
+}
+
+export interface Notification {
+  _id?: string
+  UserId: string,
+  Type: string,
+  Time: Date,
+  Title: string,
+  Message: string,
+  isRead: boolean
 }

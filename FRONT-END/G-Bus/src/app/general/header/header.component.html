@@ -38,7 +38,7 @@
         <div class="button auth head-24 med text sub" id="btnHeaderLogin" (click)="openLoginPopup()">Log in</div>
       </div>
       <div class="header-auth-signed" *ngIf="isSigned === true">
-        <div class="notification">
+        <div class="notification" (click)="goToNotification()">
           <span class="material-symbols-outlined icon-find sub">
             notifications
           </span>

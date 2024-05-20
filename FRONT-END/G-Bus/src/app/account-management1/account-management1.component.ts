@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DataService } from '../../services/Data.service';
 import { Router } from '@angular/router';
 import { PassengerInfo, UserInfo } from '../../models/ticket';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-account-management1',
@@ -17,15 +19,20 @@ export class AccountManagement1Component {
   isHover: boolean = false
   userInfo: UserInfo = {} as UserInfo 
 
+  toastMsg: string = ""
+  errStyle: any = "border: solid 1px #DD1F13;"
+
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.initializeUserInfo()
     this.loadData()
   }
+
 
   openFilePicker(): void {
     this.fileInput.nativeElement.click();
@@ -69,17 +76,31 @@ export class AccountManagement1Component {
   }
 
   saveData() {
-    // if (
-    //   this.accountAvt === "./assets/images/Gbus-logo-avt.png" &&
-    //   this.accountEmail === "" &&
-    //   this.accountName === "" &&
-    //   this.accountPhone === ""
-    // ) {
-      
-    // }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^0\d{9}$/;
+    if (
+      this.userInfo.Image === "./assets/images/Gbus-logo-avt.png" &&
+      this.userInfo.FullName === "" &&
+      this.userInfo.Email === "" &&
+      this.userInfo.PhoneNumber === ""
+    ) {
+      return;  
+    }
+
+    if (!emailRegex.test(this.userInfo.Email)) {
+      this.toastMsg = "Invalid email format!"
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid email format!', key:"error"});
+      return;  
+    }
+
+    if (!phoneRegex.test(this.userInfo.PhoneNumber)) {
+      this.toastMsg = "Phone number must start with 0 and be 10 digits long!"
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: '' , key:"error"});
+      return;  
+    }
 
     const userInfo = {
-      Image: this.accountAvt,
+      Image: this.userInfo.Image,
       FullName: this.userInfo.FullName,
       Email: this.userInfo.Email,
       PhoneNumber: this.userInfo.PhoneNumber
@@ -90,7 +111,7 @@ export class AccountManagement1Component {
     if (userId != null) {
       const userIdStr = userId.replace(/"/g, '');
       this.dataService.postAccountInfo(userIdStr, userInfo).subscribe(data => {
-        console.log(data)
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your information has updated!' ,key:"success"});
       })
     }
   }
@@ -98,6 +119,13 @@ export class AccountManagement1Component {
   bookingHistory() {
     this.router.navigate(['booking-history'])
   }
+
+  logOut() {
+    localStorage.removeItem("token")
+    window.location.reload()
+  }
+
+  
 
   initializeUserInfo() {
     this.userInfo.Email = ""
