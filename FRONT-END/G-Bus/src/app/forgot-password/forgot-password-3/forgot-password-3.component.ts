@@ -29,6 +29,10 @@ export class ForgotPassword3Component {
   }
 
   confirm() {
+    if (this.password.length < 8) {
+      alert("Password at least 8 characters")
+      return
+    }
     if (this.confirmPassword !== this.password) {
       alert("Password does not match.")
       return

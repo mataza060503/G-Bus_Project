@@ -194,6 +194,11 @@ export class HomepageComponent implements OnInit{
     this.DLocation= this.ALocation
     this.ALocation = subLocation
   }
+
+  clear() {
+    
+  }
+
   search() {
     var searchResult = {"DLocation":this.DLocation, "ALocation":this.ALocation, "DDate": this.DDate}
     if (this.DDate === undefined) {
