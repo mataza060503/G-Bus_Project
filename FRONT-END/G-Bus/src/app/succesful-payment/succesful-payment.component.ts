@@ -24,7 +24,6 @@ export class SuccesfulPaymentComponent implements OnInit{
 
     this.initializeInvoice()
     this.InitializeOrderData()
-    this.pushNotification()
 
     if (orderId != null) {
       this.loadOrderData(orderId)
@@ -74,14 +73,7 @@ export class SuccesfulPaymentComponent implements OnInit{
       this.dataService.getInvoice(invoiceId).subscribe({
         next: (data) => {
           this.invoice = data
-          this.dataService.checkExistOrder(this.orderData._id).subscribe(data=> {
-            alert(data)
-            if (data) {
-              return
-            } else {
-              this.pushNotification();
-            }
-          })
+          this.pushNotification();
         }, error: (err) => {
           this.errMessage = err
         }

@@ -776,6 +776,20 @@ input[type="radio"] {
   display: block;
 }
 
+textarea {
+  outline: none;
+}
+
+.shuttle-address {
+  width: 100%;
+  height: 79px;
+  margin-top: 16px;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 12px;
+  resize: none;
+}
+
 .shuttle-bus-tag {
   width: 80px;
   text-align: center;

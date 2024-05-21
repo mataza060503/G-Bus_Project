@@ -235,7 +235,7 @@
                           <div class="btn btn-primary sub-14 sem" style="padding:17px 0px;background-color:#4D56BE;" (click)="backToHomepage()" *ngIf="invoice.paymentStatus==='Successful'">
                               Back to Homepage
                           </div>
-                          <div *ngIf="invoice.paymentStatus==='Unsuccessful'">
+                          <div *ngIf="invoice.paymentStatus==='Unsuccessful'" style="display: grid;grid-template-columns: 1fr 1fr;gap: 16px;">
                             <div class="button button-primary-outliner" (click)="backToHomepage()">Back to Homepage</div>
                             <div class="btn btn-primary sub-14 sem">Retry</div>
                           </div>

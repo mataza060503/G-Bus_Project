@@ -1,7 +1,7 @@
 import { Tag, Ticket } from './../../../models/ticket';
 
 
-import { Component, OnInit, Renderer2, TemplateRef, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, Renderer2, TemplateRef, ViewChild, ViewChildren, inject } from '@angular/core';
 import { empty } from 'rxjs';
 import { FeedbackItem, LocalData } from '../../../models/Item';
 import { LocalDataService } from '../../../services/LocalData.service';
@@ -16,10 +16,17 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './searching-result.component.scss'
 })
 export class SearchingResultComponent implements OnInit{
+  @ViewChildren('textarea') shuttleAddress!: QueryList<ElementRef>;
+
   filterToggle: boolean[] = [];
   isDropdownOpen: boolean[] = [];
   isSteperOpen: boolean[] = [];
   isContinue: boolean[] = [];
+  isFound: boolean = false
+  isLoading: boolean = true
+  isPickShuttleAddress: boolean[][] = []
+  isDropShuttleAddress: boolean[][] = []
+
 
   list:string[] = ["a","b","c"]
   selectedDropdownItems: number[] = [];
@@ -168,6 +175,8 @@ export class SearchingResultComponent implements OnInit{
           this.isDropdownOpen.push(false);
           this.filterToggle.push(false);
           this.selectedSteper.push(1)
+          this.isPickShuttleAddress.push([])
+          this.isDropShuttleAddress.push([])
           
           // Create a new Ticket object
           const newTicket: Ticket = {
@@ -184,6 +193,14 @@ export class SearchingResultComponent implements OnInit{
             next: (routeData: Route) => {
               newTicket.Route = routeData;
               //console.log(routeData);
+              for (let index = 0; index < newTicket.Route.PickUpPoints.length; index++) {
+                const element = newTicket.Route.PickUpPoints[index];
+                this.isPickShuttleAddress[i].push(false)
+              }
+              for (let index = 0; index < newTicket.Route.DropOffPoints.length; index++) {
+                const element = newTicket.Route.DropOffPoints[index];
+                this.isDropShuttleAddress[i].push(false)
+              }
             }
           });
   
@@ -225,12 +242,23 @@ export class SearchingResultComponent implements OnInit{
           
         }
         console.log(this.tickets)
-        
+        if (this.tickets.length > 0) {
+          this.isFound = true
+        } else {
+          this.isFound = false
+        }
+        setTimeout(() => {
+          this.loadingController(false)
+        }, 2000);
       },
       error: (err) => {
         console.log(err);
       }
     });
+  }
+
+  loadingController(state: boolean) {
+    this.isLoading = state
   }
 
   checkSeatAvailable(ticket: Ticket, seat:string) {
@@ -320,7 +348,35 @@ export class SearchingResultComponent implements OnInit{
     this.departureTicket.DropOffLocation = point
   }
 
+  openShuttleAddress(ticketIndex: number, pointIndex: number, point: Point, type: string) {
+    if (point.ShuttleBus) {
+      if (type === "pick") {
+        this.isPickShuttleAddress[ticketIndex][pointIndex] = true
+      } else {
+        this.isDropShuttleAddress[ticketIndex][pointIndex] = true
+      }
+      
+    } else {
+      if (type === "pick") {
+        for (let i = 0; i < this.tickets.length; i++) {
+          const element = this.tickets[i];
+          for (let j = 0; j < element.Route.PickUpPoints.length; j++) {
+            this.isPickShuttleAddress[i][j] = false
+          }
+        }
+      } else {
+        for (let i = 0; i < this.tickets.length; i++) {
+          const element = this.tickets[i];
+          for (let j = 0; j < element.Route.DropOffPoints.length; j++) {
+            this.isDropShuttleAddress[i][j] = false
+          }
+        }
+      }
+    }
+  }
+
   goContinue(ticket:Ticket, index: number) {
+    
     if (this.RDate != undefined) {
       this.returnTrip = "Round-trip"
     } else {
@@ -328,7 +384,6 @@ export class SearchingResultComponent implements OnInit{
     }
     if (this.returnTrip === "Round-trip") {
       if (this.departureTicket.Ticket === "") {
-        alert(this.departureTicket.Ticket)
         this.departureTicket = {
           Ticket:  ticket.Ticket._id,
           Date: ticket.Ticket.DTime +"-"+ this.formatDate(ticket.Ticket.Date,3),
@@ -347,6 +402,10 @@ export class SearchingResultComponent implements OnInit{
           Image: ticket.Ticket.Image,
           PickUpPoints: ticket.Route.PickUpPoints,
           DropOffPoints: ticket.Route.DropOffPoints
+        }
+        if (this.departureTicket.PickUpLocation.Point === "" || this.departureTicket.DropOffLocation.Point === "") {
+          alert("please select location")
+          return
         }
         this.resetTickets()
         window.scrollTo({ top: 150, behavior: 'smooth' });
@@ -370,6 +429,10 @@ export class SearchingResultComponent implements OnInit{
           Image: ticket.Ticket.Image,
           PickUpPoints: ticket.Route.PickUpPoints,
         DropOffPoints: ticket.Route.DropOffPoints
+        }
+        if (this.returnTicket.PickUpLocation.Point === "" || this.returnTicket.DropOffLocation.Point === "") {
+          alert("please select location")
+          return
         }
         this.router.navigate(["passengerInfo"])
       }
@@ -570,7 +633,6 @@ export class SearchingResultComponent implements OnInit{
 
   formatDate2(dateInput: string | Date, type: number): string {
     let date;
-    console.log(dateInput)
 
     // Explicitly parse the input if it's a string in "DD/MM/YYYY" format
     if (typeof dateInput === 'string') {
