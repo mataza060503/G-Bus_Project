@@ -118,6 +118,7 @@ export interface Point {
   Address: string;
   Time: number;
   ShuttleBus: boolean;
+  ShuttleAddress?: string,
 }
 
 export interface Amenities {

@@ -35,7 +35,6 @@ export class ChoosePaymentMethodComponent implements OnInit{
   constructor(private dataService: DataService, private router: Router, private messageService: MessageService) {
     const orderId = localStorage.getItem("orderId")
 
-    this.pushNotification()
     this.InitializeOrderData()
     this.initializeInvoice()
     this.loadAllVoucher()
@@ -59,7 +58,7 @@ export class ChoosePaymentMethodComponent implements OnInit{
   }
 
   ngAfterViewInit(): void {
-    
+    this.pushNotification();
   }  
 
   pushNotification() {
@@ -105,7 +104,9 @@ export class ChoosePaymentMethodComponent implements OnInit{
       this.dataService.getInvoice(invoiceId).subscribe({
         next: (data) => {
           this.invoice = data
-          this.send()
+          if (this.invoice.paymentStatus === "Successful") {
+            this.send()
+          }
         }, error: (err) => {
           this.errMessage = err
         }
@@ -137,7 +138,7 @@ export class ChoosePaymentMethodComponent implements OnInit{
           this.orderData._id = this.order._id
           this.orderData.PassengerInfo = this.order.PassengerInfo
 
-          this.pushNotification();
+          
           
           if (this.isValidId(this.order.Departure.toString())) {
             this.dataService.getBookedTicket(this.order.Departure.toString()).subscribe({

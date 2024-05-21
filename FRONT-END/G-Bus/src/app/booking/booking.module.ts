@@ -20,6 +20,8 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 
 
@@ -45,6 +47,7 @@ import { MessageService } from 'primeng/api';
     HttpClientModule,
     RouterModule,
     ToastModule,
+    ProgressSpinnerModule,
   ], 
   exports: [
     SearchingResultComponent

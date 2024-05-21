@@ -234,6 +234,7 @@
                       <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
                         <div class="text sub-16 sem"> {{departureTicket.PickUpLocation.Point}} </div>
                         <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.PickUpLocation.Address}} </div>
+                        <div class="text sub-14 med" *ngIf="departureTicket.PickUpLocation.ShuttleAddress != null" > {{departureTicket.PickUpLocation.ShuttleAddress}} </div>
                       </div>
                       <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" (click)="openStaticBackdrop(editPickUp)">Edit</div>
                     </div>
@@ -248,6 +249,7 @@
                       <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
                         <div class="text sub-16 sem"> {{departureTicket.DropOffLocation.Point}} </div>
                         <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{departureTicket.DropOffLocation.Address}} </div>
+                        
                       </div>
                       <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" (click)="openStaticBackdrop(editDropOff)">Edit</div>
                     </div>
@@ -292,6 +294,7 @@
                       <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
                         <div class="text sub-16 sem"> {{returnTicket.PickUpLocation.Point}} </div>
                         <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{returnTicket.PickUpLocation.Address}} </div>
+                        <div class="text sub-14 med" *ngIf="returnTicket.PickUpLocation.ShuttleAddress != null" > {{returnTicket.PickUpLocation.ShuttleAddress}} </div>
                       </div>
                       <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" (click)="openStaticBackdrop(editReturnPickUp)">Edit</div>
                     </div>
@@ -306,6 +309,7 @@
                       <div style="display: flex;flex-direction: column;gap: 4px;align-items: start;">
                         <div class="text sub-16 sem"> {{returnTicket.DropOffLocation.Point}} </div>
                         <div class="text caption-14 reg" style="color: var(--neutral-grey-300);"> {{returnTicket.DropOffLocation.Address}} </div>
+                        <div class="text sub-14 med" *ngIf="returnTicket.DropOffLocation.ShuttleAddress != null" > {{returnTicket.DropOffLocation.ShuttleAddress}} </div>
                       </div>
                       <div class="text caption-14 reg" style="text-decoration: underline;cursor: pointer;color: var(--neutral-grey-300);" (click)="openStaticBackdrop(editReturnDropOff)">Edit</div>
                     </div>

@@ -69,12 +69,14 @@
       </div>
       <div class="displayflex">
           <div style="width:598px;">
-              <div style="display: flex; gap:8px;margin-bottom:16px; align-items: center;">
+              <div style="display: flex; gap:8px;margin-bottom:16px; align-items: center;" *ngIf="invoice.paymentStatus==='Successful'">
                   <div class="text-body 16 reg">Trip information has been sent to your email of </div>
                   <div class="text sub-16 sem"> {{orderData.PassengerInfo.Email}} !</div>
                   <div class="text-body 16 reg"></div>
               </div>
-              <div style="display: flex; gap:2px;margin-bottom:16px;">
+              <div class="text body-16 reg" *ngIf="invoice.paymentStatus==='Unsuccessful'"> Reason of failure: <b class="sub-16 sem" style="color: #DD1F13;">Temporary network connectivity issues.</b> </div>
+              <div class="text body-16 reg" *ngIf="invoice.paymentStatus==='Unsuccessful'">Payment failed. Please try again.</div>
+              <div style="display: flex; gap:2px;margin-bottom:16px;" *ngIf="invoice.paymentStatus==='Successful'">
                   <div>
                       <p>
                           <b style="font-weight: 700;">Note: </b>Vehicle license plate and driver’s phone number will be updated on History of GBus 24 hours before departure time. 
@@ -87,6 +89,12 @@
                       Please ensure to check notifications on the app via your mobile phone prior to departure time and keep your phone reachable to receive calls from the driver or staff.
                   </div>
               </div>
+              <div *ngIf="invoice.paymentStatus==='Unsuccessful'">
+                <div class="text sub-16 sem" style="margin-bottom:16px">Payment Guideline</div>
+                <div class="text-body 16 reg" style="margin-bottom:16px">
+                    Customers are required to make payment for unpaid tickets within 15 minutes of booking. Failure to complete payment within this time-frame may result in the cancellation of the booking and the release of the ticket for other customers.
+                </div>
+            </div>
               <div>
                   <div class="booking-preview">
                       <div class="booking-title">
@@ -224,8 +232,12 @@
                   </div>
                   <div>
                       <div class="" style="display: flex; flex-direction: column;gap:24px;margin-top:40px">
-                          <div class="btn btn-primary sub-14 sem" style="padding:17px 0px;background-color:#4D56BE;" (click)="backToHomepage()">
+                          <div class="btn btn-primary sub-14 sem" style="padding:17px 0px;background-color:#4D56BE;" (click)="backToHomepage()" *ngIf="invoice.paymentStatus==='Successful'">
                               Back to Homepage
+                          </div>
+                          <div *ngIf="invoice.paymentStatus==='Unsuccessful'" style="display: grid;grid-template-columns: 1fr 1fr;gap: 16px;">
+                            <div class="button button-primary-outliner" (click)="backToHomepage()">Back to Homepage</div>
+                            <div class="btn btn-primary sub-14 sem">Retry</div>
                           </div>
                           <div class="caption-14 reg" style="text-align: center;">
                               Having issues?
