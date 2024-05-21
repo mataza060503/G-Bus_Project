@@ -403,10 +403,7 @@ export class SearchingResultComponent implements OnInit{
           PickUpPoints: ticket.Route.PickUpPoints,
           DropOffPoints: ticket.Route.DropOffPoints
         }
-        if (this.departureTicket.PickUpLocation.Point === "" || this.departureTicket.DropOffLocation.Point === "") {
-          alert("please select location")
-          return
-        }
+        
         this.resetTickets()
         window.scrollTo({ top: 150, behavior: 'smooth' });
         return
@@ -430,10 +427,7 @@ export class SearchingResultComponent implements OnInit{
           PickUpPoints: ticket.Route.PickUpPoints,
         DropOffPoints: ticket.Route.DropOffPoints
         }
-        if (this.returnTicket.PickUpLocation.Point === "" || this.returnTicket.DropOffLocation.Point === "") {
-          alert("please select location")
-          return
-        }
+        
         this.router.navigate(["passengerInfo"])
       }
     } else if (this.returnTrip === "One-way-trip") {
