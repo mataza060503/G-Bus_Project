@@ -257,7 +257,7 @@ export class ChoosePaymentMethodComponent implements OnInit{
     } else {
 
       if (this.paymentMethod === "Mastercard") {
-        const cardNumberRegex = /^(?:\d{4}-){3}\d{4}|\d{16}$/;
+        const cardNumberRegex = /^(?:\d{4}-){3}\d{4}|\d{12}$/;
         const cvvRegex = /^\d{3,4}$/;
         const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/
         const isCardNumberValid = cardNumberRegex.test(this.cardNumber);

@@ -196,7 +196,8 @@ export class HomepageComponent implements OnInit{
   }
 
   clear() {
-    
+    localStorage.removeItem("his")
+    this.SearchingHistory = []
   }
 
   search() {
