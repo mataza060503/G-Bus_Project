@@ -326,15 +326,16 @@ app.get("/checkUserId/:userId", cors(), async (req, res) => {
   const userId = req.params.userId
   const data = await database.collection("Account").find({userId: userId}).toArray()
   if (data.length > 0) {
-    res.send(true)
+    res.send(data[0])
   } else {
     res.send(false)
   } 
 })
 app.post("/checkPassword", cors(), async (req, res) => {
+  const phoneNumber = req.body.phoneNumber
   const password = req.body.password
-  const data = await database.collection("Account").find({password: password}).toArray()
-  if (data.length > 0) {
+  const data = await database.collection("Account").find({phoneNumber: phoneNumber}).toArray()
+  if (data[0].password === password) {
     res.send(data[0].userId)
   } else {
     res.send("fail")

@@ -367,13 +367,13 @@ checkExistUserId(userId: string):Observable<any> {
   )
 }
 
-checkPassword(password: string):Observable<any> {
+checkPassword(phoneNumber: string, password: string):Observable<any> {
   const headers=new HttpHeaders().set("Content-Type","application/json;charset=utf8")
   const requestOptions:Object={
     headers:headers,
     responseType:"text"
   } 
-  return this._http.post<any>(this.API+"/checkPassword",{"password": password},requestOptions).pipe(
+  return this._http.post<any>(this.API+"/checkPassword",{ "phoneNumber": phoneNumber, "password": password },requestOptions).pipe(
     map(res=> res as string),
     retry(3),
     catchError(this.handleError)

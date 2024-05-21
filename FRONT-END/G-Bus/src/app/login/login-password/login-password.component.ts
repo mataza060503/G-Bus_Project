@@ -15,11 +15,18 @@ export class LoginPasswordComponent {
   }
 
   checkPassword() {
-    this.dataService.checkPassword(this.password).subscribe(data=> {
-      alert(data)
-      localStorage.setItem('token',data)
-      window.location.reload()
-    })
+    const phoneNumber = localStorage.getItem("phoneNumber")
+    if (phoneNumber != null) {
+      this.dataService.checkPassword(phoneNumber, this.password).subscribe(data=> {
+        alert(data)
+        if (data === "fail") {
+          return
+        } else {
+          localStorage.setItem('token',data)
+          window.location.reload()
+        }
+      })
+    }
   }
 
   resetPassword() {

@@ -34,6 +34,10 @@ export class SignUpPasswordComponent {
       alert("Please input your password")
       return
     }
+    if (this.password.length < 8) {
+      alert("password at least 8 characters")
+      return
+    }
     if (this.confirmPassword !== this.password) {
       alert("Password does not match.")
       return

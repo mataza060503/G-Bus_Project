@@ -65,8 +65,9 @@ export class ChoosePaymentMethodComponent implements OnInit{
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your information has updated!' ,key:"success"});
   }
 
-  send() {
+  send(email: string) {
     const templateParams = {
+      to_Email: email,
       CustomerName: this.orderData.PassengerInfo.FullName,
       Trip: this.tripType,
       BusType: this.orderData.DepartBusType.Name,
@@ -105,7 +106,7 @@ export class ChoosePaymentMethodComponent implements OnInit{
         next: (data) => {
           this.invoice = data
           if (this.invoice.paymentStatus === "Successful") {
-            this.send()
+            this.send(this.orderData.PassengerInfo.Email)
           }
         }, error: (err) => {
           this.errMessage = err
@@ -254,6 +255,28 @@ export class ChoosePaymentMethodComponent implements OnInit{
         } 
       })
     } else {
+
+      if (this.paymentMethod === "Mastercard") {
+        const cardNumberRegex = /^(?:\d{4}-){3}\d{4}|\d{16}$/;
+        const cvvRegex = /^\d{3,4}$/;
+        const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/
+        const isCardNumberValid = cardNumberRegex.test(this.cardNumber);
+        const isCvvValid = cvvRegex.test(this.cvv);
+        const isExpiryDateValid = expiryDateRegex.test(this.expireDate);
+        if (this.cardNumber === "" || this.cardHolderName === "" || this.expireDate === "" || this.cvv === "") {
+          alert("Please input card infomation")
+          return
+        } else if (!isCardNumberValid) {
+          alert("Card number is invalid")
+          return
+        } else if (!isCvvValid) {
+          alert("CVV is invalid")
+          return
+        } else if (!isExpiryDateValid) {
+          alert("Expire date is invalid")
+          return
+        }
+      } 
       this.dataService.patchInvoice(this.orderData._id, invoiceId, "unsuccessful").subscribe({
         next: (data) => {
           this.dataService.postNotification(unsuccessNotification).subscribe()

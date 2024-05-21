@@ -41,6 +41,7 @@ export class LoginPhoneNumberComponent implements OnInit{
     if (this.phoneNumber && phoneNumberRegex.test(this.phoneNumber)) {
       this.checkExistAccount(this.phoneNumber).subscribe(isExist => {
         if (isExist) {
+          localStorage.setItem("phoneNumber", this.phoneNumber)
           this.router.navigate([{ outlets: { 'auth-popup': ['login-password'] } }]);
         } else {
           alert('Phone number not found');
